@@ -19,8 +19,8 @@ This will make `.md` file in `your directory/ouput` folder.
 - make md to jekyll post format
 - add other notion type
 - add test
-- sub page
-- sub file
+- export subpage
+- export subfile
 - export media
 
 ## Contributing
