@@ -1,0 +1,40 @@
+Metadata-Version: 2.1
+Name: notion2md
+Version: 0.1.1
+Summary: Export notion page to markdown.
+Home-page: https://github.com/echo724/notion2md.git
+Author: Eunchan Cho
+Author-email: eunchan1001@gmail.com
+License: MIT
+Platform: UNKNOWN
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.7
+Description-Content-Type: text/markdown
+Requires-Dist: notion (>=0.0.25)
+Requires-Dist: requests (>=2.22.0)
+
+# Notion Markdown Exporter
+This is Notion Markdown Exporter using [`notion-py`](https://github.com/jamalex/notion-py)
+notion2md will export your [notion.so](http://notion.so) page to markdown formatted file.
+## Installation
+```Plain Text
+pip install notion2md
+```
+## Usage from CLI
+In your Bash/Zsh terminal,
+```Bash
+$python3 -m notion2md
+#Markdown file name: <output file name(without .md)>
+#Token_v2: <your token_v2 on notion.so>
+#Notion Page Url: <your notion page to export>
+```
+This will make `.md` file in `your directory/ouput` folder.
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Please make sure to update tests as appropriate.
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
+
+

@@ -1,0 +1,17 @@
+CHANGELOG.md
+LICENSE
+MANIFEST.in
+README.md
+setup.cfg
+setup.py
+test.py
+python_slugify.egg-info/PKG-INFO
+python_slugify.egg-info/SOURCES.txt
+python_slugify.egg-info/dependency_links.txt
+python_slugify.egg-info/entry_points.txt
+python_slugify.egg-info/requires.txt
+python_slugify.egg-info/top_level.txt
+slugify/__init__.py
+slugify/__main__.py
+slugify/slugify.py
+slugify/special.py
