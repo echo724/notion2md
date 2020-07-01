@@ -15,8 +15,17 @@ $python3 -m notion2md
 ```
 This will make `.md` file in `your directory/ouput` folder.
 
+## Todo
+- make md to jekyll post format
+- add other notion type
+- add test
+- export subpage
+- export subfile
+- export media
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 Please make sure to update tests as appropriate.
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
