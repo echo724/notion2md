@@ -1,4 +1,4 @@
-from .md_exporter import export
+from .md_exporter import export_cli
 
 if __name__ == "__main__":
-    export()
+    export_cli()

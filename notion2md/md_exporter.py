@@ -8,7 +8,7 @@ def get_page():
     return token_v2,url
 
 def set_filename():
-    directory = './output/'
+    directory = './notion_output/'
     if not(os.path.isdir(directory)):
         os.makedirs(os.path.join(directory))
     fname = input("Markdown file name: ") + ".md"
@@ -86,7 +86,16 @@ def block2md(blocks):
         md += "\n"
     return md
 
-def export():
+def export(v2,url):
+    blocks = []
+    client = NotionClient(token_v2=v2)
+    page = client.get_block(url)
+
+    recursive_getblocks(page,blocks,client)
+    md = block2md(blocks)
+    return md
+
+def export_cli():
     fname = set_filename()
     file = open(fname,'w')
     token_v2, url = get_page()
@@ -104,4 +113,4 @@ def export():
     print("The markdown extraction is complete.")
 
 if __name__ == "__main__":
-    export()
+    export_cli()
