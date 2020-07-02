@@ -86,11 +86,8 @@ def block2md(blocks):
         md += "\n"
     return md
 
-def export(v2,url):
+def export(page,client):
     blocks = []
-    client = NotionClient(token_v2=v2)
-    page = client.get_block(url)
-
     recursive_getblocks(page,blocks,client)
     md = block2md(blocks)
     return md
