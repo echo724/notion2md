@@ -31,7 +31,10 @@ def block2md(blocks):
     md = ""
     numbered_list_index = 0
     for block in blocks:
-        btype = block.type
+        try:
+            btype = block.type
+        except:
+            continue
         if btype != "numbered_list":
             numbered_list_index = 0
         try:
@@ -54,7 +57,7 @@ def block2md(blocks):
             except:
                 md += "# " + bt
         elif btype == 'text':
-            md += bt
+            md += bt +"  "
         elif btype == 'bookmark':
             md += link(bt,block.link)
         elif btype == "video" or btype == "file" or btype =="audio" or btype =="pdf" or btype == "gist":
