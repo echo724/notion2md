@@ -86,7 +86,7 @@ def block2md(blocks):
             continue
         else:
             pass
-        md += "\n"
+        md += "\n\n"
     return md
 
 def export(page,client):
