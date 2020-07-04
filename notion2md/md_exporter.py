@@ -1,6 +1,7 @@
 import notion
 import os
 from notion.client import NotionClient
+import requests
 
 def get_page():
     token_v2 = input("Token_v2: ")
@@ -13,7 +14,7 @@ def set_filename():
         os.makedirs(os.path.join(directory))
     fname = input("Markdown file name: ") + ".md"
     fname = os.path.join(directory,fname)
-    return fname
+    return fname,dir
 
 def recursive_getblocks(block,container,client):
     container.append(client.get_block(block.id))
@@ -27,9 +28,19 @@ def recursive_getblocks(block,container,client):
 def link(name,url):
     return "["+name+"]"+"("+url+")"
 
-def block2md(blocks):
+def image_export(url,count,dir):
+    img_dir = dir + 'img_{0}.png'.format(count)
+    r = requests.get(url, allow_redirects=True)
+    open(img_dir,'wb').write(r.content)
+    return img_dir
+
+def block2md(blocks,dir = "./"):
     md = ""
+    img_count = 0
     numbered_list_index = 0
+    dir += 'images/'
+    if not(os.path.isdir(dir)):
+        os.makedirs(os.path.join(dir))
     for block in blocks:
         try:
             btype = block.type
@@ -68,7 +79,9 @@ def block2md(blocks):
             numbered_list_index += 1
             md += str(numbered_list_index)+'. ' + bt
         elif btype == "image":
-            md += "!"+link(block.source,block.source)
+            img_count += 1
+            img_dir = image_export(block.source,img_count,dir)
+            md += "!"+link(img_dir,img_dir)
         elif btype == "code":
             md += "```"+block.language+"\n"+block.title+"\n```"
         elif btype == "equation":
@@ -96,7 +109,7 @@ def export(page,client):
     return md
 
 def export_cli():
-    fname = set_filename()
+    fname,dir = set_filename()
     file = open(fname,'w')
     token_v2, url = get_page()
     blocks = []
@@ -105,12 +118,12 @@ def export_cli():
     page = client.get_block(url)
 
     recursive_getblocks(page,blocks,client)
-    md = block2md(blocks)
+    md = block2md(blocks,dir=dir)
 
     file.write(md)
     file.close()
 
-    print("The markdown extraction is complete.")
+    print("Notion Page is successfully exported to Markdown")
 
 if __name__ == "__main__":
     export_cli()
