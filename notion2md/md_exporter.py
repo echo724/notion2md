@@ -38,7 +38,7 @@ def block2md(blocks,dir = "./"):
     md = ""
     img_count = 0
     numbered_list_index = 0
-    dir += 'images/'
+    dir += '{0}/'.format(blocks[0].title)
     if not(os.path.isdir(dir)):
         os.makedirs(os.path.join(dir))
     for block in blocks:
