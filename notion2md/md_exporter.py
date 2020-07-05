@@ -34,7 +34,7 @@ def image_export(url,count,dir):
     open(img_dir,'wb').write(r.content)
     return img_dir
 
-def block2md(blocks,dir = "./"):
+def block2md(blocks,dir):
     md = ""
     img_count = 0
     numbered_list_index = 0
@@ -118,7 +118,7 @@ def export_cli():
     page = client.get_block(url)
 
     recursive_getblocks(page,blocks,client)
-    md = block2md(blocks,dir=dir)
+    md = block2md(blocks,dir)
 
     file.write(md)
     file.close()
