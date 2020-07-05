@@ -102,7 +102,9 @@ def block2md(blocks,dir):
         md += "\n\n"
     return md
 
-def export(page,client):
+def export(url,token):
+    client = NotionClient(token_v2=token)
+    page = client.get_block(url)
     blocks = []
     recursive_getblocks(page,blocks,client)
     md = block2md(blocks)
