@@ -107,7 +107,7 @@ def export(url,token):
     page = client.get_block(url)
     blocks = []
     recursive_getblocks(page,blocks,client)
-    md = block2md(blocks)
+    md = block2md(blocks,'./')
     return md
 
 def export_cli():
