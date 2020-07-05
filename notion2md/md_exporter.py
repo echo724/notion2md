@@ -14,7 +14,7 @@ def set_filename():
         os.makedirs(os.path.join(directory))
     fname = input("Markdown file name: ") + ".md"
     fname = os.path.join(directory,fname)
-    return fname,dir
+    return fname,directory
 
 def recursive_getblocks(block,container,client):
     container.append(client.get_block(block.id))
