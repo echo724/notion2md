@@ -39,8 +39,6 @@ def block2md(blocks,dir):
     img_count = 0
     numbered_list_index = 0
     dir += '{0}/'.format(blocks[0].title)
-    if not(os.path.isdir(dir)):
-        os.makedirs(os.path.join(dir))
     for block in blocks:
         try:
             btype = block.type
@@ -79,6 +77,8 @@ def block2md(blocks,dir):
             numbered_list_index += 1
             md += str(numbered_list_index)+'. ' + bt
         elif btype == "image":
+            if not(os.path.isdir(dir)):
+                os.makedirs(os.path.join(dir))
             img_count += 1
             img_dir = image_export(block.source,img_count,dir)
             md += "!"+link(img_dir,img_dir)

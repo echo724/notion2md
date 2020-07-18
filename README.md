@@ -40,6 +40,10 @@ url = #<your notion page url>
 export(url,token_v2)
 ```
 
+## Additional Info.
+
+- This exporter will make path `<your notion tile>` in your `notion_output` if the page has any image.
+
 ## Todo
 - export with subpage
 - export with subfile
