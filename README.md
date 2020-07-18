@@ -23,7 +23,7 @@ This will make `.md` file in `your directory/notion_ouput` folder.
 ## Usage_Jupyter or Ipython
 
 ```Python
-from notion2md import export
+from notion2md.md_exporter import export
 from notion.client import NotionClient
 token_v2 = #<your notion token_v2>
 url = #<your notion page url>
