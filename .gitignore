@@ -126,3 +126,4 @@ dmypy.json
 .sh
 
 .DS_Store
+notion_output

@@ -6,7 +6,7 @@ with io.open('README.md', 'r', encoding='utf-8') as f:
     readme = f.read()
 setup(
       name='notion2md',
-      version='0.1.7.2',
+      version='0.1.7.3',
       description='Export notion page to markdown.',
       long_description=readme,
       long_description_content_type="text/markdown",

@@ -10,7 +10,7 @@ And also, the exporter will download the images in your notion page and save it 
 ```Plain Text
 pip install notion2md
 ```
-## Usage from CLI
+## Usage in Terminal
 In your Bash/Zsh terminal,
 ```Bash
 $python3 -m notion2md
@@ -20,11 +20,20 @@ $python3 -m notion2md
 ```
 This will make `.md` file in `your directory/notion_ouput` folder.
 
-## Usage_Jupyter or Ipython
+## Usage in Python
 
+> I changed the way to use the jekyll exporter. Please follow these examples.
+
+### With nothing
 ```Python
-from notion2md.md_exporter import export
-from notion.client import NotionClient
+from notion2md import *
+
+export_cli()
+```
+### With token_v2 & url
+```Python
+from notion2md import *
+
 token_v2 = #<your notion token_v2>
 url = #<your notion page url>
 

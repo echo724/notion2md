@@ -102,6 +102,7 @@ def block2md(blocks,dir):
         md += "\n\n"
     return md
 
+# This function will return the string file.
 def export(url,token):
     client = NotionClient(token_v2=token)
     page = client.get_block(url)
@@ -110,6 +111,7 @@ def export(url,token):
     md = block2md(blocks,'./')
     return md
 
+# This function will export the markdown file.
 def export_cli():
     fname,dir = set_filename()
     file = open(fname,'w')
