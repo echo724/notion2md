@@ -4,7 +4,7 @@
 This is Notion Markdown Exporter using [`notion-py`](https://github.com/jamalex/notion-py)
 notion2md will export your [notion.so](http://notion.so) page to markdown formatted file.
 
-And also, the exporter will download the images in your notion page and save it to the sub folder named with notion page's title.
+Also, the exporter will download the images in your notion page and save it to the sub folder named with `notion page's title`.
 
 ## Installation
 ```Plain Text
