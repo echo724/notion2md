@@ -2,7 +2,8 @@
 [![PyPI version](https://badge.fury.io/py/notion2md.svg)](https://badge.fury.io/py/notion2md)
 
 This is Notion Markdown Exporter using [`notion-py`](https://github.com/jamalex/notion-py)
-notion2md will export your [notion.so](http://notion.so) page to markdown formatted file.
+
+**notion2md** will export your [notion.so](http://notion.so) page to markdown formatted file.
 
 Also, the exporter will download the images in your notion page and save it to the sub folder named with `notion page's title`.
 
