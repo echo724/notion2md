@@ -28,7 +28,7 @@ This will make `.md` file in `your directory/notion_ouput` folder.
 ```Python
 from notion2md import *
 
-export_cli()
+export_cli() #this will save md file in ./notion-output folder.
 ```
 ### With token_v2 & url
 ```Python
@@ -37,7 +37,7 @@ from notion2md import *
 token_v2 = #<your notion token_v2>
 url = #<your notion page url>
 
-export(url,token_v2)
+export(url,token_v2) #this will return string file.
 ```
 
 ## Additional Info.
