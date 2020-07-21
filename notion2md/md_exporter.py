@@ -3,11 +3,13 @@ import os
 from notion.client import NotionClient
 import requests
 
+#get notion's page info(url,token_v2)
 def get_page():
     token_v2 = input("Token_v2: ")
     url = input("Notion Page Url: ")
     return token_v2,url
 
+#set Markdown file name and path
 def set_filename():
     directory = './notion_output/'
     if not(os.path.isdir(directory)):
@@ -16,6 +18,7 @@ def set_filename():
     fname = os.path.join(directory,fname)
     return fname,directory
 
+#get children blocks in notion's page
 def recursive_getblocks(block,container,client):
     container.append(client.get_block(block.id))
     try:
@@ -25,15 +28,18 @@ def recursive_getblocks(block,container,client):
     except:
         return
 
+#make markdown link format string
 def link(name,url):
     return "["+name+"]"+"("+url+")"
 
+#make image file
 def image_export(url,count,dir):
     img_dir = dir + 'img_{0}.png'.format(count)
     r = requests.get(url, allow_redirects=True)
     open(img_dir,'wb').write(r.content)
     return img_dir
 
+#change notion's block to markdown string
 def block2md(blocks,dir):
     md = ""
     img_count = 0
@@ -83,7 +89,7 @@ def block2md(blocks,dir):
             img_dir = image_export(block.source,img_count,dir)
             md += "!"+link(img_dir,img_dir)
         elif btype == "code":
-            md += "```"+block.language+"\n"+block.title+"\n```"
+            md += "``` "+block.language.lower()+"\n"+block.title+"\n```"
         elif btype == "equation":
             md += "$$"+block.latex+"$$"
         elif btype == "divider":
@@ -102,7 +108,7 @@ def block2md(blocks,dir):
         md += "\n\n"
     return md
 
-# This function will return the string file.
+# return the string file.
 def export(url,token):
     client = NotionClient(token_v2=token)
     page = client.get_block(url)
@@ -111,7 +117,7 @@ def export(url,token):
     md = block2md(blocks,'./')
     return md
 
-# This function will export the markdown file.
+# export the markdown file(string).
 def export_cli():
     fname,dir = set_filename()
     file = open(fname,'w')
@@ -127,7 +133,7 @@ def export_cli():
     file.write(md)
     file.close()
 
-    print("Notion Page is successfully exported to Markdown")
+    print("\n--- Exporter successfully exported notion page to markdown ---")
 
 if __name__ == "__main__":
     export_cli()
