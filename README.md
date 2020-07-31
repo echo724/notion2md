@@ -34,7 +34,9 @@ This will make `<date-page-title>.md` file in `your directory/Notion_Exporter_Ou
 ``` python
 from notion2md import *
 
-export_cli() #this will save md file in ./notion-output folder.
+export_cli()
+# Token_v2: <your token_v2 on notion.so>
+# Notion Page Url: <your notion page to export>
 ```
 
 ## Output Structure.
