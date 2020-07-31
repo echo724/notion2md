@@ -1,7 +1,7 @@
 # Notion Markdown Exporter
 [![PyPI version](https://badge.fury.io/py/notion2md.svg)](https://badge.fury.io/py/notion2md)
 
-> **the Notion2md is updated to version 1.0.0. Please update the pacakge**.
+### **the Notion2md is updated to version 1.0.0. Please update the pacakge**.
 
 This is Notion Markdown Exporter using [`notion-py`](https://github.com/jamalex/notion-py)
 
@@ -37,7 +37,7 @@ from notion2md import *
 export_cli() #this will save md file in ./notion-output folder.
 ```
 
-## Output Tree.
+## Output Structure.
 This is the structure of the output folder.
 
 ```
