@@ -9,10 +9,10 @@ This is Notion Markdown Exporter using [`notion-py`](https://github.com/jamalex/
 
 ## Features & Updates
 
-- Converts almost every blocks in the notion's page to Markdown texts.
+- Converts **almost every blocks** in the notion's page to Markdown texts.
 - Downloads **images** and **files** in notion's page
 - Exports **Nested Pages** in the page!
-- Create Front Matters for supporting CMS (Title, Created Date, Tags)
+- Create **Front Matters** for supporting CMS (Title, Created Date, Tags)
 
 ## Installation
 ``` bash
