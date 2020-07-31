@@ -3,9 +3,9 @@
 
 ### The Notion2md is updated to version 1.0.0. Please update the pacakge.
 
-This is Notion Markdown Exporter using [`notion-py`](https://github.com/jamalex/notion-py)
+- This is Notion Markdown Exporter using [`notion-py`](https://github.com/jamalex/notion-py)
 
-**notion2md** will export your [notion.so](http://notion.so) page to markdown formatted file.
+- **notion2md** will export your [notion.so](http://notion.so) page to markdown formatted file.
 
 ## Features & Updates
 
