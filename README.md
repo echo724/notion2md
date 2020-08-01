@@ -17,7 +17,7 @@
 
 - Create **Front Matters** for supporting CMS (Title, Created Date, Tags)
 
-> Add "Created" and "Tags" properties in your page. Then exporter will put them in the file's front matter.
+> Add "Created" and "Tags" properties in your page. Then exporter will put them in the md file's front matter.
 
 
 ## Installation
