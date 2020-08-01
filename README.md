@@ -43,7 +43,7 @@ $python3 -m notion2md
 
 This will make `<date-page-title>.md` file in `your directory/Notion_Exporter_Output` folder.
 
-## Usages in Python
+## Usage in Python
 
 ``` python
 from notion2md import *
