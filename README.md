@@ -50,8 +50,8 @@ This is the structure of the output folder.
 
 ```
 Notion_Exporter_Output
-└── Test_for_nested_page
-    ├── <main-page-name>.md
+└── <main-page-title>/
+    ├── <main-page-title>.md
     ├── download/
     │   └── ...
     ├── image/
