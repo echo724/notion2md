@@ -9,11 +9,11 @@
 
 ## Upadtes
 
-- Changed all the structures of exporter to support exporting sub pages and sub files.
+- Changed the structure of the exporter to support exporting sub pages and sub files.
 
-- Used Object named 'PageBlockExporter' to connect supporting functions and attributes.
+- Used Object named '`PageBlockExporter`' to connect supporting functions and attributes.
 
-- Each Exporter has its client(NotionClient), page(notion.Block), and sub pages' exporter list ([PageBlockExporter])
+- Each Exporter has its client(`NotionClient`), page(`notion.Block`), and sub pages' exporter list (`[PageBlockExporter]`)
 
 ## Features
 
