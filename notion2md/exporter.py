@@ -133,7 +133,7 @@ class PageBlockExporter:
     """return tags in the page
 
       Condition:
-        "Tags" or "tags" property exits in the page
+        "Tags" or "tags" property should exit in the page
 
       Returns:
         tags([String]): tags in "Tags or tags" property in the page
@@ -149,7 +149,7 @@ class PageBlockExporter:
     """return created date in the page
 
       Condition:
-        "created" or "Created" property exits in the page
+        "created" or "Created" property should exit in the page
 
       Returns:
         formatted_date(String): formatted created date
