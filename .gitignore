@@ -1,5 +1,5 @@
 *.sh
-__pycache__/
+__pycache__
 *.pyc
 
 mphyspy.egg-info
@@ -127,3 +127,4 @@ dmypy.json
 
 .DS_Store
 notion_output
+Notion_Exporter_Output
