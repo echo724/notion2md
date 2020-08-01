@@ -54,7 +54,7 @@ export_cli()
 ```
 
 ## Output Structure.
-This is the structure of the output folder.
+The structure of the output looks like this path.
 
 ```
 Notion_Exporter_Output
