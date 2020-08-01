@@ -61,7 +61,7 @@ Notion_Exporter_Output
         └── ...
 ```
 
-- in `subpage/`, there will be `images/`, `downloads/`, and `subpage/` folders if there are sub components in `sub page`.
+- in `subpage/`, there will be `image/`, `download/`, and `subpage/` folders if there are sub components in `sub page`.
 
 ## Todo
 - convert other block types to md.
