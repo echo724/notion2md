@@ -7,7 +7,15 @@
 
 - **notion2md** will export your [notion.so](http://notion.so) page to markdown formatted file.
 
-## Features & Updates
+## Upadtes
+
+- Changed all the structures of exporter to support exporting sub pages and sub files.
+
+- Used Object named 'PageBlockExporter' to connect supporting functions and attributes.
+
+- Each Exporter has its client(NotionClient), page(notion.Block), and sub pages' exporter list ([PageBlockExporter])
+
+## Features
 
 - Converts **almost every block** in the notion's page to Markdown texts
 
