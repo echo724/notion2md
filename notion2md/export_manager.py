@@ -36,6 +36,11 @@ def get_page():
 
 
 def export(exporter):
+    """Recursively export page block with its sub pages
+    
+        Args:
+            exporter(PageBlockExporter()): export page block
+    """
     exporter.page2md(tapped = 0)
     exporter.write_file()
     for sub_exporter in exporter.sub_exporters:
