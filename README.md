@@ -9,7 +9,7 @@
 
 ## Features & Updates
 
-- Converts **almost every blocks** in the notion's page to Markdown texts
+- Converts **almost every block** in the notion's page to Markdown texts
 
 - Downloads **images** and **files** in notion's page
 
