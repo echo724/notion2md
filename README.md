@@ -5,7 +5,13 @@
 
 - **notion2md** will export your [notion.so](http://notion.so) page to markdown formatted file.
 
+### Caution
+
+- Do not share your `Token_v2` with others. Others can access your notion page if the token is shared.
+
 ## Features
+
+- [**New**] Token_v2 will be saved after using the exporter, and don't have to enter it next time
 
 - Converts **almost every block** in the notion's page to Markdown texts
 
@@ -19,7 +25,7 @@
 
 ## Updates v1.1.0
 
-- Change the output folder name `Notion_Exporter_Output/` to `notion_output/'
+- Change the output folder name `Notion_Exporter_Output/` to `notion_output/`
 
 - Save token_v2 in `notion_output/notion_token.json` and read it when you use the exporter again.
 
@@ -30,6 +36,11 @@
 
 ### [Change Log](./change_log.md)
 
+## Requirements
+
+- token_v2: check the way to get Token_v2 in Notion-py [Quickstart](https://github.com/jamalex/notion-py#quickstart)
+
+- url: the link that you will export
 
 ## Installation
 ``` bash
@@ -44,7 +55,7 @@ $python3 -m notion2md
 #Notion Page Url: <your notion page to export>
 ```
 
-This will make `<date-page-title>.md` file in `your directory/Notion_Exporter_Output` folder.
+This will make `<date-page-title>.md` file in `your directory/notion_output` folder.
 
 ## Usage in Python
 
@@ -60,7 +71,8 @@ export_cli()
 The structure of the output looks like this path.
 
 ```
-Notion_Exporter_Output
+notion_output
+├── notion_token.json
 └── <main-page-title>/
     ├── <main-page-title>.md
     ├── download/
@@ -74,12 +86,13 @@ Notion_Exporter_Output
 
 - in `subpage/`, there will be `image/`, `download/`, and `subpage/` folders if there are sub components in `sub page`.
 
-## Todo
-- convert other block types to md.
+### Todo
 
-## Contributing
+- convert other block types to md. 
+
+### Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 Please make sure to update tests as appropriate.
 
-## License
+### License
 [MIT](https://choosealicense.com/licenses/mit/)
