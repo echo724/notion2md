@@ -212,10 +212,13 @@ class PageBlockExporter:
               exporter = PageBlockExporter(sub_url,self.client)
               exporter.create_folder(self.sub_dir)
               sub_page_path = exporter.create_file()
-              if "https:" in block.icon:
-                  icon = "!"+link_format("",block.icon)
-              else:
-                  icon = block.icon
+              try:
+                if "https:" in block.icon:
+                    icon = "!"+link_format("",block.icon)
+                else:
+                    icon = block.icon
+              except:
+                icon = ""
               self.md += icon + link_format(exporter.file_name,sub_page_path)
               self.sub_exporters.append(exporter)
         if btype == 'text':
