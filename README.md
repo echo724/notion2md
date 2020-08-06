@@ -31,10 +31,6 @@
 
 - Fix the error that block.icon is not defined if the block has no icon in the title.
 
-## Previous Versions
-
-
-### [Change Log](./change_log.md)
 
 ## Requirements
 
@@ -89,6 +85,12 @@ notion_output
 ### Todo
 
 - convert other block types to md. 
+
+
+## Previous Versions
+
+
+### [Change Log](./change_log.md)
 
 ### Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
