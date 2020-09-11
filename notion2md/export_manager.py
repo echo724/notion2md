@@ -12,8 +12,18 @@ def export_cli():
     
     client = parse_token()
     url = input("Enter Notion Page Url: ")
+    while True:
+        bmode = input("Will you export the Notion Page as blog post? [y/n]")
+        if bmode == "y":
+            blog_mode = True
+            break
+        elif bmode == "n":
+            blog_mode = False
+            break
+        else:
+            continue
     
-    exporter = PageBlockExporter(url,client)
+    exporter = PageBlockExporter(url,client,blog_mode=blog_mode)
     exporter.create_main_folder(output_folder)
     exporter.create_file()
     export(exporter)

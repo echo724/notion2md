@@ -1,16 +1,22 @@
 import os
 import requests
+from datetime import datetime
 
 class PageBlockExporter:
-  def __init__(self,url,client):
+  def __init__(self,url,client,blog_mode):
     self.client = client
     self.page = self.client.get_block(url)
     self.title = self.page.title
-    self.md = self._page_header()
+    self.bmode = blog_mode
+    if self.bmode:
+      self.md = self._page_header()
+      self.file_name = self._set_filename()
+    else:
+      self.file_name = self.page.title
+      self.md = ""
     self.image_dir=""
     self.download_dir=""
     self.sub_exporters = []
-    self.file_name = self._set_filename()
   
   def create_main_folder(self,directory):
     """create folder with file name
@@ -118,7 +124,7 @@ class PageBlockExporter:
     header = "---\n"
     header += "title: {0}\n".format(self.title)
     try:
-      header += "date: {0}\n".format(self.page.created)
+      header += "date: {0}\n".format(self._format_date())
     except:
       header += ""
     tags = self._get_tags()
@@ -155,11 +161,7 @@ class PageBlockExporter:
         formatted_date(String): formatted created date
     """
     date = self.page.get_property("created")
-    formatted_date = []
-    formatted_date.append(str(date.year))
-    formatted_date.append(str(date.month))
-    formatted_date.append(str(date.day))
-    formatted_date = "-".join(formatted_date)
+    formatted_date = date.strftime('%Y-%m-%d')
     return formatted_date
 
   def _set_filename(self):
@@ -175,6 +177,81 @@ class PageBlockExporter:
         date_in_name = ""
     file_name = date_in_name + self.title.replace(" ","-")
     return file_name
+  
+  def block2md(self,block):
+        try:
+            btype = block.type
+        except:
+            print(block)
+            return
+        if btype != "numbered_list":
+            numbered_list_index = 0
+        try:
+            bt = block.title
+        except:
+            pass
+        if btype == 'header':
+            return "# " + bt
+        if btype == "sub_header":
+            return "## " +bt
+        if btype == "sub_sub_header":
+            return "### " +bt
+        if btype == 'page':
+              self.create_sub_folder()
+              sub_url = block.get_browseable_url()
+              exporter = PageBlockExporter(sub_url,self.client,self.bmode)
+              exporter.create_folder(self.sub_dir)
+              sub_page_path = exporter.create_file()
+              try:
+                if "https:" in block.icon:
+                    icon = "!"+link_format("",block.icon)
+                else:
+                    icon = block.icon
+              except:
+                icon = ""
+              self.sub_exporters.append(exporter)
+              return icon + link_format(exporter.file_name,sub_page_path)
+        if btype == 'text':
+            if bt == "":
+              return
+            return bt +"  "
+        if btype == 'bookmark':
+            return link_format(bt,block.link)
+        if btype == "video" or btype == "file" or btype =="audio" or btype =="pdf" or btype == "gist":
+            return link_format(block.source,block.source)
+        if btype == "bulleted_list" or btype == "toggle":
+            return '- '+bt
+        if btype == "numbered_list":
+            numbered_list_index += 1
+            return str(numbered_list_index)+'. ' + bt
+        if btype == "image":
+            img_count += 1
+            img_path = self.image_export(block.source,img_count)
+            return "!"+link_format(img_path,img_path)
+        if btype == "code":
+            return "``` "+block.language.lower()+"\n"+block.title+"\n```"
+        if btype == "equation":
+            return "$$"+block.latex+"$$"
+        if btype == "divider":
+            return "---"
+        if btype == "to_do":
+            if block.checked:
+                return "- [x] "+ bt
+            else:
+                return "- [ ]" + bt
+        if btype == "quote":
+            return "> "+bt
+        if btype == "column" or btype =="column_list":
+            return
+        if btype == "file":
+            self.downlaod_file(block.source,block.title)
+            print("\n[Download]'{0}' is saved in 'download' folder".format(block.title))
+        if btype == "collection_view":
+            collection = block.collection
+            return self.make_table(collection)
+        if block.children and btype != 'page':
+            tapped += 1
+            self.page2md(tapped,page=block)
     
   def page2md(self,tapped,page=None):
     """change notion's block to markdown string
@@ -188,80 +265,58 @@ class PageBlockExporter:
             self.md += '\t'
     if page is None:
       page = self.page
+    count = 0
     for block in page.children:
+        if block != page.children[0]:
+          self.md +="\n\n"
         try:
-            btype = block.type
+          self.md += self.block2md(block)
         except:
-            print(block)
-            continue
-        if btype != "numbered_list":
-            numbered_list_index = 0
-        try:
-            bt = block.title
-        except:
-            pass
-        if btype == 'header':
-            self.md += "# " + bt
-        if btype == "sub_header":
-            self.md += "## " +bt
-        if btype == "sub_sub_header":
-            self.md += "### " +bt
-        if btype == 'page':
-              self.create_sub_folder()
-              sub_url = block.get_browseable_url()
-              exporter = PageBlockExporter(sub_url,self.client)
-              exporter.create_folder(self.sub_dir)
-              sub_page_path = exporter.create_file()
-              try:
-                if "https:" in block.icon:
-                    icon = "!"+link_format("",block.icon)
-                else:
-                    icon = block.icon
-              except:
-                icon = ""
-              self.md += icon + link_format(exporter.file_name,sub_page_path)
-              self.sub_exporters.append(exporter)
-        if btype == 'text':
-            self.md += bt +"  "
-        if btype == 'bookmark':
-            self.md += link_format(bt,block.link)
-        if btype == "video" or btype == "file" or btype =="audio" or btype =="pdf" or btype == "gist":
-            self.md += link_format(block.source,block.source)
-        if btype == "bulleted_list" or btype == "toggle":
-            self.md += '- '+bt
-        if btype == "numbered_list":
-            numbered_list_index += 1
-            self.md += str(numbered_list_index)+'. ' + bt
-        if btype == "image":
-            img_count += 1
-            img_path = self.image_export(block.source,img_count)
-            self.md += "!"+link_format(img_path,img_path)
-        if btype == "code":
-            self.md += "``` "+block.language.lower()+"\n"+block.title+"\n```"
-        if btype == "equation":
-            self.md += "$$"+block.latex+"$$"
-        if btype == "divider":
-            self.md += "---"
-        if btype == "to_do":
-            if block.checked:
-                self.md += "- [x] "+ bt
-            else:
-                self.md += "- [ ]" + bt
-        if btype == "quote":
-            self.md += "> "+bt
-        if btype == "column" or btype =="column_list":
-            continue
-        if btype == "file":
-            self.downlaod_file(block.source,block.title)
-            print("\n[Download]'{0}' is saved in 'download' folder".format(block.title))
-        if block.children and btype != 'page':
-            tapped += 1
-            self.page2md(tapped,page=block)
-            continue
-        self.md += "\n\n"
+          self.md += ""
+
+  def make_table(self,collection):
+    columns = []
+    row_blocks=collection.get_rows()
+    for proptitle in row_blocks[0].schema:
+      prop = proptitle['name']
+      if prop == "Name":
+          columns.insert(0,prop)
+      else:
+          columns.append(prop)
+    table = []
+    table.append(columns)
+    for row in row_blocks:
+      row_content = []
+      for column in columns:
+        if column == "Name" and row.get("content") is not None:
+            content = self.block2md(row)
+        else:
+            content = row.get_property(column)
+        if str(type(content))=="<class 'list'>":
+            content = ', '.join(content)
+        if str(type(content)) == "<class 'datetime.datetime'>":
+            content = content.strftime('%b %d, %Y')
+        if column =="Name":
+            row_content.insert(0,content)
+        else:
+            row_content.append(content)
+      table.append(row_content)
+    return table_to_markdown(table)
 
 def link_format(name,url):
     """make markdown link format string
     """
     return "["+name+"]"+"("+url+")"
 
+def table_to_markdown(table):
+    md = ""
+    md += join_with_vertical(table[0])
+    md += "\n---|---|---\n"
+    for row in table[1:]:
+      if row != table[1]:
+        md += '\n'
+      md += join_with_vertical(row)
+    return md
+
+def join_with_vertical(list):
+    return " | ".join(list)
