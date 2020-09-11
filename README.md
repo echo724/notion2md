@@ -5,9 +5,15 @@
 
 - **notion2md** will export your [notion.so](http://notion.so) page to markdown formatted file.
 
-### Caution
+## Updates v1.2.0
 
-- Do not share your `Token_v2` with others. Others can access your notion page if the token is shared.
+- Now Supports Exporting the **inline table block**
+    
+    - Even the block that has its own page in the table will be exported as **subpage**
+
+- You can choose wheather you will export notion page as `a blog post` or not
+
+    - Blog post format includes frontmatter and Date in Post's name.
 
 ## Features
 
@@ -23,18 +29,13 @@
 
 > Add "Created" and "Tags" properties in your page. Then exporter will put them in the md file's front matter.
 
-## Updates v1.1.0
-
-- Change the output folder name `Notion_Exporter_Output/` to `notion_output/`
-
-- Save token_v2 in `notion_output/notion_token.json` and read it when you use the exporter again.
-
-- Fix the error that block.icon is not defined if the block has no icon in the title.
 
 
 ## Requirements
 
 - token_v2: check the way to get Token_v2 in Notion-py [Quickstart](https://github.com/jamalex/notion-py#quickstart)
+
+- **Caution** Do not share your `Token_v2` with others. Others can access your notion page if the token is shared.
 
 - url: the link that you will export
 
@@ -49,6 +50,7 @@ In your Bash/Zsh terminal,
 $python3 -m notion2md
 #Token_v2: <your token_v2 on notion.so>
 #Notion Page Url: <your notion page to export>
+# Choose you will export the notion page as blog post: [y/n]
 ```
 
 This will make `<date-page-title>.md` file in `your directory/notion_output` folder.
@@ -61,13 +63,14 @@ from notion2md import *
 export_cli()
 # Token_v2: <your token_v2 on notion.so>
 # Notion Page Url: <your notion page to export>
+# Choose you will export the notion page as blog post: [y/n]
 ```
 
 ## Output Structure.
 The structure of the output looks like this path.
 
 ```
-notion_output
+notion_output/
 ├── notion_token.json
 └── <main-page-title>/
     ├── <main-page-title>.md
@@ -86,13 +89,9 @@ notion_output
 
 - convert other block types to md. 
 
+## [Change Log](./change_log.md)
 
-## Previous Versions
-
-
-### [Change Log](./change_log.md)
-
-## Contributing
+## Contribution
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 Please make sure to update tests as appropriate.
 
