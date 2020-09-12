@@ -5,7 +5,7 @@
 
 - **notion2md** will export your [notion.so](http://notion.so) page to markdown formatted file.
 
-## Updates v1.2.0
+## Updates v1.2
 
 - Now Supports Exporting the **inline table block**
     
