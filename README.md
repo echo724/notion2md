@@ -23,7 +23,7 @@
 
 - Downloads **images** and **files** in notion's page
 
-- Exports **Nested Pages** in the page!
+- Exports **Nested Pages**!
 
 - Create **Front Matters** for supporting CMS (Title, Created Date, Tags)
 
