@@ -19,7 +19,7 @@
 
 - [**New**] Token_v2 will be saved after using the exporter, and don't have to enter it next time
 
-- Converts **almost every block** in the notion's page to Markdown texts
+- Converts **almost every block** in the notion's page to Markdown
 
 - Downloads **images** and **files** in notion's page
 
