@@ -47,7 +47,7 @@ pip install notion2md
 ## Usage in Terminal
 In your Bash/Zsh terminal,
 ``` bash
-$python3 -m notion2md
+$python -m notion2md
 #Token_v2: <your token_v2 on notion.so>
 #Notion Page Url: <your notion page to export>
 # Choose you will export the notion page as blog post: [y/n]
