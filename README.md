@@ -35,7 +35,7 @@
 
 - token_v2: check the way to get Token_v2 in Notion-py [Quickstart](https://github.com/jamalex/notion-py#quickstart)
 
-- **Caution** Do not share your `Token_v2` with others. Others can access your notion page if the token is shared.
+> **Caution** Do not share your `Token_v2` with others. Others can access your notion page if the token is shared.
 
 - url: the link that you will export
 
