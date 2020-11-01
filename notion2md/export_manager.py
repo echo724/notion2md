@@ -5,23 +5,26 @@ import requests
 from notion2md.exporter import PageBlockExporter
 import json
 # export the markdown file(string).
-def export_cli():
+def export_cli(token_v2="",url="",bmode=-1):
     output_folder = './notion2md_output/'
     if not(os.path.isdir(output_folder)):
         os.makedirs(os.path.join(output_folder))
-    
-    client = parse_token()
-    url = input("Enter Notion Page Url: ")
-    while True:
-        bmode = input("Will you export the Notion Page as blog post? [y/n]")
-        if bmode == "y":
+    if token_v2=="":
+        client = parse_token()
+    else:
+        client = NotionClient(token_v2=token_v2)
+    if url=="":
+        url = input("Enter Notion Page Url: ")
+    if bmode==-1:
+        inp = input("Will you export the Notion Page as blog post? [y/n]")
+        if inp == "y":
             blog_mode = True
-            break
-        elif bmode == "n":
+        elif inp == "n":
             blog_mode = False
-            break
         else:
-            continue
+            print("Invaild Input -> Set None")
+    else:
+        blog_mode=bool(bmode)
     
     exporter = PageBlockExporter(url,client,blog_mode=blog_mode)
     exporter.create_main_folder(output_folder)
@@ -71,7 +74,7 @@ def export(exporter):
         Args:
             exporter(PageBlockExporter()): export page block
     """
-    exporter.page2md(tapped = 0)
+    exporter.page2md()
     exporter.write_file()
     for sub_exporter in exporter.sub_exporters:
         export(sub_exporter)

@@ -1,3 +1,13 @@
+# v1.2.0
+
+- Now Supports Exporting the **inline table block**
+    
+    - Even the block that has its own page in the table will be exported as **subpage**
+
+- You can choose wheather you will export notion page as `a blog post` or not
+
+    - Blog post format includes frontmatter and Date in Post's name.
+
 # v1.1.0
 
 - Change the output folder name `Notion_Exporter_Output/` to `notion_output/`

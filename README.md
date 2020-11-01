@@ -5,15 +5,11 @@
 
 - **notion2md** will export your [notion.so](http://notion.so) page to markdown formatted file.
 
-## Updates v1.2.0
+## Updates v1.2.2
 
-- Now Supports Exporting the **inline table block**
-    
-    - Even the block that has its own page in the table will be exported as **subpage**
+- Supports **Inline Math Code** in the `text block`, `bulleted list`, and `numbered list`.
 
-- You can choose wheather you will export notion page as `a blog post` or not
-
-    - Blog post format includes frontmatter and Date in Post's name.
+- Supports Call `export_cli()` with `token_v2`, `url`, and `bmode`
 
 ## Features
 
@@ -28,8 +24,6 @@
 - Create **Front Matters** for supporting CMS (Title, Created Date, Tags)
 
 > Add "Created" and "Tags" properties in your page. Then exporter will put them in the md file's front matter.
-
-
 
 ## Requirements
 
@@ -60,7 +54,9 @@ This will make `<date-page-title>.md` file in `your directory/notion_output` fol
 ``` python
 from notion2md import *
 
-export_cli()
+export_cli(token_v2=<Token_v2>,url=<Notion.so Page's url>,bmode=<0 or 1>)
+
+# Without any parameters will call this prompts
 # Token_v2: <your token_v2 on notion.so>
 # Notion Page Url: <your notion page to export>
 # Choose you will export the notion page as blog post: [y/n]
@@ -70,7 +66,7 @@ export_cli()
 The structure of the output looks like this path.
 
 ```
-notion_output/
+notion2md_output/
 ├── notion_token.json
 └── <main-page-title>/
     ├── <main-page-title>.md
