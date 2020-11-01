@@ -15,11 +15,11 @@
 
 - [**New**] Token_v2 will be saved after using the exporter, and don't have to enter it next time
 
-- Converts **almost every block** in the notion's page to Markdown texts
+- Converts **almost every block** in the notion's page to Markdown
 
 - Downloads **images** and **files** in notion's page
 
-- Exports **Nested Pages** in the page!
+- Exports **Nested Pages**!
 
 - Create **Front Matters** for supporting CMS (Title, Created Date, Tags)
 
@@ -29,7 +29,7 @@
 
 - token_v2: check the way to get Token_v2 in Notion-py [Quickstart](https://github.com/jamalex/notion-py#quickstart)
 
-- **Caution** Do not share your `Token_v2` with others. Others can access your notion page if the token is shared.
+> **Caution** Do not share your `Token_v2` with others. Others can access your notion page if the token is shared.
 
 - url: the link that you will export
 
@@ -41,7 +41,7 @@ pip install notion2md
 ## Usage in Terminal
 In your Bash/Zsh terminal,
 ``` bash
-$python3 -m notion2md
+$python -m notion2md
 #Token_v2: <your token_v2 on notion.so>
 #Notion Page Url: <your notion page to export>
 # Choose you will export the notion page as blog post: [y/n]
