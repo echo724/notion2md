@@ -341,11 +341,13 @@ def join_with_vertical(list):
     return " | ".join(list)
 
 def get_inline_math(block):
+"""This function will get inline math code and append it to the text
+"""
     text=""
     lists = block.get("properties")["title"]
     for list in lists:
       if list[0] == "⁍":
-        text+="$"+list[1][0][1]+"$"
+        text+="$$"+list[1][0][1]+"$$"
       else:
         text+=list[0]
     return text
