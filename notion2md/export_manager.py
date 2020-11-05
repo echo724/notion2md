@@ -6,6 +6,14 @@ from notion2md.exporter import PageBlockExporter
 import json
 # export the markdown file(string).
 def export_cli(token_v2="",url="",bmode=-1):
+    """
+    Exports a folder to a folder.
+
+    Args:
+        token_v2: (str): write your description
+        url: (str): write your description
+        bmode: (str): write your description
+    """
     output_folder = './notion2md_output/'
     if not(os.path.isdir(output_folder)):
         os.makedirs(os.path.join(output_folder))

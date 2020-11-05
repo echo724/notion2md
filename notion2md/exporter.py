@@ -4,6 +4,15 @@ from datetime import datetime
 
 class PageBlockExporter:
   def __init__(self,url,client,blog_mode):
+      """
+      Initialize a blog page.
+
+      Args:
+          self: (todo): write your description
+          url: (str): write your description
+          client: (todo): write your description
+          blog_mode: (str): write your description
+      """
     self.client = client
     self.page = self.client.get_block(url)
     self.title = self.page.title
@@ -179,6 +188,15 @@ class PageBlockExporter:
     return file_name
   
   def block2md(self,block,tap_count,num_index):
+      """
+      Generate markdown block
+
+      Args:
+          self: (todo): write your description
+          block: (todo): write your description
+          tap_count: (int): write your description
+          num_index: (int): write your description
+      """
         result=""
         if tap_count !=0:
           result+= '\n'
@@ -294,6 +312,13 @@ class PageBlockExporter:
           self.md += ""
 
   def make_table(self,collection):
+      """
+      Make a table from a list of dicts.
+
+      Args:
+          self: (todo): write your description
+          collection: (todo): write your description
+      """
     columns = []
     row_blocks=collection.get_rows()
     for proptitle in row_blocks[0].schema:
@@ -328,6 +353,12 @@ def link_format(name,url):
     return "["+name+"]"+"("+url+")"
 
 def table_to_markdown(table):
+    """
+    Convert markdown table to markdown.
+
+    Args:
+        table: (str): write your description
+    """
     md = ""
     md += join_with_vertical(table[0])
     md += "\n---|---|---\n"
@@ -338,6 +369,12 @@ def table_to_markdown(table):
     return md
 
 def join_with_vertical(list):
+    """
+    Join a list of strings into a list.
+
+    Args:
+        list: (todo): write your description
+    """
     return " | ".join(list)
 
 def get_inline_math(block):
