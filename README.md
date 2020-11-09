@@ -7,7 +7,7 @@
 
 ## Updates v1.2.2
 
-- Supports **Inline Math Code** in the `text block`, `bulleted list`, and `numbered list`.It will denoted as `$$<math code>$$`
+- Supports **Inline Math Code** in the `text block`, `bulleted list`, and `numbered list`. It will Be denoted as `$$<math code>$$`
 
 - Supports Call `export_cli()` with `token_v2`, `url`, and `bmode`
 
