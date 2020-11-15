@@ -129,3 +129,4 @@ dmypy.json
 notion_output
 Notion_Exporter_Output
 Makefile
+build.sh
