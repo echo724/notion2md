@@ -357,4 +357,4 @@ def get_inline_math(block):
             text += "$$"+list[1][0][1]+"$$"
         else:
             text += list[0]
-        return text
+    return text
