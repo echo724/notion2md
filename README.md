@@ -5,6 +5,8 @@
 
 - **notion2md** will export your [notion.so](http://notion.so) page to markdown formatted file.
 
+## [Note from notion2md developer](announement.md)
+
 ## Updates v1.2.2.1
 
 - Supports **Inline Math Code** in the `text block`, `bulleted list`, and `numbered list`. It will Be denoted as `$$<math code>$$`
