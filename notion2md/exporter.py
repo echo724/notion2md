@@ -86,7 +86,6 @@ class PageBlockExporter:
         """
         if self.image_dir is "":
             self.create_image_foler()
-
         image_path = self.image_dir + 'img_{0}.png'.format(count)
         r = requests.get(url, allow_redirects=True)
         open(image_path, 'wb').write(r.content)
@@ -96,6 +95,7 @@ class PageBlockExporter:
         """create download output directory
         """
         self.download_dir = os.path.join(self.dir, 'download/')
+        print(self.download_dir)
         if not(os.path.isdir(self.download_dir)):
             os.makedirs(os.path.join(self.download_dir))
 
@@ -112,7 +112,10 @@ class PageBlockExporter:
         if self.download_dir is "":
             self.create_download_foler()
 
-        download_path = self.download_dir + file_name
+        try:
+            download_path = self.download_dir + file_name
+        except Exception as e:
+            print(e)
         r = requests.get(url, allow_redirects=True)
         open(download_path, 'wb').write(r.content)
 
@@ -161,7 +164,7 @@ class PageBlockExporter:
           Returns:
             formatted_date(String): formatted created date
         """
-        date = self.page.get_property("created")
+        date = self.page.get_property("created_time")
         formatted_date = date.strftime('%Y-%m-%d')
         return formatted_date
 
@@ -179,28 +182,40 @@ class PageBlockExporter:
         file_name = date_in_name + self.title.replace(" ", "-")
         return file_name
 
-    def block2md(self, block, tap_count, num_index,img_count):
-        result = ""
-        if tap_count != 0:
-            result += '\n'
-            for i in range(tap_count):
-                result += '\t'
+    def page2md(self, page=None):
+        """change notion's block to markdown string
+        """
+        params = {'tap_count':0,'img_count':0,'num_index':0}
+        if page is None:
+            page = self.page
+        for i,block in enumerate(page.children):
+            try:
+                self.block2md(block,params)
+            except Exception as e:
+                self.md += ""
+        self.md = self.md[:-1]
+
+    def block2md(self,block,params):
+        if params['tap_count'] != 0:
+            self.md += '\n'
+            for i in range(params['tap_count']):
+                self.md += '\t'
         try:
             btype = block.type
         except:
             pass
         if btype != "numbered_list":
-            num_index = 0
+            params['num_index'] = 0
         try:
             bt = block.title
         except:
             pass
         if btype == 'header':
-            result += "# " + filter_inline_math(block)
+            self.md += "# " + filter_inline_math(block)
         if btype == "sub_header":
-            result += "## " + filter_inline_math(block)
+            self.md += "## " + filter_inline_math(block)
         if btype == "sub_sub_header":
-            result += "### " + filter_inline_math(block)
+            self.md += "### " + filter_inline_math(block)
         if btype == 'page':
             self.create_sub_folder()
             sub_url = block.get_browseable_url()
@@ -215,67 +230,46 @@ class PageBlockExporter:
             except:
                 icon = ""
             self.sub_exporters.append(exporter)
-            result += icon + link_format(exporter.file_name, sub_page_path)
+            self.md += icon + link_format(exporter.file_name, sub_page_path)
         if btype == 'text':
-            result += filter_inline_math(block)
-        if btype == 'bookmark':
-            result += link_format(bt, block.link)
-        if btype == "video" or btype == "file" or btype == "audio" or btype == "pdf" or btype == "gist":
-            result += link_format(block.source, block.source)
-        if btype == "bulleted_list" or btype == "toggle":
-            result += '- '+filter_inline_math(block)
-        if btype == "numbered_list":
-            num_index += 1
-            result += str(num_index)+'. '+filter_inline_math(block)
-        if btype == "image":
-            img_count += 1
-            result+="Image"
-            img_path = self.image_export(block.source, img_count)
-            result += "!"+link_format(img_path, img_path)
-        if btype == "code":
-            result += "``` "+block.language.lower()+"\n"+block.title+"\n```"
-        if btype == "equation":
-            result += "$$"+block.latex+"$$"
-        if btype == "divider":
-            result += "---"
-        if btype == "to_do":
-            if block.checked:
-                result += "- [x] " + bt
-            else:
-                result += "- [ ]" + bt
-        if btype == "quote":
-            result += "> "+bt
-        if btype == "column" or btype == "column_list":
-            result += ""
-        if btype == "file":
-            self.downlaod_file(block.source, block.title)
-            print("\n[Download]'{0}' is saved in 'download' folder".format(
-                block.title))
-        if btype == "collection_view":
-            collection = block.collection
-            result += self.make_table(collection)
-        if block.children and btype != 'page':
-            tap_count += 1
-            for child in block.children:
-                result += self.block2md(child,
-                                        tap_count=tap_count, num_index=num_index)
-        return result
-
-    def page2md(self, page=None):
-        """change notion's block to markdown string
-        """
-        img_count = 0
-        num_index = 0
-        tapped = 0
-        if page is None:
-            page = self.page
-        for block in page.children:
-            if block != page.children[0]:
-                self.md += "\n\n"
             try:
-                self.md += self.block2md(block, tapped, num_index=num_index,img_count=img_count)
+                self.md += filter_inline_math(block)
             except:
                 self.md += ""
+        if btype == 'bookmark':
+            self.md += link_format(bt, block.link)
+        if btype == "video" or btype == "file" or btype == "audio" or btype == "pdf" or btype == "gist":
+            self.md += link_format(block.source, block.source)
+        if btype == "bulleted_list" or btype == "toggle":
+            self.md += '- '+filter_inline_math(block)
+        if btype == "numbered_list":
+            params['num_index'] += 1
+            self.md += str(params['num_index'])+'. '+filter_inline_math(block)
+        if btype == "code":
+            self.md += "``` "+block.language.lower()+"\n"+block.title+"\n```"
+        if btype == "equation":
+            self.md += "$$"+block.latex+"$$"
+        if btype == "divider":
+            self.md += "---"
+        if btype == "to_do":
+            if block.checked:
+                self.md += "- [x] " + bt
+            else:
+                self.md += "- [ ]" + bt
+        if btype == "quote":
+            self.md += "> "+bt
+        if btype == "column" or btype == "column_list":
+            self.md += ""
+        if btype == "collection_view":
+            collection = block.collection
+            self.md += self.make_table(collection)
+        if block.children and btype != 'page':
+            params['tap_count'] += 1
+            for child in block.children:
+                self.block2md(child,params)
+            params['tap_count'] -= 1
+        if params['tap_count'] == 0:
+            self.md += "\n\n"
 
     def make_table(self, collection):
         columns = []
@@ -292,7 +286,7 @@ class PageBlockExporter:
             row_content = []
             for column in columns:
                 if column == "Name" and row.get("content") is not None:
-                    content = self.block2md(row)
+                    content = self.page2md(row)
                 else:
                     content = row.get_property(column)
                 if str(type(content)) == "<class 'list'>":
@@ -332,10 +326,16 @@ def filter_inline_math(block):
     """This function will get inline math code and append it to the text
     """
     text = ""
-    lists = block.get("properties")["title"]
-    for list in lists:
-        if list[0] == "⁍":
-            text += "$$"+list[1][0][1]+"$$"
+    elements = block.get("properties")["title"]
+    for i in elements:
+        if i[0] == "⁍":
+            text += "$$"+i[1][0][1]+"$$"
         else:
-            text += block.title   
+            text += block.title
     return text
+
+def filter_source_url(block):
+    try:
+        return block.get('properties')['source'][0][0]
+    except:
+        return block.title
