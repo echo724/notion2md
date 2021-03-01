@@ -2,23 +2,26 @@ from setuptools import find_packages, setup
 import setuptools
 import io
 # Read in the README for the long description on PyPI
-with io.open('README.md', 'r', encoding='utf-8') as f:
-    readme = f.read()
+def long_description():
+    with io.open('README.md', 'r', encoding='utf-8') as f:
+        readme = f.read()
+    return readme
+
 setup(
       name='notion2md',
-      version='1.2.3.1',
+      version='1.3',
       description='Export notion page to markdown.',
-      long_description=readme,
+      long_description=long_description(),
       long_description_content_type="text/markdown",
       url='https://github.com/echo724/notion2md.git',
-      author='Eunchan Cho',
+      author='echo724',
       author_email='eunchan1001@gmail.com',
       license='MIT',
       install_requires=[
         'notion>=0.0.25',
         'requests>=2.22.0',
       ],
-      packages=setuptools.find_packages(),
+      packages=setuptools.find_packages(include=['notion2md']),
       classifiers=[
           "License :: OSI Approved :: MIT License",
           "Operating System :: OS Independent",

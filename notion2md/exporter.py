@@ -179,7 +179,7 @@ class PageBlockExporter:
         file_name = date_in_name + self.title.replace(" ", "-")
         return file_name
 
-    def block2md(self, block, tap_count, num_index):
+    def block2md(self, block, tap_count, num_index,img_count):
         result = ""
         if tap_count != 0:
             result += '\n'
@@ -196,20 +196,11 @@ class PageBlockExporter:
         except:
             pass
         if btype == 'header':
-            try:
-                result += "# " + get_inline_math(block)
-            except:
-                result += "# " + bt
+            result += "# " + filter_inline_math(block)
         if btype == "sub_header":
-            try:
-                result += "## " + get_inline_math(block)
-            except:
-                result += "## " + bt
+            result += "## " + filter_inline_math(block)
         if btype == "sub_sub_header":
-            try:
-                result += "## " + get_inline_math(block)
-            except:
-                result += "### " + bt
+            result += "### " + filter_inline_math(block)
         if btype == 'page':
             self.create_sub_folder()
             sub_url = block.get_browseable_url()
@@ -226,29 +217,19 @@ class PageBlockExporter:
             self.sub_exporters.append(exporter)
             result += icon + link_format(exporter.file_name, sub_page_path)
         if btype == 'text':
-            try:
-                result += get_inline_math(block)
-            except:
-                if bt == "":
-                    result += ""
-                result += bt + "  "
+            result += filter_inline_math(block)
         if btype == 'bookmark':
             result += link_format(bt, block.link)
         if btype == "video" or btype == "file" or btype == "audio" or btype == "pdf" or btype == "gist":
             result += link_format(block.source, block.source)
         if btype == "bulleted_list" or btype == "toggle":
-            try:
-                result += '- '+get_inline_math(block)
-            except:
-                result += '- '+bt
+            result += '- '+filter_inline_math(block)
         if btype == "numbered_list":
             num_index += 1
-            try:
-                result += str(num_index)+'. '+get_inline_math(block)
-            except:
-                result += str(num_index)+'. ' + bt
+            result += str(num_index)+'. '+filter_inline_math(block)
         if btype == "image":
             img_count += 1
+            result+="Image"
             img_path = self.image_export(block.source, img_count)
             result += "!"+link_format(img_path, img_path)
         if btype == "code":
@@ -292,7 +273,7 @@ class PageBlockExporter:
             if block != page.children[0]:
                 self.md += "\n\n"
             try:
-                self.md += self.block2md(block, tapped, num_index=num_index)
+                self.md += self.block2md(block, tapped, num_index=num_index,img_count=img_count)
             except:
                 self.md += ""
 
@@ -347,7 +328,7 @@ def join_with_vertical(list):
     return " | ".join(list)
 
 
-def get_inline_math(block):
+def filter_inline_math(block):
     """This function will get inline math code and append it to the text
     """
     text = ""
@@ -356,5 +337,5 @@ def get_inline_math(block):
         if list[0] == "⁍":
             text += "$$"+list[1][0][1]+"$$"
         else:
-            text += list[0]
+            text += block.title   
     return text

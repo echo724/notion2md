@@ -1,7 +1,6 @@
 import notion
 import os
 from notion.client import NotionClient
-import requests
 from notion2md.exporter import PageBlockExporter
 import json
 # export the markdown file(string).
