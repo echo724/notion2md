@@ -9,7 +9,7 @@
 
 ## Notice
 
-- Saving images and files is not supported anymore(Maybe the notion's sequrity rule had changed)
+- Saving images and files is not supported anymore(Maybe the notion's security rule had changed)
 
 
 ## Requirements
