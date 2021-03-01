@@ -133,3 +133,4 @@ Makefile
 build.sh
 
 bin/
+notion_output/
