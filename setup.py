@@ -10,7 +10,7 @@ def long_description():
 setup(
       name='notion2md',
       version='1.3',
-      description='Export notion page to markdown.',
+      description='Export notion page to markdown',
       long_description=long_description(),
       long_description_content_type="text/markdown",
       url='https://github.com/echo724/notion2md.git',
