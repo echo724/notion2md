@@ -7,25 +7,10 @@
 
 ## [Note from notion2md developer](announement.md)
 
-## Updates v1.2.2.1
+## Notice
 
-- Supports **Inline Math Code** in the `text block`, `bulleted list`, and `numbered list`. It will Be denoted as `$$<math code>$$`
+- Saving images and files is not supported anymore(Maybe the notion's sequrity rule had changed)
 
-- Supports Call `export_cli()` with `token_v2`, `url`, and `bmode`
-
-## Features
-
-- [**New**] Token_v2 will be saved after using the exporter, and don't have to enter it next time
-
-- Converts **almost every block** in the notion's page to Markdown
-
-- Downloads **images** and **files** in notion's page
-
-- Exports **Nested Pages**!
-
-- Create **Front Matters** for supporting CMS (Title, Created Date, Tags)
-
-> Add "Created" and "Tags" properties in your page. Then exporter will put them in the md file's front matter.
 
 ## Requirements
 
