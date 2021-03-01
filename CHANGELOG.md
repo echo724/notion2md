@@ -1,3 +1,5 @@
+# v1.3.0
+
 # v1.2.0
 
 - Now Supports Exporting the **inline table block**
