@@ -134,3 +134,6 @@ build.sh
 
 bin/
 notion2md_output/
+
+.idea/
+venv/
