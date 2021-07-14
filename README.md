@@ -5,7 +5,7 @@
 
 - **notion2md** will export your [notion.so](http://notion.so) page to markdown formatted file.
 
-## [Note from notion2md developer](announement.md)
+## [Note from notion2md developer](announcement.md)
 
 ## Notice
 
