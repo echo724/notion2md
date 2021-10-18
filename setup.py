@@ -9,22 +9,18 @@ def long_description():
 
 setup(
       name='notion2md',
-      version='1.3',
-      description='Export notion page to markdown',
+      version='2.0',
+      description='Export notion page to markdown using official notion api',
       long_description=long_description(),
       long_description_content_type="text/markdown",
       url='https://github.com/echo724/notion2md.git',
       author='echo724',
       author_email='eunchan1001@gmail.com',
       license='MIT',
-      install_requires=[
-        'notion>=0.0.25',
-        'requests>=2.22.0',
-      ],
       packages=setuptools.find_packages(include=['notion2md']),
       classifiers=[
           "License :: OSI Approved :: MIT License",
           "Operating System :: OS Independent",
-          'Programming Language :: Python :: 3.7',
+          'Programming Language :: Python :: 3.9',
           ],
 )
