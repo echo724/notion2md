@@ -5,7 +5,9 @@ __pycache__
 
 mphyspy.egg-info
 
+# Jupyter Notebook
 *.ipynb
+Test/
 
 
 # Byte-compiled / optimized / DLL files
@@ -114,9 +116,6 @@ venv.bak/
 # Rope project settings
 .ropeproject
 
-# mkdocs documentation
-/site
-
 # mypy
 .mypy_cache/
 .dmypy.json
@@ -127,10 +126,11 @@ dmypy.json
 .sh
 
 .DS_Store
-notion_output
-Notion_Exporter_Output
 Makefile
 build.sh
 
 bin/
 notion2md_output/
+
+config.py
+__main__.py

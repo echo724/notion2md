@@ -1,4 +1,4 @@
-from translators import block
+from evaluator import block
 
 pre_type_map = {
     "heading_1":block.heading_1,
@@ -8,4 +8,3 @@ pre_type_map = {
     "toggle":block.bulleted_list_item,
     "equation":block.equation,
 }
-

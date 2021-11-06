@@ -35,26 +35,23 @@ annotation_map = {
     "code": code,
 }
 
-def list_translator(richtext_list:list):
-    output = ""
+def richtext_evaluator(richtext_list:list,icon=False) -> str:
+    outcome_sentence = ""
     for richtext in richtext_list:
-        output += word_translator(richtext)
-    return output
-
-def word_translator(rich:object):
-    output = ""
-    text = rich["plain_text"]
-    if rich['type'] == "equation":
-        output = equation(text)
-    else:
-        annot = rich["annotations"]
-        if rich["href"]:
-            output = link(rich["text"])
+        outcome_word = ""
+        plain_text = richtext["plain_text"]
+        if richtext['type'] == "equation":
+            outcome_word = equation(plain_text)
         else:
-            output = text
-        for key,transfer in annotation_map.items():
-            if annot[key]:
-                output = transfer(output)
-        if annot["color"] != "default":
-            output = color(output,annot["color"])
-    return output
+            annot = richtext["annotations"]
+            if richtext["href"]:
+                outcome_word = link(richtext["text"])
+            else:
+                outcome_word = plain_text
+            for key,transfer in annotation_map.items():
+                if annot[key]:
+                    outcome_word = transfer(outcome_word)
+            if annot["color"] != "default":
+                outcome_word = color(outcome_word,annot["color"])
+        outcome_sentence += outcome_word
+    return outcome_sentence
