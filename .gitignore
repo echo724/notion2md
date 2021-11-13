@@ -134,3 +134,4 @@ config.py
 output.md
 
 notion2md-output/
+Makefile

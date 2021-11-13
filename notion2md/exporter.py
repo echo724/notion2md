@@ -1,9 +1,7 @@
-import sys
-import os
-sys.path.append('../notion2md')
 from notion_client.helpers import get_id
-from client_handler import notion_client_object
-from evaluator.block import blocks_evaluator
+from .client_handler import notion_client_object
+from .evaluator.block import blocks_evaluator
+import os
 import argparse
 
 parser = argparse.ArgumentParser(description="Notion2md: Notion to Markdown Exporter")

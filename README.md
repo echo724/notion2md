@@ -20,6 +20,8 @@ $ pip install notion2md
 
 ## Useage: Shell Command
 
+![notion2md-options](notion2md-options.png)
+
 ```{bash}
 notion2md
 >>Enter Notion Url: URL
@@ -35,10 +37,10 @@ block_exporter(target_id,output_path)
 
 ## To-do
 
-- [] Page Exporter
-- [] Database Exporter
-- export file object(image or files)
-- export child page
+- [ ] Page Exporter
+- [ ] Database Exporter
+- [ ] export file object(image and files)
+- [ ] export child page
  
 ## Contribution
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
