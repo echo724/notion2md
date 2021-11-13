@@ -7,7 +7,6 @@ mphyspy.egg-info
 
 # Jupyter Notebook
 *.ipynb
-Test/
 
 
 # Byte-compiled / optimized / DLL files

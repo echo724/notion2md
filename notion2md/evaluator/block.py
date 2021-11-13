@@ -1,105 +1,99 @@
 from .richtext import richtext_evaluator
-from client_handler import notion_client
+from notion2md.client_handler import notion_client
 
-def paragraph(**kwargs:dict) -> str:
-    return kwargs['text']
+def paragraph(information:dict) -> str:
+    return information['text']
 
-def heading_1(**kwagrs:dict) -> str:
-    return f"# {kwagrs['text']}"
+def heading_1(information:dict) -> str:
+    return f"# {information['text']}"
 
-def heading_2(**kwagrs:dict) -> str:
-    return f"## {kwagrs['text']}"
+def heading_2(information:dict) -> str:
+    return f"## {information['text']}"
 
-def heading_3(**kwagrs:dict) -> str:
-    return f"### {kwagrs['text']}"
+def heading_3(information:dict) -> str:
+    return f"### {information['text']}"
 
-def callout(**kwagrs:dict) -> str:
-    return f"{kwagrs['icon']}"
+def callout(information:dict) -> str:
+    return f"{information['icon']} {information['text']}"
 
-def quote(**kwagrs:dict) -> str:
-    return f"> {kwagrs['text']}"
+def quote(information:dict) -> str:
+    return f"> {information['text']}"
 
 #toggle item will be changed as bulleted list item
-def bulleted_list_item(**kwagrs:dict) -> str:
-    return f"- {kwagrs['text']}"
+def bulleted_list_item(information:dict) -> str:
+    return f"- {information['text']}"
 
-def numbered_list_item(**kwargs:dict) -> str:
+# numbering is not supported
+def numbered_list_item(information:dict) -> str:
     """
     input: item:dict = {"number":int, "text":str}
     """
-    return f"{kwargs['number']}. {kwargs['text']}"
+    return f"1. {information['text']}"
 
-def to_do(**kwargs:dict) -> str:
+def to_do(information:dict) -> str:
     """
     input: item:dict = {"checked":bool, "test":str}
     """
-    return f"- {'[x]' if kwargs['checked'] else '[ ]'} {kwargs['text']}"
+    return f"- {'[x]' if information['checked'] else '[ ]'} {information['text']}"
 
+#not yet supported
 #child_database will be changed as child page
-def child_page(**kwargs:dict) -> str:
-    """
-    input: item:dict = {"id":str,"text":str}
-    """
-    #make_page(kwargs['id'])
-    text = kwargs['text']
-    return f'[{text}]({text})'
+# def child_page(information:dict) -> str:
+#     """
+#     input: item:dict = {"id":str,"text":str}
+#     """
+#     #make_page(information['id'])
+#     text = information['text']
+#     return f'[{text}]({text})'
 
-def code_block(**kwargs:dict) -> str:
+def code(information:dict) -> str:
     """
-    input: item:dict = {"lang":str,"text":str}
+    input: item:dict = {"language":str,"text":str}
     """
-    return f"""
-    ```{kwargs['lang']}
-    {kwargs['text']}
-    ```
-    """
+    return f"```{information['language']}\n\t{information['text']}\n```"
 
-def embed(**kwargs:dict) -> str:
+def embed(information:dict) -> str:
     """
     input: item:dict ={"url":str,"text":str}
     """
-    return f"[{kwargs['text']}]({kwargs['url']})"
+    return f"[{information['url']}]({information['url']})"
 
-def image(**kwargs:dict) -> str:
+def image(information:dict) -> str:
     """
     input: item:dict ={"url":str,"text":str,"caption":str}
     """
     #if internal: make_image(url)
-    return f"""
-    ![{kwargs['text']}]({kwargs['url']})
-    {kwargs['caption']}
-    """
+    return f"![{information['url']}]({information['url']})\n\n{information['caption']}"
 
-def bookmark(**kwargs:dict) -> str:
+def bookmark(information:dict) -> str:
     """
     input: item:dict ={"url":str,"text":str,"caption":str}
     """
     #if internal: make_image(url)
-    return f"""
-    ![{kwargs['text']}]({kwargs['url']})
-    {kwargs['caption']}
-    """
+    return f"[{information['url']}]({information['url']})\n\n{information['caption']}"
 
-def equation(**kwargs:dict) -> str:
-    return f"$$ {kwargs['text']} $$"
+def equation(information:dict) -> str:
+    return f"$$ {information['text']} $$"
 
-def divider(**kwargs:dict) -> str:
+def divider(information:dict) -> str:
     return f"---"
 
-def none(**kwargs:dict) -> str:
+def none(information:dict) -> str:
     return ""
 
 block_type_map = {
+    "paragraph": paragraph,
     "heading_1": heading_1,
     "heading_2": heading_2,
     "heading_3": heading_3,
     "callout": callout,
+    "toggle":bulleted_list_item,
     "quote": quote,
     "bulleted_list_item": bulleted_list_item,
     "numbered_list_item": numbered_list_item,
     "to_do": to_do,
-    "child_page": child_page,
-    "code_block": code_block,
+    # "child_page": child_page,
+    "code": code,
     "embed": embed,
     "imgae": image,
     "bookmark": bookmark,
@@ -108,24 +102,46 @@ block_type_map = {
     "none": none
 }
 
-# def plain_evaluator(block:object) -> str:
-#     btype = block['type']
-#     text = richtext_evaluator(block[btype]['text'])
-#     return plain_map(text)
-
-# def has_children_evaluator(block:object) -> str:
-#     btype = block['type']
-
 def blocks_evaluator(block_list:object) -> str:
     outcome_blocks:str = ""
+    for block in block_list:
+        outcome_blocks += block_evaluator(block)
     return outcome_blocks
 
-def block_evaluator(block:object) -> str:
+def information_collector(payload:dict) -> dict:
+    information = dict()
+    if "text" in payload:
+        information['text'] = richtext_evaluator(payload['text'])
+    if "icon" in payload:
+        information['icon'] = payload['icon']['emoji']
+    if "checked" in payload:
+        information['checked'] = payload['checked']
+    if "expression" in payload:
+        information['text'] = payload['expression']
+    if "url" in payload:
+        information['url'] = payload['url']
+    if "caption" in payload:
+        information['caption'] = richtext_evaluator(payload['caption'])
+    if "external" in payload:
+        information['url'] = payload['external']['url']
+    if "language" in payload:
+        information['language'] = payload['language']
+    return information
+
+def block_evaluator(block:object,depth=0) -> str:
     outcome_block:str = ""
+    block_type = block['type']
+    if block_type in block_type_map:
+        outcome_block = block_type_map[block_type](information_collector(block[block_type])) + "\n\n"
+    else:
+        outcome_block = f"[{block_type} is not supported]\n\n"
     if block['has_children']:
-        child_blocks = notion_client.blocks.children.list(block_id=block['id'])
-        for block in child_blocks['results']:
-            outcome_block += "&nbsp;&nbsp;&nbsp;&nbsp;" + block_evaluator(block) + "\n\n"
-    if block['']
-    
-    return 1
+        if block_type == "child_page":
+            #call make_child_function
+            pass
+        else:
+            depth += 1
+            child_blocks = notion_client.blocks.children.list(block_id=block['id'])
+            for block in child_blocks['results']:
+                outcome_block += "&nbsp;&nbsp;&nbsp;&nbsp;"*depth + block_evaluator(block,depth)
+    return outcome_block

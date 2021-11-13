@@ -3,7 +3,7 @@ def link(item:dict):
     """
     input: item:dict ={"content":str,"link":str}
     """
-    return f"[{item['content']}]({item['link']})"
+    return f"[{item['content']}]({item['link']['url']})"
 
 #Annotations
 def bold(content:str):
@@ -35,7 +35,7 @@ annotation_map = {
     "code": code,
 }
 
-def richtext_evaluator(richtext_list:list,icon=False) -> str:
+def richtext_evaluator(richtext_list:list) -> str:
     outcome_sentence = ""
     for richtext in richtext_list:
         outcome_word = ""
