@@ -1,5 +1,7 @@
 # Notion Markdown Exporter 2.0 [Updated]
 
+[![PyPI version](https://badge.fury.io/py/notion2md.svg)](https://badge.fury.io/py/notion2md)
+
 - Notion Markdown Exporter using **official notion api** by [notion-sdk-py](https://github.com/ramnes/notion-sdk-py)
 
 ## API Key(Token)
