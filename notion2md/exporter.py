@@ -1,9 +1,9 @@
 import sys
 import os
-from notion_client.helpers import get_id
-from notion2md.evaluator.block import blocks_evaluator
 sys.path.append('../notion2md')
-from notion2md.client_handler import notion_client_object
+from notion_client.helpers import get_id
+from client_handler import notion_client_object
+from evaluator.block import blocks_evaluator
 import argparse
 
 parser = argparse.ArgumentParser(description="Notion2md: Notion to Markdown Exporter")
@@ -15,7 +15,7 @@ parser.add_argument('--path','-p',type=str,help="relative path of output file")
 args = parser.parse_args()
 
 def get_url():
-    return input("Enter Target Notion Url: ")
+    return input("Enter Notion Url: ")
 
 if args.url:
     target_id = get_id(args.url)
@@ -33,14 +33,13 @@ else:
     if not os.path.exists(output_path):
         os.mkdir(output_path)
 
-
-
-def block_exporter(target_id:str,output_path):
+def block_exporter(target_id:str,output_path="notion2md-output"):
     parent_block = notion_client_object.blocks.retrieve(target_id)
     block_title = parent_block['child_page']['title']
     blocks = notion_client_object.blocks.children.list(target_id)
     with open(os.path.join(output_path,block_title+'.md'),'w') as output:
         output.write(blocks_evaluator(blocks['results']))
+    print("Export Completed")
 
 target_type_map ={
     'block': block_exporter,
@@ -49,3 +48,7 @@ target_type_map ={
 }
 
 target_type_map[args.type](target_id,output_path)
+
+# page_exporter()
+
+# database_exporter()
