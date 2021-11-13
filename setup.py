@@ -9,7 +9,7 @@ def long_description():
 
 setup(
       name='notion2md',
-      version='2.0.1',
+      version='2.0.3',
       description='Export notion page to markdown using official notion api',
       long_description=long_description(),
       long_description_content_type="text/markdown",
@@ -21,7 +21,7 @@ setup(
       install_requires=[
           "notion-client >= 0.7.1",
       ],
-      packages=setuptools.find_packages(include=['notion2md']),
+      packages=setuptools.find_packages(include=['notion2md','notion2md.evaluator'], exclude=['test']),
       classifiers=[
           "License :: OSI Approved :: MIT License",
           "Operating System :: OS Independent",
