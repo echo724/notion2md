@@ -1,5 +1,5 @@
 from .richtext import richtext_evaluator
-from notion2md.client_handler import notion_client
+from notion2md.client_handler import notion_client_object
 
 def paragraph(information:dict) -> str:
     return information['text']
@@ -141,7 +141,7 @@ def block_evaluator(block:object,depth=0) -> str:
             pass
         else:
             depth += 1
-            child_blocks = notion_client.blocks.children.list(block_id=block['id'])
+            child_blocks = notion_client_object.blocks.children.list(block_id=block['id'])
             for block in child_blocks['results']:
                 outcome_block += "&nbsp;&nbsp;&nbsp;&nbsp;"*depth + block_evaluator(block,depth)
     return outcome_block
