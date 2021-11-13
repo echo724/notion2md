@@ -131,7 +131,6 @@ build.sh
 bin/
 
 config.py
-__main__.py
 output.md
 
 notion2md-output/
