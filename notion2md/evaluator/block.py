@@ -130,19 +130,21 @@ def information_collector(payload:dict) -> dict:
 def block_evaluator(block:object,depth=0) -> str:
     outcome_block:str = ""
     block_type = block['type']
+    #Special Case: Block is blank
     if block_type == "paragraph" and not block['has_children'] and not block[block_type]['text']:
         outcome_block = blank()
-    if block_type in block_type_map:
-        outcome_block = block_type_map[block_type](information_collector(block[block_type])) + "\n\n"
     else:
-        outcome_block = f"[{block_type} is not supported]\n\n"
-    if block['has_children']:
-        if block_type == "child_page":
-            #call make_child_function
-            pass
+        if block_type in block_type_map:
+            outcome_block = block_type_map[block_type](information_collector(block[block_type])) + "\n\n"
         else:
-            depth += 1
-            child_blocks = notion_client_object.blocks.children.list(block_id=block['id'])
-            for block in child_blocks['results']:
-                outcome_block += "&nbsp;&nbsp;&nbsp;&nbsp;"*depth + block_evaluator(block,depth)
+            outcome_block = f"[{block_type} is not supported]\n\n"
+        if block['has_children']:
+            if block_type == "child_page":
+                #call make_child_function
+                pass
+            else:
+                depth += 1
+                child_blocks = notion_client_object.blocks.children.list(block_id=block['id'])
+                for block in child_blocks['results']:
+                    outcome_block += "&nbsp;&nbsp;&nbsp;&nbsp;"*depth + block_evaluator(block,depth)
     return outcome_block
