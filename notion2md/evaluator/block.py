@@ -78,8 +78,8 @@ def equation(information:dict) -> str:
 def divider(information:dict) -> str:
     return f"---"
 
-def none(information:dict) -> str:
-    return ""
+def blank() -> str:
+    return "<br/>"
 
 block_type_map = {
     "paragraph": paragraph,
@@ -99,7 +99,6 @@ block_type_map = {
     "bookmark": bookmark,
     "equation": equation,
     "divider": divider,
-    "none": none
 }
 
 def blocks_evaluator(block_list:object) -> str:
@@ -131,6 +130,8 @@ def information_collector(payload:dict) -> dict:
 def block_evaluator(block:object,depth=0) -> str:
     outcome_block:str = ""
     block_type = block['type']
+    if block_type == "paragraph" and not block['has_children'] and not block[block_type]['text']:
+        outcome_block = blank()
     if block_type in block_type_map:
         outcome_block = block_type_map[block_type](information_collector(block[block_type])) + "\n\n"
     else:
