@@ -1,3 +1,9 @@
+# v2.0
+
+- Notion Markdown Exporter(notion2md) now use **official notion api** by [notion-sdk-py](https://github.com/ramnes/notion-sdk-py)
+
+- Rewrite the structure of the program to use the api and improve the speed and usability of API
+
 ## v1.2.2.1
 
 - Supports **Inline Math Code** in the `text block`, `bulleted list`, and `numbered list`. It will Be denoted as `$$<math code>$$`
