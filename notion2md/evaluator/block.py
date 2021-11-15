@@ -132,7 +132,7 @@ def block_evaluator(block:object,depth=0) -> str:
     block_type = block['type']
     #Special Case: Block is blank
     if block_type == "paragraph" and not block['has_children'] and not block[block_type]['text']:
-        outcome_block = blank()
+        outcome_block = blank() +"\n\n"
     else:
         if block_type in block_type_map:
             outcome_block = block_type_map[block_type](information_collector(block[block_type])) + "\n\n"
