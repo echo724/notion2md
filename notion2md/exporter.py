@@ -12,6 +12,7 @@ def block_exporter(target_id:str,output_path="notion2md-output"):
     block_title = notion_client_object.blocks.retrieve(target_id)['child_page']['title']
     #Get actual blocks
     blocks = notion_client_object.blocks.children.list(target_id)['results']
+    print(f'Export {len(blocks)} blocks')
     #Write(Export) Markdown file
     with open(os.path.join(output_path,block_title+'.md'),'w') as output:
         output.write(blocks_evaluator(blocks))

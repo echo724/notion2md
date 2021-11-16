@@ -25,9 +25,6 @@ if args.path:
     output_path = os.path.abspath(args.path)
 else:
     output_path = os.path.join(os.getcwd(),'notion2md-output')
-    
-if not os.path.exists(output_path):
-    os.mkdir(output_path)
 
 target_type_map ={
     'block': block_exporter,

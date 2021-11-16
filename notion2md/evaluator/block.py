@@ -1,5 +1,6 @@
 from .richtext import richtext_evaluator
 from notion2md.client_handler import notion_client_object
+import concurrent.futures
 
 def paragraph(information:dict) -> str:
     return information['text']
@@ -103,8 +104,9 @@ block_type_map = {
 
 def blocks_evaluator(block_list:object) -> str:
     outcome_blocks:str = ""
-    for block in block_list:
-        outcome_blocks += block_evaluator(block)
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        results = executor.map(block_evaluator,block_list)
+        outcome_blocks = "".join([result for result in results])
     return outcome_blocks
 
 def information_collector(payload:dict) -> dict:
