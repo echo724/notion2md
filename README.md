@@ -11,7 +11,7 @@
 - Then save your api key(token) as your os environment variable
 
 ```Bash
-$ NOTION_TOKEN="{your integration token key}"
+$ export NOTION_TOKEN="{your integration token key}"
 ```
 
 ## Install
@@ -25,8 +25,7 @@ $ pip install notion2md
 ![notion2md-options](notion2md-options.png)
 
 ```Bash
-notion2md
->>Enter Notion Url: URL
+notion2md -p ~/MyBlog/content/posts -u https://notion.so/...
 ```
 
 ## Usage: Python
@@ -34,7 +33,7 @@ notion2md
 from notion2md.exporter import block_exporter
 
 #output_path is optional
-block_exporter(target_id,output_path)
+block_exporter({id of notion page},{OutPut Path(Relative)})
 ```
 
 ## To-do
