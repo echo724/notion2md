@@ -1,5 +1,6 @@
 from .richtext import richtext_evaluator
 from notion2md.client_handler import notion_client_object
+import concurrent.futures
 
 def paragraph(information:dict) -> str:
     return information['text']
@@ -78,8 +79,8 @@ def equation(information:dict) -> str:
 def divider(information:dict) -> str:
     return f"---"
 
-def none(information:dict) -> str:
-    return ""
+def blank() -> str:
+    return "<br/>"
 
 block_type_map = {
     "paragraph": paragraph,
@@ -99,13 +100,13 @@ block_type_map = {
     "bookmark": bookmark,
     "equation": equation,
     "divider": divider,
-    "none": none
 }
 
 def blocks_evaluator(block_list:object) -> str:
     outcome_blocks:str = ""
-    for block in block_list:
-        outcome_blocks += block_evaluator(block)
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        results = executor.map(block_evaluator,block_list)
+        outcome_blocks = "".join([result for result in results])
     return outcome_blocks
 
 def information_collector(payload:dict) -> dict:
@@ -131,17 +132,21 @@ def information_collector(payload:dict) -> dict:
 def block_evaluator(block:object,depth=0) -> str:
     outcome_block:str = ""
     block_type = block['type']
-    if block_type in block_type_map:
-        outcome_block = block_type_map[block_type](information_collector(block[block_type])) + "\n\n"
+    #Special Case: Block is blank
+    if block_type == "paragraph" and not block['has_children'] and not block[block_type]['text']:
+        outcome_block = blank() +"\n\n"
     else:
-        outcome_block = f"[{block_type} is not supported]\n\n"
-    if block['has_children']:
-        if block_type == "child_page":
-            #call make_child_function
-            pass
+        if block_type in block_type_map:
+            outcome_block = block_type_map[block_type](information_collector(block[block_type])) + "\n\n"
         else:
-            depth += 1
-            child_blocks = notion_client_object.blocks.children.list(block_id=block['id'])
-            for block in child_blocks['results']:
-                outcome_block += "&nbsp;&nbsp;&nbsp;&nbsp;"*depth + block_evaluator(block,depth)
+            outcome_block = f"[{block_type} is not supported]\n\n"
+        if block['has_children']:
+            if block_type == "child_page":
+                #call make_child_function
+                pass
+            else:
+                depth += 1
+                child_blocks = notion_client_object.blocks.children.list(block_id=block['id'])
+                for block in child_blocks['results']:
+                    outcome_block += "&nbsp;&nbsp;&nbsp;&nbsp;"*depth + block_evaluator(block,depth)
     return outcome_block
