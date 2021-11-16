@@ -33,7 +33,7 @@ notion2md -p ~/MyBlog/content/posts -u https://notion.so/...
 from notion2md.exporter import block_exporter
 
 #output_path is optional
-block_exporter({id of notion page},{OutPut Path(Relative)})
+block_exporter("id of notion page","OutPut Path(Relative)")
 ```
 
 ## To-do
