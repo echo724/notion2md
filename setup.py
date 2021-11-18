@@ -9,11 +9,7 @@ def long_description():
 
 setup(
       name='notion2md',
-<<<<<<< HEAD
-      version='2.0.0.1',
-=======
       version='2.1.0',
->>>>>>> develop
       description='Export notion page to markdown using official notion api',
       long_description=long_description(),
       long_description_content_type="text/markdown",
