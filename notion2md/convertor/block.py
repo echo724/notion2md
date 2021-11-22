@@ -102,7 +102,7 @@ block_type_map = {
     "divider": divider,
 }
 
-def blocks_evaluator(blocks:object) -> str:
+def blocks_converter(blocks:object) -> str:
     outcome_blocks:str = ""
     with concurrent.futures.ThreadPoolExecutor() as executor:
         results = executor.map(block_evaluator,blocks)

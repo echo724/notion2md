@@ -6,7 +6,7 @@
 
 ## Update v2.1
 
-- Improved exporting speed by using **MultiThreading**
+- Improved exporting speed by using MultiThreading
 
 ## API Key(Token)
 
