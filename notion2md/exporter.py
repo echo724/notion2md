@@ -31,12 +31,14 @@ def block_exporter(target_id:str,output_path="notion2md-output"):
     block_title = notion_client_object.blocks.retrieve(target_id)['child_page']['title']
     #Get actual blocks
     blocks = notion_client_object.blocks.children.list(target_id)['results']
+    print()
     fprint("Exporting",str(len(blocks)) + " blocks")
     #Write(Export) Markdown file
     with open(os.path.join(output_path,block_title+'.md'),'w') as output:
         output.write(blocks_evaluator(blocks))
     #Result and Time Check
     fprint("Completed", f"exported {len(blocks)} blocks in {time.time() - start_time:.2f}s")
+    print()
 
 # page_exporter()
 
