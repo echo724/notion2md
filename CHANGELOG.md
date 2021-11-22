@@ -1,3 +1,11 @@
+# Update v2.2
+
+- Stylized terminal output
+
+# Update v2.1
+
+- Improved exporting speed by using MultiThreading
+
 # v2.0
 
 - Notion Markdown Exporter(notion2md) now use **official notion api** by [notion-sdk-py](https://github.com/ramnes/notion-sdk-py)
