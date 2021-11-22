@@ -31,14 +31,13 @@ def block_exporter(target_id:str,output_path="notion2md-output"):
     block_title = notion_client_object.blocks.retrieve(target_id)['child_page']['title']
     #Get actual blocks
     print()
-    fprint("Downloading",f"blocks from '{target_id}'")
+    fprint("Retrieving",f"blocks from '{target_id}'")
     blocks = notion_client_object.blocks.children.list(target_id)['results']
-    fprint("Exporting",str(len(blocks)) + " blocks")
     #Write(Export) Markdown file
     with open(os.path.join(output_path,block_title+'.md'),'w') as output:
         output.write(blocks_convertor(blocks))
     #Result and Time Check
-    fprint("Converted", f"{len(blocks)} blocks as markdown in {time.time() - start_time:.2f}s")
+    fprint("Converted", f"{str(len(blocks))} blocks to markdown in {time.time() - start_time:.2f}s")
     fprint("Exported", f'"{block_title}.md" in "{os.path.abspath(output_path)}/"')
     print()
 

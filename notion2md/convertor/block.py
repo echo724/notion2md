@@ -1,4 +1,4 @@
-from .richtext import richtext_evaluator
+from .richtext import richtext_convertor
 from notion2md.client_store import notion_client_object
 import concurrent.futures
 
@@ -102,17 +102,17 @@ block_type_map = {
     "divider": divider,
 }
 
-def blocks_converter(blocks:object) -> str:
+def blocks_convertor(blocks:object) -> str:
     outcome_blocks:str = ""
     with concurrent.futures.ThreadPoolExecutor() as executor:
-        results = executor.map(block_evaluator,blocks)
+        results = executor.map(block_convertor,blocks)
         outcome_blocks = "".join([result for result in results])
     return outcome_blocks
 
 def information_collector(payload:dict) -> dict:
     information = dict()
     if "text" in payload:
-        information['text'] = richtext_evaluator(payload['text'])
+        information['text'] = richtext_convertor(payload['text'])
     if "icon" in payload:
         information['icon'] = payload['icon']['emoji']
     if "checked" in payload:
@@ -122,14 +122,14 @@ def information_collector(payload:dict) -> dict:
     if "url" in payload:
         information['url'] = payload['url']
     if "caption" in payload:
-        information['caption'] = richtext_evaluator(payload['caption'])
+        information['caption'] = richtext_convertor(payload['caption'])
     if "external" in payload:
         information['url'] = payload['external']['url']
     if "language" in payload:
         information['language'] = payload['language']
     return information
 
-def block_evaluator(block:object,depth=0) -> str:
+def block_convertor(block:object,depth=0) -> str:
     outcome_block:str = ""
     block_type = block['type']
     #Special Case: Block is blank
@@ -148,5 +148,5 @@ def block_evaluator(block:object,depth=0) -> str:
                 depth += 1
                 child_blocks = notion_client_object.blocks.children.list(block_id=block['id'])
                 for block in child_blocks['results']:
-                    outcome_block += "&nbsp;&nbsp;&nbsp;&nbsp;"*depth + block_evaluator(block,depth)
+                    outcome_block += "&nbsp;&nbsp;&nbsp;&nbsp;"*depth + block_convertor(block,depth)
     return outcome_block

@@ -35,7 +35,7 @@ annotation_map = {
     "code": code,
 }
 
-def richtext_evaluator(richtext_list:list) -> str:
+def richtext_convertor(richtext_list:list) -> str:
     outcome_sentence = ""
     for richtext in richtext_list:
         outcome_word = ""

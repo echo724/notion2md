@@ -1,7 +1,7 @@
 import unittest
 import sys
 sys.path.append('../notion2md')
-from notion2md.evaluator.block import blocks_evaluator
+from notion2md.convertor.block import blocks_convertor
 from notion2md.client_store import notion_client
 from .config import specific_block_id
 
@@ -10,9 +10,9 @@ class ExportBlocksTest(unittest.TestCase):
         test_blocks = notion_client.blocks.children.list(
             block_id=specific_block_id
         )
-        print(blocks_evaluator(test_blocks['results']))
+        print(blocks_convertor(test_blocks['results']))
         with open('output.md','w') as file:
-            file.write(blocks_evaluator(test_blocks['results']))
+            file.write(blocks_convertor(test_blocks['results']))
 
 if __name__ == "__main__":
     unittest.main()
