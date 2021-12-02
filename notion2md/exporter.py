@@ -22,13 +22,14 @@ class style():
 def fprint(left,right):
     print(f"{style.GREEN}{style.BOLD}{left+' ':>12}{style.RESET}{right}")
 
-def block_exporter(target_id:str,output_path="notion2md-output"):
+def block_exporter(target_id:str,output_path="notion2md-output",custom_name=""):
     start_time = time.time()
     #Directory Checking and Creating
     if not os.path.exists(output_path):
         os.mkdir(output_path)
     #Get title from parent page block
-    block_title = notion_client_object.blocks.retrieve(target_id)['child_page']['title']
+    block_title = custom_name if custom_name \
+        else notion_client_object.blocks.retrieve(target_id)['child_page']['title']
     #Get actual blocks
     print()
     fprint("Retrieving",f"blocks from '{target_id}'")

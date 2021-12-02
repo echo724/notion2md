@@ -6,25 +6,23 @@ import argparse
 parser = argparse.ArgumentParser(description="Notion2md: Notion to Markdown Exporter")
 parser.add_argument('--type','-t',type=str,help="a type of target page: block, page, database",default="block")
 parser.add_argument('--url','-u',type=str,help="an url of target page")
-parser.add_argument('--id','-i',type=str,help="id of target page")
-parser.add_argument('--path','-p',type=str,help="relative path of output file")
+parser.add_argument('--id','-i',type=str,help="an id of target page")
+parser.add_argument('--path','-p',type=str,help="a relative path of output file")
+parser.add_argument('--name','-n',type=str,help="a custom name of output file")
 
 args = parser.parse_args()
 
 def get_url():
     return input("Enter Notion Url: ")
 
-if args.url:
-    target_id = get_id(args.url)
-elif args.id:
-    target_id = args.id
-else:
-    target_id = get_id(get_url())
+custom_name = args.name if args.name else ""
 
-if args.path:
-    output_path = os.path.abspath(args.path)
-else:
-    output_path = os.path.join(os.getcwd(),'notion2md-output')
+target_id = get_id(args.url) if args.url \
+    else ( args.id if args.id \
+    else get_id(get_url()))
+
+output_path = os.path.abspath(args.path) if args.path \
+    else os.path.join(os.getcwd(),'notion2md-output')
 
 target_type_map ={
     'block': block_exporter,
@@ -32,7 +30,7 @@ target_type_map ={
     # 'database': database
 }
 
-target_type_map[args.type](target_id,output_path)
+target_type_map[args.type](target_id,output_path,custom_name)
 
 # page_exporter()
 
