@@ -1,4 +1,4 @@
-from notion2md.client_store import notion_client_object
+from notion2md.client_handler import notion_client_object
 from notion2md.convertor.block import blocks_convertor
 import os
 import time
@@ -35,7 +35,7 @@ def block_exporter(target_id:str,output_path="notion2md-output",custom_name=""):
     fprint("Retrieving",f"blocks from '{target_id}'")
     blocks = notion_client_object.blocks.children.list(target_id)['results']
     #Write(Export) Markdown file
-    with open(os.path.join(output_path,block_title+'.md'),'w') as output:
+    with open(os.path.join(output_path,block_title+'.md'),'w',encoding="utf-8") as output:
         output.write(blocks_convertor(blocks))
     #Result and Time Check
     fprint("Converted", f"{str(len(blocks))} blocks to markdown in {time.time() - start_time:.2f}s")
