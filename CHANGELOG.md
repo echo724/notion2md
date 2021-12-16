@@ -1,5 +1,9 @@
 <!--next-version-placeholder-->
 
+## v2.2.2 (2021-12-16)
+### Fix
+* Fix script not working ([`e001e75`](https://github.com/echo724/notion2md/commit/e001e75eb8cd7c19f702510008e872cec9e7a331))
+
 ## v2.2.1 (2021-12-16)
 ### Fix
 * Fix module names ([`e323911`](https://github.com/echo724/notion2md/commit/e3239110f8a72fd337b58ba2221b0df136f8c6a1))
