@@ -20,7 +20,7 @@ python-semantic-release = "^7.23.0"
 [tool.semantic_release]
 version_variable = [
     "notion2md/__init__.py:__version__",
-    "pyproject.tom:version"
+    "pyproject.toml:version"
 ]
 branch = "main"
 upload_to_pypi = true
