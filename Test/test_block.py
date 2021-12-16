@@ -2,12 +2,12 @@ import unittest
 import sys
 sys.path.append('../notion2md')
 from notion2md.convertor.block import blocks_convertor
-from notion2md.client_store import notion_client
+from notion2md.client_handler import notion_client_object
 from .config import specific_block_id
 
 class ExportBlocksTest(unittest.TestCase):
     def test_runs(self):
-        test_blocks = notion_client.blocks.children.list(
+        test_blocks = notion_client_object.blocks.children.list(
             block_id=specific_block_id
         )
         print(blocks_convertor(test_blocks['results']))

@@ -1,7 +1,7 @@
 [tool]
 [tool.poetry]
 name = "notion2md"
-version = "2.2.1"
+version = "2.2.0"
 description = "Notion Markdown Exporter with Python Cli"
 license = "MIT"
 classifiers = ["License :: OSI Approved :: MIT License", "Operating System :: OS Independent", "Programming Language :: Python :: 3.9"]
@@ -11,11 +11,18 @@ readme = "README.md"
 exclude = ["Test/test_*"]
 
 [tool.poetry.dependencies]
-python = "*"
+python = ">=3.7, <4"
 notion-client = ">=0.7.1"
 
+
+[tool.poetry.dev-dependencies]
+python-semantic-release = "^7.23.0"
 [tool.semantic_release]
 version_variable = [
+    "notion2md/__init__.py:__version__",
     "pyproject.tom:version"
 ]
+branch = "main"
+upload_to_pypi = true
+upload_to_release = true
 build_command = "pip install poetry && poetry build"
