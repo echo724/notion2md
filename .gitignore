@@ -135,3 +135,5 @@ output.md
 
 notion2md-output/
 Makefile
+
+pyproject.toml

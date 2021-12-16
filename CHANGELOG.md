@@ -1,3 +1,5 @@
+<!--next-version-placeholder-->
+
 # Update v2.2
 
 - Stylized terminal output
