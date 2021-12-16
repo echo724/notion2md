@@ -1,0 +1,21 @@
+[tool]
+[tool.poetry]
+name = "notion2md"
+version = "2.2.1"
+description = "Notion Markdown Exporter with Python Cli"
+license = "MIT"
+classifiers = ["License :: OSI Approved :: MIT License", "Operating System :: OS Independent", "Programming Language :: Python :: 3.9"]
+homepage = "https://github.com/echo724/notion2md.git"
+authors = ["echo724 <eunchan1001@gmail.com>"]
+readme = "README.md"
+exclude = ["Test/test_*"]
+
+[tool.poetry.dependencies]
+python = "*"
+notion-client = ">=0.7.1"
+
+[tool.semantic_release]
+version_variable = [
+    "pyproject.tom:version"
+]
+build_command = "pip install poetry && poetry build"
