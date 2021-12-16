@@ -1,5 +1,9 @@
 <!--next-version-placeholder-->
 
+## v2.2.1 (2021-12-16)
+### Fix
+* Fix module names ([`e323911`](https://github.com/echo724/notion2md/commit/e3239110f8a72fd337b58ba2221b0df136f8c6a1))
+
 # Update v2.2
 
 - Stylized terminal output
