@@ -4,6 +4,7 @@ import os
 try:
     notion_client_object = Client(auth=os.environ["NOTION_TOKEN"])
 except:
+    print(
     """
         Token Error
 
@@ -21,5 +22,6 @@ except:
         If you want to save this environment variable after reboot,
         put upper command in your shell resource(ex: .bashrc or .zshrc)
     """
+    )
 
 # notion_async_client = AsyncClient(auth=os.environ["NOTION_TOKEN"])
