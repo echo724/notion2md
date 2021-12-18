@@ -1,5 +1,9 @@
 <!--next-version-placeholder-->
 
+## v2.2.3 (2021-12-18)
+### Fix
+* Showing error message when client didn't get client ([`3e07428`](https://github.com/echo724/notion2md/commit/3e07428c96adc37a70c8fcd9cda70dae59873656))
+
 ## v2.2.2 (2021-12-16)
 ### Fix
 * Fix script not working ([`e001e75`](https://github.com/echo724/notion2md/commit/e001e75eb8cd7c19f702510008e872cec9e7a331))
