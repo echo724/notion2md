@@ -1,9 +1,15 @@
 ![Notion2Md Cover](Notion2md.jpg)
 
+<br/>
+<br/>
+
 <div align="center">
     <h1>Notion2Md</h1>
     <i>Notion Markdown Exporter with Python Cli</i>
 </div>
+
+<br/>
+<br/>
 
 ## About Notion2Md
 
