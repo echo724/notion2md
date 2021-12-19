@@ -1,6 +1,14 @@
-# Notion Markdown Exporter 2.2 [Updated]
+![Notion2Md Cover](Notion2Md.jpg)
+
+<div align="center">
+    <h1>Notion2Md</h1>
+    <i>Notion Markdown Exporter with Python Cli</i>
+    [![PyPI version](https://badge.fury.io/py/notion2md.svg)](https://badge.fury.io/py/notion2md)
+</div>
 
 [![PyPI version](https://badge.fury.io/py/notion2md.svg)](https://badge.fury.io/py/notion2md)
+
+## About Notion2Md
 
 - Notion Markdown Exporter using **official notion api** by [notion-sdk-py](https://github.com/ramnes/notion-sdk-py)
 
