@@ -1,14 +1,13 @@
-![Notion2Md Cover](Notion2Md.jpg)
+![Notion2Md Cover](Notion2md.jpg)
 
 <div align="center">
     <h1>Notion2Md</h1>
     <i>Notion Markdown Exporter with Python Cli</i>
-    [![PyPI version](https://badge.fury.io/py/notion2md.svg)](https://badge.fury.io/py/notion2md)
 </div>
 
-[![PyPI version](https://badge.fury.io/py/notion2md.svg)](https://badge.fury.io/py/notion2md)
-
 ## About Notion2Md
+
+[![PyPI version](https://badge.fury.io/py/notion2md.svg)](https://badge.fury.io/py/notion2md)
 
 - Notion Markdown Exporter using **official notion api** by [notion-sdk-py](https://github.com/ramnes/notion-sdk-py)
 
