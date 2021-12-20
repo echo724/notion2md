@@ -29,7 +29,7 @@ def block_exporter(target_id:str,output_path="notion2md-output",custom_name=""):
         os.mkdir(output_path)
     #Get title from parent page block
     block_title = custom_name if custom_name \
-        else notion_client_object.blocks.retrieve(target_id)['child_page']['title']
+        else target_id
     #Get actual blocks
     print()
     fprint("Retrieving",f"blocks from '{target_id}'")
