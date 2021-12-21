@@ -6,7 +6,6 @@ try:
     notion_client_object = Client(auth=os.environ["NOTION_TOKEN"])
 except:
     print_error("Notion Integration Token is not found")
-    print()
     print(
     """
         Welcome to notion2md!
@@ -24,5 +23,6 @@ except:
         put upper command in your shell resource(ex: .bashrc or .zshrc)
     """
     )
+    print()
     sys.exit(1)
 # notion_async_client = AsyncClient(auth=os.environ["NOTION_TOKEN"])
