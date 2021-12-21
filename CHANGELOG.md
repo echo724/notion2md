@@ -1,5 +1,13 @@
 <!--next-version-placeholder-->
 
+## v2.2.4 (2021-12-21)
+### Fix
+* Format console output ([`bf27ced`](https://github.com/echo724/notion2md/commit/bf27ced9eed5dfa173331a53aa76c9dd52f05499))
+* Refactorize exporter ([`661e3f8`](https://github.com/echo724/notion2md/commit/661e3f85e432674adbf2009fd0165af4e02cb543))
+* Add checking version ([`2c9a6c1`](https://github.com/echo724/notion2md/commit/2c9a6c19ff96bfd8ba3073e49f87e5c04fa8edb6))
+* Change file name as id because title can cause dir error ([`4db6e0f`](https://github.com/echo724/notion2md/commit/4db6e0f37421d092099929910d5bcbaa7831d332))
+* Halt program after token error catched ([`0c356b4`](https://github.com/echo724/notion2md/commit/0c356b4c3e772cb059e3a9fb7321878a89ed0b60))
+
 ## v2.2.3 (2021-12-18)
 ### Fix
 * Showing error message when client didn't get client ([`3e07428`](https://github.com/echo724/notion2md/commit/3e07428c96adc37a70c8fcd9cda70dae59873656))
