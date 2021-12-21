@@ -8,19 +8,19 @@ from notion2md.console import print_error, print_status
 
 class Config(object):
     __slots__ = ("file_name", "target_id", "output_path","exporter_type")
-    def __init__(self,args:dict):
-        self.file_name = args["name"] if args["name"] else args["id"]
+    def __init__(self,id,name="",path="",url="",type=""):
+        self.file_name = name if name else id
 
-        self.output_path = os.path.abspath(args["path"]) if args["path"] \
+        self.output_path = os.path.abspath(path) if path \
         else os.path.join(os.getcwd(),'notion2md-output')
 
-        self.target_id = get_id(args["url"]) if args["url"] else args["id"]
+        self.target_id = get_id(url) if url else id
 
         if not self.target_id:
             print_error("please enter a Notion page's id or url")
             sys.exit(1)
         
-        self.exporter_type = args["type"]
+        self.exporter_type = type
 
 def parse_config() -> dict:
     parser = argparse.ArgumentParser(description="Notion2md: Notion to Markdown Exporter")
@@ -49,6 +49,6 @@ def run():
         print_status("Version",notion2md.__version__)
         sys.exit(None)
 
-    config = Config(args)
+    config = Config(**args)
     
     call_exporter(config)
