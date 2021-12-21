@@ -1,5 +1,5 @@
 from notion_client import Client #,AsyncClient
-import os
+import os,sys
 
 try:
     notion_client_object = Client(auth=os.environ["NOTION_TOKEN"])
@@ -23,5 +23,5 @@ except:
         put upper command in your shell resource(ex: .bashrc or .zshrc)
     """
     )
-
+    sys.exit()
 # notion_async_client = AsyncClient(auth=os.environ["NOTION_TOKEN"])

@@ -1,17 +1,24 @@
 from notion_client.helpers import get_id
+import notion2md
 from notion2md.exporter import *
 import os
+import sys
 import argparse
 
 def cli():
     parser = argparse.ArgumentParser(description="Notion2md: Notion to Markdown Exporter")
-    parser.add_argument('--type','-t',type=str,help="a type of target page: block, page, database",default="block")
-    parser.add_argument('--url','-u',type=str,help="an url of target page")
-    parser.add_argument('--id','-i',type=str,help="an id of target page")
-    parser.add_argument('--path','-p',type=str,help="a relative path of output file")
-    parser.add_argument('--name','-n',type=str,help="a custom name of output file")
+    parser.add_argument('--type','-t',type=str,help="Set a type of target page: block, page, database",default="block")
+    parser.add_argument('--url','-u',type=str,help="Set an url of target page")
+    parser.add_argument('--id','-i',type=str,help="Set an id of target page")
+    parser.add_argument('--path','-p',type=str,help="Set a relative path of output file")
+    parser.add_argument('--name','-n',type=str,help="Set a custom name of output file")
+    parser.add_argument('--version','-v', action='store_true',help="Show a version of Notion2Md")
 
     args = parser.parse_args()
+
+    if args.version:
+        print(notion2md.__version__)
+        sys.exit()
 
     def get_url():
         return input("Enter Notion Url: ")
