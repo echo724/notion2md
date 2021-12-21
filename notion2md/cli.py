@@ -48,6 +48,8 @@ def run():
     if args["version"]:
         print_status("Version",notion2md.__version__)
         sys.exit(None)
+    else:
+        del args["version"]
 
     config = Config(**args)
     
