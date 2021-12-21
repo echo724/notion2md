@@ -15,10 +15,11 @@ python = ">=3.7, <4"
 notion-client = ">=0.7.1"
 
 [tool.poetry.scripts]
-notion2md = 'notion2md.exporter_client:cli'
+notion2md = 'notion2md.cli:run'
 
 [tool.poetry.dev-dependencies]
 python-semantic-release = "^7.23.0"
+
 [tool.semantic_release]
 version_variable = [
     "notion2md/__init__.py:__version__",

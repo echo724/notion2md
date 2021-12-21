@@ -4,7 +4,7 @@ from notion2md.exporter import *
 import os
 import sys
 import argparse
-from notion2md.console import print_error
+from notion2md.console import print_error, print_status
 
 class Config(object):
     __slots__ = ("file_name", "target_id", "output_path","exporter_type")
@@ -17,8 +17,7 @@ class Config(object):
         self.target_id = get_id(args["url"]) if args["url"] else args["id"]
 
         if not self.target_id:
-            print_error("please enter Notion page's id or url")
-            print()
+            print_error("please enter a Notion page's id or url")
             sys.exit(1)
         
         self.exporter_type = args["type"]
@@ -43,15 +42,13 @@ def call_exporter(config:Config):
 
     target_type_map[config.exporter_type](config)
     
-def cli():
-
+def run():
     args = parse_config()
 
     if args["version"]:
-        print(notion2md.__version__)
+        print_status("Version",notion2md.__version__)
         sys.exit(None)
 
     config = Config(args)
-    print()
+    
     call_exporter(config)
-    print()

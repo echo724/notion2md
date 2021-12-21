@@ -1,11 +1,10 @@
 from notion2md.notion_client import notion_client_object
 from notion2md.convertor.block import blocks_convertor
-from notion2md.cli import Config
 import os
 import time
 from notion2md.console import print_status
 
-def block_exporter(config:Config):
+def block_exporter(config):
     start_time = time.time()
     #Directory Checking and Creating
     if not os.path.exists(config.output_path):
