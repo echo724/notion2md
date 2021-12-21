@@ -2,7 +2,7 @@ import unittest
 import sys
 sys.path.append('../notion2md')
 from notion2md.convertor.block import blocks_convertor
-from notion2md.client_handler import notion_client_object
+from notion2md.notion_client import notion_client_object
 from .config import specific_block_id
 
 class ExportBlocksTest(unittest.TestCase):
