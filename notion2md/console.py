@@ -22,7 +22,7 @@ def _formatted_print(left,right,error=False):
     print()
 
 def print_error(message):
-    _formatted_print("ERROR",message)
+    _formatted_print("ERROR",message,error=True)
 
 def print_status(status,message):
     _formatted_print(status,message)
