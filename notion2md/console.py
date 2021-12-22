@@ -17,12 +17,13 @@ class Style():
 
 def _formatted_print(left,right,error=False):
     color = Style.RED if error else Style.GREEN
-    print()
     print(f"{color}{Style.BOLD}{left+' ':>12}{Style.RESET}{right}")
-    print()
+    
 
 def print_error(message):
+    print()
     _formatted_print("ERROR",message,error=True)
+    print()
 
 def print_status(status,message):
     _formatted_print(status,message)
