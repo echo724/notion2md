@@ -1,4 +1,4 @@
-![Notion2Md Cover](Notion2md.jpg)
+![Notion2Md logo - an arrow pointing from "N" to "MD"](Notion2md.jpg)
 
 <br/>
 
@@ -33,7 +33,7 @@ $ pip install notion2md
 
 ## Useage: Shell Command
 
-![notion2md-options](notion2md-options.png)
+![Terminal output of the `notion2md -h` command](notion2md-options.png)
 
 ```Bash
 notion2md -p ~/MyBlog/content/posts -u https://notion.so/...
