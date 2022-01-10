@@ -1,12 +1,5 @@
-![Notion2Md Cover](Notion2md.jpg)
+![Notion2Md logo - an arrow pointing from "N" to "MD"](Notion2md.jpg)
 
-<br/>
-
-<div align="center">
-    <i>Notion Markdown Exporter with Python Cli</i>
-</div>
-
-<br/>
 <br/>
 
 ## About Notion2Md
@@ -33,7 +26,7 @@ $ pip install notion2md
 
 ## Useage: Shell Command
 
-![notion2md-options](notion2md-options.png)
+![Terminal output of the `notion2md -h` command](notion2md-options.png)
 
 ```Bash
 notion2md -p ~/MyBlog/content/posts -u https://notion.so/...
@@ -55,8 +48,12 @@ block_exporter("id of notion page","OutPut Path(Relative)")
 - [ ] export child page
  
 ## Contribution
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-Please make sure to update tests as appropriate.
+Pull requests are welcome. 
+1. folk this repo's **develop** branch into yours
+2. make changes and push to your **develop** branch repo
+3. send pull request from your **develop** branch to this develop branch
+
+"This will be only way to give pull request to this repo. Thank you
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
