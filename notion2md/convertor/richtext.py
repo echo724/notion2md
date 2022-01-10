@@ -1,5 +1,5 @@
 #Link
-def link(item:dict):
+def text_link(item:dict):
     """
     input: item:dict ={"content":str,"link":str}
     """
@@ -35,6 +35,43 @@ annotation_map = {
     "code": code,
 }
 
+#Mentions
+def _mention_link(content,url):
+    return f"([{content}]({url}])"
+
+def user(information:dict):
+    return f"({information['content']})"
+
+def page(information:dict):
+    return _mention_link(information['content'], information['url'])
+
+def date(information:dict):
+    return f"({information['content']})"
+
+def database(information:dict):
+    return _mention_link(information['content'], information['url'])
+
+def mention_information(payload:dict):
+    information = dict()
+    if payload['href']:
+        information['url'] = payload['href']
+        if payload['plain_text'] != "Untitled":
+            information['content'] = payload['plain_text']
+        else:
+            information['content'] = payload['href']
+    else:
+        information['content'] = payload['plain_text']
+    
+    return information
+
+mention_map = {
+    "user": user,
+    "page": page,
+    "database": database,
+    "date": date
+}
+
+
 def richtext_convertor(richtext_list:list) -> str:
     outcome_sentence = ""
     for richtext in richtext_list:
@@ -42,14 +79,18 @@ def richtext_convertor(richtext_list:list) -> str:
         plain_text = richtext["plain_text"]
         if richtext['type'] == "equation":
             outcome_word = equation(plain_text)
+        elif richtext['type'] == "mention":
+            mention_type = richtext['mention']['type']
+            if mention_type in mention_map:
+                outcome_word = mention_map[mention_type](mention_information(richtext))
         else:
-            annot = richtext["annotations"]
             if richtext["href"]:
-                outcome_word = link(richtext["text"])
+                outcome_word = text_link(richtext["text"])
             else:
                 outcome_word = plain_text
+            annot = richtext["annotations"]
             for key,transfer in annotation_map.items():
-                if annot[key]:
+                if richtext["annotations"][key]:
                     outcome_word = transfer(outcome_word)
             if annot["color"] != "default":
                 outcome_word = color(outcome_word,annot["color"])
