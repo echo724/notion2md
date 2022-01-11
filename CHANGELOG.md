@@ -1,5 +1,9 @@
 <!--next-version-placeholder-->
 
+## v2.2.6 (2022-01-11)
+### Documentation
+* Update README.md ([`ff115cb`](https://github.com/echo724/notion2md/commit/ff115cb091520843eaa18cf691e147db076e8fc0))
+
 ## v2.2.5 (2021-12-21)
 ### Fix
 * Unpacking config dick error ([`6d0b105`](https://github.com/echo724/notion2md/commit/6d0b105c05ab12671d930dd61e72f7014985bb09))
