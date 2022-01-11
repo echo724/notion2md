@@ -26,7 +26,7 @@ $ pip install notion2md
 
 ## Useage: Shell Command
 
-![Terminal output of the `notion2md -h` command](notion2md-options.png)
+![Terminal output of the `notion2md -h` command](notion2md_terminal.png)
 
 ```Bash
 notion2md -p ~/MyBlog/content/posts -u https://notion.so/...
@@ -53,7 +53,7 @@ Pull requests are welcome.
 2. make changes and push to your **develop** branch repo
 3. send pull request from your **develop** branch to this develop branch
 
-"This will be only way to give pull request to this repo. Thank you
+> This will be only way to give pull request to this repo. Thank you
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
