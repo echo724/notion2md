@@ -1,5 +1,5 @@
 from .richtext import richtext_convertor
-from notion2md.notion_client import notion_client_object
+from notion2md.client_store import notion_client_object
 import concurrent.futures
 
 def paragraph(information:dict) -> str:

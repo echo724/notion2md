@@ -46,7 +46,7 @@ def run():
     args = parse_config()
 
     if args["version"]:
-        print_status("Version",notion2md.__version__)
+        print_status("Version", notion2md.__version__)
         sys.exit(None)
     else:
         del args["version"]

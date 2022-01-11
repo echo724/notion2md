@@ -1,4 +1,4 @@
-from notion2md.notion_client import notion_client_object
+from notion2md.client_store import notion_client_object
 from notion2md.convertor.block import blocks_convertor
 import os
 import time
