@@ -96,7 +96,7 @@ block_type_map = {
     # "child_page": child_page,
     "code": code,
     "embed": embed,
-    "imgae": image,
+    "image": image,
     "bookmark": bookmark,
     "equation": equation,
     "divider": divider,
