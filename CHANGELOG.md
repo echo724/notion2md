@@ -1,5 +1,9 @@
 <!--next-version-placeholder-->
 
+## v2.2.8 (2022-01-11)
+### Fix
+* Fix name of image in block converter ([`757e253`](https://github.com/echo724/notion2md/commit/757e2534a55eafa9041d0f24b340504f09f92892))
+
 ## v2.2.7 (2022-01-11)
 ### Fix
 * Add handling 'mention' object to fix #18 ([`291b2c1`](https://github.com/echo724/notion2md/commit/291b2c1867d766e996168c6157dabf8ba25f9c03))
