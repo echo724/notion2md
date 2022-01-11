@@ -47,7 +47,7 @@ Pull requests are welcome.
 2. make changes and push to your **develop** branch repo
 3. send pull request from your **develop** branch to this develop branch
 
-> This will be only way to give pull request to this repo. Thank you
+**This is only way to give pull request to this repo. Thank you**
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
