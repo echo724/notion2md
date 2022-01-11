@@ -23,6 +23,5 @@ except:
         put upper command in your shell resource(ex: .bashrc or .zshrc)
     """
     )
-    print()
     sys.exit(1)
 # notion_async_client = AsyncClient(auth=os.environ["NOTION_TOKEN"])

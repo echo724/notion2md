@@ -23,7 +23,7 @@ class Config(object):
         self.exporter_type = type
 
 def parse_config() -> dict:
-    parser = argparse.ArgumentParser(description="Notion2md: Notion to Markdown Exporter")
+    parser = argparse.ArgumentParser(description="Notion2md: Notion Markdown Exporter with Python Cli")
     parser.add_argument('--type','-t',type=str,help="Set a type of target page: block, page, database",default="block")
     parser.add_argument('--url','-u',type=str,help="Set an url of target page")
     parser.add_argument('--id','-i',type=str,help="Set an id of target page")
@@ -46,7 +46,7 @@ def run():
     args = parse_config()
 
     if args["version"]:
-        print_status("Version",notion2md.__version__)
+        print_status("Version", notion2md.__version__)
         sys.exit(None)
     else:
         del args["version"]

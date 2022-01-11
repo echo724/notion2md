@@ -1,5 +1,5 @@
 from .richtext import richtext_convertor
-from notion2md.notion_client import notion_client_object
+from notion2md.client_store import notion_client_object
 import concurrent.futures
 
 def paragraph(information:dict) -> str:
@@ -148,5 +148,5 @@ def block_convertor(block:object,depth=0) -> str:
                 depth += 1
                 child_blocks = notion_client_object.blocks.children.list(block_id=block['id'])
                 for block in child_blocks['results']:
-                    outcome_block += "&nbsp;&nbsp;&nbsp;&nbsp;"*depth + block_convertor(block,depth)
+                    outcome_block += "\t"*depth + block_convertor(block,depth)
     return outcome_block
