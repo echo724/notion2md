@@ -1,5 +1,10 @@
 <!--next-version-placeholder-->
 
+## v2.2.7 (2022-01-11)
+### Fix
+* Add handling 'mention' object to fix #18 ([`291b2c1`](https://github.com/echo724/notion2md/commit/291b2c1867d766e996168c6157dabf8ba25f9c03))
+* Change ERROR color to RED ([`1ac9c80`](https://github.com/echo724/notion2md/commit/1ac9c8013c247b132743795ed1260027d4067c63))
+
 ## v2.2.6 (2022-01-11)
 ### Documentation
 * Update README.md ([`ff115cb`](https://github.com/echo724/notion2md/commit/ff115cb091520843eaa18cf691e147db076e8fc0))
