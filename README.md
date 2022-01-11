@@ -29,16 +29,10 @@ $ pip install notion2md
 ![Terminal output of the `notion2md -h` command](notion2md_terminal.png)
 
 ```Bash
-notion2md -p ~/MyBlog/content/posts -u https://notion.so/...
+notion2md -n post -p ~/MyBlog/content/posts -u https://notion.so/...
 ```
 
-## Usage: Python
-```Python
-from notion2md.exporter import block_exporter
-
-#output_path is optional
-block_exporter("id of notion page","OutPut Path(Relative)")
-```
+- This command will generate "**post.md**" in your '**~/MyBlog/content/posts**' directory
 
 ## To-do
 
