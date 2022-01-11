@@ -43,8 +43,8 @@ notion2md -n post -p ~/MyBlog/content/posts -u https://notion.so/...
  
 ## Contribution
 Pull requests are welcome. 
-1. folk this repo's **develop** branch into yours
-2. make changes and push to your **develop** branch repo
+1. folk this repo into yours
+2. make changes and push to your repo
 3. send pull request from your **develop** branch to this develop branch
 
 **This is only way to give pull request to this repo. Thank you**
