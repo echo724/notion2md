@@ -1,5 +1,9 @@
 <!--next-version-placeholder-->
 
+## v2.3.1 (2022-01-17)
+### Fix
+* Key error ([`af224a6`](https://github.com/echo724/notion2md/commit/af224a62580551df3e2c49aa361c359175dd9eea))
+
 ## v2.3.0 (2022-01-17)
 ### Feature
 * Add file(image) downloader #20 ([`d42a1a0`](https://github.com/echo724/notion2md/commit/d42a1a02975181b05d9290f12adc3f7bc2b87c51))
