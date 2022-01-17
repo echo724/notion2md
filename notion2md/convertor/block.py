@@ -1,6 +1,7 @@
 from .richtext import richtext_convertor
 from notion2md.client_store import notion_client_object
 import concurrent.futures
+from .file import external_img_downlaoder,internal_downloader
 
 def paragraph(information:dict) -> str:
     return information['text']
@@ -63,14 +64,21 @@ def image(information:dict) -> str:
     """
     input: item:dict ={"url":str,"text":str,"caption":str}
     """
-    #if internal: make_image(url)
-    return f"![{information['url']}]({information['url']})\n\n{information['caption']}"
+    if information['external']:
+        image_name = external_img_downlaoder(information['url'])
+    else:
+        image_name = internal_downloader(information['url'])
+    
+    return f"![{image_name}]({image_name})\n\n{information['caption']}"
+
+def file(information:dict) -> str:
+    filename = internal_downloader(information['url'])
+    return f"[{filename}]({filename})"
 
 def bookmark(information:dict) -> str:
     """
     input: item:dict ={"url":str,"text":str,"caption":str}
     """
-    #if internal: make_image(url)
     return f"[{information['url']}]({information['url']})\n\n{information['caption']}"
 
 def equation(information:dict) -> str:
@@ -100,6 +108,7 @@ block_type_map = {
     "bookmark": bookmark,
     "equation": equation,
     "divider": divider,
+    "file": file,
 }
 
 def blocks_convertor(blocks:object) -> str:
@@ -124,9 +133,16 @@ def information_collector(payload:dict) -> dict:
     if "caption" in payload:
         information['caption'] = richtext_convertor(payload['caption'])
     if "external" in payload:
+        information['external'] = True
         information['url'] = payload['external']['url']
     if "language" in payload:
+        information['external'] = False
         information['language'] = payload['language']
+    
+    # interal url
+    if "file" in payload:
+        information['url'] = payload['file']['url']
+
     return information
 
 def block_convertor(block:object,depth=0) -> str:
