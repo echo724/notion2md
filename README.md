@@ -39,7 +39,7 @@ notion2md -n post -p ~/MyBlog/content/posts -u https://notion.so/...
 
 - [ ] Page Exporter
 - [ ] Database Exporter
-- [ ] export file object(image and files)
+- [x] export file object(image and files)
 - [ ] export child page
  
 ## Contribution
