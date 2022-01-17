@@ -136,11 +136,11 @@ def information_collector(payload:dict) -> dict:
         information['external'] = True
         information['url'] = payload['external']['url']
     if "language" in payload:
-        information['external'] = False
         information['language'] = payload['language']
     
     # interal url
     if "file" in payload:
+        information['external'] = False
         information['url'] = payload['file']['url']
 
     return information
