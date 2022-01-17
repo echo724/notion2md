@@ -1,5 +1,9 @@
 <!--next-version-placeholder-->
 
+## v2.3.0 (2022-01-17)
+### Feature
+* Add file(image) downloader #20 ([`d42a1a0`](https://github.com/echo724/notion2md/commit/d42a1a02975181b05d9290f12adc3f7bc2b87c51))
+
 ## v2.2.8 (2022-01-11)
 ### Fix
 * Fix name of image in block converter ([`757e253`](https://github.com/echo724/notion2md/commit/757e2534a55eafa9041d0f24b340504f09f92892))
