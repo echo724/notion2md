@@ -11,7 +11,7 @@ class ExportBlocksTest(unittest.TestCase):
             block_id=specific_block_id
         )
         print(blocks_convertor(test_blocks['results']))
-        with open('output.md','w') as file:
+        with open('output.md','w',encoding="utf-8") as file:
             file.write(blocks_convertor(test_blocks['results']))
 
 if __name__ == "__main__":
