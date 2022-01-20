@@ -44,7 +44,7 @@ notion2md -n post -p ~/MyBlog/content/posts -u https://notion.so/...
  
 ## Contribution
 Pull requests are welcome. 
-1. folk this repo into yours
+1. fork this repo into yours
 2. make changes and push to your repo
 3. send pull request from your **develop** branch to this develop branch
 
