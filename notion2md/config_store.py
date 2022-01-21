@@ -38,4 +38,4 @@ if not args["id"] and not args["name"]:
     print_error("please enter a Notion page's id or url")
     sys.exit(1)
 
-config = Config(**args)
+CONFIG = Config(**args)
