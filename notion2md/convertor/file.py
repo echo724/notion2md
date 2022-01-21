@@ -1,5 +1,7 @@
 from turtle import down
 import urllib.request as request
+from urllib.parse import urlparse
+import os
 import re
 from notion2md import console
 
@@ -12,7 +14,7 @@ def internal_downloader(url:str) -> str:
 # whether the file is downloadable or not,
 # there is no external file downloader
 def external_img_downlaoder(url:str) -> str:
-    filename = re.search("[.\-\w]+(?=\?)",url).group(0) + ".jpg"
+    filename = os.path.basename(urlparse(url).path)
     downlaoder(url,filename)
     return filename
 
