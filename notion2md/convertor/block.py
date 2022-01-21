@@ -174,7 +174,7 @@ def block_convertor(block:object,depth=0) -> str:
             if block_type == "child_page":
                 #call make_child_function
                 pass
-            if block_type == 'table':
+            elif block_type == 'table':
                 depth += 1
                 child_blocks = notion_client_object.blocks.children.list(block_id=block['id'])
                 table_list = []
