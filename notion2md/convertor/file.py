@@ -1,7 +1,7 @@
-from turtle import down
 import urllib.request as request
-import re
+import re, os
 from notion2md import console
+from notion2md.config_store import CONFIG
 
 def internal_downloader(url:str) -> str:
     filename = re.search("[.\-\w]+(?=\?)",url).group(0)
@@ -18,9 +18,10 @@ def external_img_downlaoder(url:str) -> str:
 
 def downlaoder(url,filename):
     if filename:
+        fullpath = os.path.join(CONFIG.output_path,filename)
         try:
             console.print_status("Downloading",filename)
-            request.urlretrieve(url,filename)
+            request.urlretrieve(url,fullpath)
             console.print_status("Downloaded",f"successfully downloaded {filename}")
         except:
             console.print_error("Cannot download a file or an image")
