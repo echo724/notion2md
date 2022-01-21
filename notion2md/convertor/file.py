@@ -1,7 +1,7 @@
 import urllib.request as request
 import re, os, sys
 from notion2md import console
-from notion2md.config_store import CONFIG
+from notion2md.config_store import get_config
 
 def internal_downloader(url:str) -> str:
     filename = re.search("[.\-\w]+(?=\?)",url).group(0)
@@ -17,8 +17,9 @@ def external_img_downlaoder(url:str) -> str:
     return filename
 
 def downlaoder(url,filename):
+    cfg = get_config()
     if filename:
-        fullpath = os.path.join(CONFIG.output_path,filename)
+        fullpath = os.path.join(cfg.output_path,filename)
         try:
             console.print_status("Downloading",filename)
             request.urlretrieve(url,fullpath)
