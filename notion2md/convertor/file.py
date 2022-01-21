@@ -1,5 +1,5 @@
 import urllib.request as request
-import re, os
+import re, os, sys
 from notion2md import console
 from notion2md.config_store import CONFIG
 
@@ -25,5 +25,7 @@ def downlaoder(url,filename):
             console.print_status("Downloaded",f"successfully downloaded {filename}")
         except:
             console.print_error("Cannot download a file or an image")
+            sys.exit(1)
     else:
         console.print_error("Cannot find a file or an image name")
+        sys.exit(1)
