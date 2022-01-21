@@ -11,7 +11,7 @@ Here are some guides for you to how to contribute
 - [ ] Page Exporter
 - [ ] Database Exporter
 - [ ] Child page
-- [ ] Column List and Column Blocks 
+- [ ] Column List and Column Blocks
 - [ ] Synced Block
 
 
