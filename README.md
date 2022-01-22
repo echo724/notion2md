@@ -37,18 +37,17 @@ notion2md -n post -p ~/MyBlog/content/posts -u https://notion.so/...
 
 ## To-do
 
+- [x] Download file object(image and files)
+- [x] Table blocks
 - [ ] Page Exporter
 - [ ] Database Exporter
-- [x] export file object(image and files)
-- [ ] export child page
+- [ ] Child page
+- [ ] Column List and Column Blocks 
+- [ ] Synced Block
  
 ## Contribution
-Pull requests are welcome. 
-1. folk this repo into yours
-2. make changes and push to your repo
-3. send pull request from your **develop** branch to this develop branch
 
-**This is only way to give pull request to this repo. Thank you**
+Please read [Contribution Guide](CONTRIBUTION.md)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

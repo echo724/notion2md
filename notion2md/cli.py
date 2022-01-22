@@ -1,26 +1,8 @@
-from notion_client.helpers import get_id
-import notion2md
 from notion2md.exporter import *
-import os
-import sys
-import argparse
-from notion2md.console import print_error, print_status
-
-class Config(object):
-    __slots__ = ("file_name", "target_id", "output_path","exporter_type")
-    def __init__(self,id,name="",path="",url="",type=""):
-        self.file_name = name if name else id
-
-        self.output_path = os.path.abspath(path) if path \
-        else os.path.join(os.getcwd(),'notion2md-output')
-
-        self.target_id = get_id(url) if url else id
-
-        if not self.target_id:
-            print_error("please enter a Notion page's id or url")
-            sys.exit(1)
-        
-        self.exporter_type = type
+from notion2md.config_store import *
+import sys, argparse
+import notion2md
+from notion2md.console import print_error,print_status
 
 def parse_config() -> dict:
     parser = argparse.ArgumentParser(description="Notion2md: Notion Markdown Exporter with Python Cli")
@@ -33,14 +15,7 @@ def parse_config() -> dict:
 
     return vars(parser.parse_args())
 
-def call_exporter(config:Config):
-    target_type_map ={
-        'block': block_exporter,
-        # 'page': page_exporter,
-        # 'database': database
-    }
 
-    target_type_map[config.exporter_type](config)
     
 def run():
     args = parse_config()
@@ -51,6 +26,21 @@ def run():
     else:
         del args["version"]
 
-    config = Config(**args)
+    if not args["id"] and not args["name"]:
+        print_error("please enter a Notion page's id or url")
+        sys.exit(1)
     
-    call_exporter(config)
+    target_type_map ={
+        'block': block_exporter,
+        # 'page': page_exporter,
+        # 'database': database
+    }
+    
+    set_config(**args)
+    cfg = get_config()
+
+    if cfg.exporter_type in target_type_map:
+        target_type_map[cfg.exporter_type](cfg)
+    else:
+        print_error("the type of target page is not supported")
+        sys.exit(1)

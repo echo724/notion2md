@@ -1,7 +1,7 @@
 from .richtext import richtext_convertor
 from notion2md.client_store import notion_client_object
 import concurrent.futures
-from .file import external_img_downlaoder,internal_downloader
+from .file import downloader
 
 def paragraph(information:dict) -> str:
     return information['text']
@@ -64,22 +64,25 @@ def image(information:dict) -> str:
     """
     input: item:dict ={"url":str,"text":str,"caption":str}
     """
-    if information['external']:
-        image_name = external_img_downlaoder(information['url'])
+    image_name = downloader(information['url'])
+
+    if information['caption']:
+        return f"![{image_name}]({image_name})\n\n{information['caption']}"
     else:
-        image_name = internal_downloader(information['url'])
-    
-    return f"![{image_name}]({image_name})\n\n{information['caption']}"
+        return f"![{image_name}]({image_name})"
 
 def file(information:dict) -> str:
-    filename = internal_downloader(information['url'])
+    filename = downloader(information['url'])
     return f"[{filename}]({filename})"
 
 def bookmark(information:dict) -> str:
     """
     input: item:dict ={"url":str,"text":str,"caption":str}
     """
-    return f"[{information['url']}]({information['url']})\n\n{information['caption']}"
+    if information['caption']:
+        return f"![{information['url']}]({information['url']})\n\n{information['caption']}"
+    else:
+        return f"![{information['url']}]({information['url']})"
 
 def equation(information:dict) -> str:
     return f"$$ {information['text']} $$"
@@ -89,6 +92,15 @@ def divider(information:dict) -> str:
 
 def blank() -> str:
     return "<br/>"
+
+def table_row(information:list) -> list:
+    """
+    input: item:list = [[richtext],....]
+    """
+    column_list = []
+    for column in information['cells']:
+        column_list.append(richtext_convertor(column))
+    return column_list
 
 block_type_map = {
     "paragraph": paragraph,
@@ -109,6 +121,7 @@ block_type_map = {
     "equation": equation,
     "divider": divider,
     "file": file,
+    'table_row': table_row
 }
 
 def blocks_convertor(blocks:object) -> str:
@@ -133,15 +146,17 @@ def information_collector(payload:dict) -> dict:
     if "caption" in payload:
         information['caption'] = richtext_convertor(payload['caption'])
     if "external" in payload:
-        information['external'] = True
         information['url'] = payload['external']['url']
     if "language" in payload:
         information['language'] = payload['language']
     
     # interal url
     if "file" in payload:
-        information['external'] = False
         information['url'] = payload['file']['url']
+    
+    # table cells
+    if "cells" in payload:
+        information['cells'] = payload['cells']
 
     return information
 
@@ -160,6 +175,21 @@ def block_convertor(block:object,depth=0) -> str:
             if block_type == "child_page":
                 #call make_child_function
                 pass
+            elif block_type == 'table':
+                depth += 1
+                child_blocks = notion_client_object.blocks.children.list(block_id=block['id'])
+                table_list = []
+                for cell_block in child_blocks['results']:
+                    cell_block_type = cell_block['type']
+                    table_list.append(block_type_map[cell_block_type](information_collector(cell_block[cell_block_type])))
+                # convert to markdown table
+                for index,value in enumerate(table_list):
+                    if index == 0:
+                        outcome_block = " | " + " | ".join(value) + " | " + "\n"
+                        outcome_block += " | " + " | ".join(['----'] * len(value)) + " | " + "\n"
+                        continue
+                    outcome_block += " | " + " | ".join(value) + " | " + "\n"
+                outcome_block += "\n"
             else:
                 depth += 1
                 child_blocks = notion_client_object.blocks.children.list(block_id=block['id'])
