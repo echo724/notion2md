@@ -1,5 +1,14 @@
 <!--next-version-placeholder-->
 
+## v2.3.2 (2022-01-22)
+### Fix
+* Merge error ([`a4244c0`](https://github.com/echo724/notion2md/commit/a4244c0064db5deb797ad64953f8ab07e5fb5d6b))
+* Change directory of downloaded files ([`452cc69`](https://github.com/echo724/notion2md/commit/452cc69f56972ee15b721ffda19a3c39ac404bd8))
+
+### Documentation
+* Change Contribution guide in README.md ([`2c2c1da`](https://github.com/echo724/notion2md/commit/2c2c1daef50127995384dde4df57b21d789ca653))
+* Add CONTRIBUTE.md ([`18be264`](https://github.com/echo724/notion2md/commit/18be264b4ed41eaee9c76f59f200714e47772bac))
+
 ## v2.3.1 (2022-01-17)
 ### Fix
 * Key error ([`af224a6`](https://github.com/echo724/notion2md/commit/af224a62580551df3e2c49aa361c359175dd9eea))
