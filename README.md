@@ -49,5 +49,11 @@ notion2md -n post -p ~/MyBlog/content/posts -u https://notion.so/...
 
 Please read [Contribution Guide](CONTRIBUTION.md)
 
+## Donation
+
+If you think **Notion2Md** is helpful to you, you can support me here:
+
+<a href="https://www.buymeacoffee.com/echo724" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 54px;" height="54"></a>
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
