@@ -14,13 +14,13 @@ def downloader(url:str) -> str:
     cfg = get_config()
     if filename:
         name,ext = os.path.splitext(filename)
-        outfilename =  name +"-"+ uuid.uuid1()+ext
+        outfilename =  name +"-"+ str(uuid.uuid4())+ext
         fullpath = os.path.join(cfg.output_path,outfilename)
         try:
             console.print_status("Downloading",filename)
             request.urlretrieve(url,fullpath)
             console.print_status("Downloaded",f"successfully downloaded {filename}")
-            return filename
+            return outfilename
         except:
             console.print_error("Cannot download a file or an image")
             sys.exit(1)
