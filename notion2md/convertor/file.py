@@ -2,6 +2,7 @@ import urllib.request as request
 from urllib.parse import urlparse
 import os
 import sys
+import uuid
 from notion2md import console
 from notion2md.config_store import get_config
 
@@ -12,7 +13,9 @@ def downloader(url:str) -> str:
     filename = os.path.basename(urlparse(url).path)
     cfg = get_config()
     if filename:
-        fullpath = os.path.join(cfg.output_path,filename)
+        name,ext = os.path.splitext(filename)
+        outfilename =  name +"-"+ uuid.uuid1()+ext
+        fullpath = os.path.join(cfg.output_path,outfilename)
         try:
             console.print_status("Downloading",filename)
             request.urlretrieve(url,fullpath)
