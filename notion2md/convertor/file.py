@@ -15,20 +15,21 @@ def downloader(url:str) -> str:
     
     if filename:
         name,ext = os.path.splitext(filename)
-        fullpath = os.path.join(cfg.output_path,filename)
-
+        fullpath = os.path.join(cfg.output_path,filename) 
         is_uuid_file = os.environ["NOTION2MD_UUIDFILE"] 
+
+        outfilename = filename
         if str.lower(is_uuid_file) == "true" :
             outfilename = str(uuid.uuid4())+ext 
             fullpath = os.path.join(cfg.output_path,outfilename)
             
         try:
-            console.print_status("Downloading",filename)
+            console.print_status("Downloading",f"{filename},fullpath:{fullpath},url:{url}")
             request.urlretrieve(url,fullpath)
             console.print_status("Downloaded",f"successfully downloaded {filename} -> {outfilename}  ")
             return outfilename,name
-        except:
-            console.print_error("Cannot download a file or an image")
+        except  :
+            console.print_error("Cannot download a file or an image") 
             sys.exit(1)
     else:
         console.print_error("Cannot find a file or an image name")
