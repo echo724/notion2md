@@ -1,7 +1,6 @@
 import urllib.request as request
 from urllib.parse import urlparse
 import os
-import sys
 import uuid
 from notion2md import console
 from notion2md.config_store import get_config

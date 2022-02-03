@@ -35,12 +35,9 @@ def run():
         # 'page': page_exporter,
         # 'database': database
     }
-    
-    set_config(**args)
-    cfg = get_config()
 
-    if cfg.exporter_type in target_type_map:
-        target_type_map[cfg.exporter_type](cfg)
+    if args['type'] in target_type_map:
+        target_type_map[args['type']](**args)
     else:
         print_error("the type of target page is not supported")
         sys.exit(1)

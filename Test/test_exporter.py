@@ -8,8 +8,7 @@ from .config import specific_block_id
 
 class ExporterTest(unittest.TestCase):
     def test_runs(self):
-        set_config(id=specific_block_id)
-        block_exporter(get_config())
+        block_exporter(id=specific_block_id)
 
 if __name__ == "__main__":
     unittest.main()
