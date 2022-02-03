@@ -1,5 +1,5 @@
 from .richtext import richtext_convertor
-from notion2md.client_store import notion_client_object
+from notion2md.notion_api import get_children
 import concurrent.futures
 from .file import downloader
 
@@ -52,7 +52,7 @@ def code(information:dict) -> str:
     """
     input: item:dict = {"language":str,"text":str}
     """
-    return f"```{information['language']}\n\t{information['text']}\n```"
+    return f"\n```{information['language']}\n{information['text']}\n```"
 
 def embed(information:dict) -> str:
     """
@@ -64,16 +64,16 @@ def image(information:dict) -> str:
     """
     input: item:dict ={"url":str,"text":str,"caption":str}
     """
-    image_name = downloader(information['url'])
+    filepath,name = downloader(information['url'])
 
     if information['caption']:
-        return f"![{image_name}]({image_name})\n\n{information['caption']}"
+        return f"![{name}]({filepath})\n\n{information['caption']}"
     else:
-        return f"![{image_name}]({image_name})"
+        return f"![{name}]({filepath})"
 
 def file(information:dict) -> str:
-    filename = downloader(information['url'])
-    return f"[{filename}]({filename})"
+    filepath,name = downloader(information['url'])
+    return f"[{name}]({filepath})"
 
 def bookmark(information:dict) -> str:
     """
@@ -102,6 +102,10 @@ def table_row(information:list) -> list:
         column_list.append(richtext_convertor(column))
     return column_list
 
+# Since Synced Block has only child blocks, not name, it will return blank
+def synced_block(information:list) -> str:
+    return "[//]: # (Synced Block)"
+
 block_type_map = {
     "paragraph": paragraph,
     "heading_1": heading_1,
@@ -121,7 +125,8 @@ block_type_map = {
     "equation": equation,
     "divider": divider,
     "file": file,
-    'table_row': table_row
+    'table_row': table_row,
+    'synced_block':synced_block
 }
 
 def blocks_convertor(blocks:object) -> str:
@@ -177,9 +182,9 @@ def block_convertor(block:object,depth=0) -> str:
                 pass
             elif block_type == 'table':
                 depth += 1
-                child_blocks = notion_client_object.blocks.children.list(block_id=block['id'])
+                child_blocks = get_children(block['id'])
                 table_list = []
-                for cell_block in child_blocks['results']:
+                for cell_block in child_blocks:
                     cell_block_type = cell_block['type']
                     table_list.append(block_type_map[cell_block_type](information_collector(cell_block[cell_block_type])))
                 # convert to markdown table
@@ -192,7 +197,7 @@ def block_convertor(block:object,depth=0) -> str:
                 outcome_block += "\n"
             else:
                 depth += 1
-                child_blocks = notion_client_object.blocks.children.list(block_id=block['id'])
-                for block in child_blocks['results']:
+                child_blocks = get_children(block['id'])
+                for block in child_blocks:
                     outcome_block += "\t"*depth + block_convertor(block,depth)
     return outcome_block

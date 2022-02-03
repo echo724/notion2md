@@ -25,3 +25,6 @@ except:
     )
     sys.exit(1)
 # notion_async_client = AsyncClient(auth=os.environ["NOTION_TOKEN"])
+
+def get_children(parent_id):
+    return notion_client_object.blocks.children.list(parent_id)['results']
