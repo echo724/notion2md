@@ -12,6 +12,7 @@ def parse_config() -> dict:
     parser.add_argument('--path','-p',type=str,help="Set a relative path of output file")
     parser.add_argument('--name','-n',type=str,help="Set a custom name of output file")
     parser.add_argument('--version','-v', action='store_true',help="Show a version of Notion2Md")
+    parser.add_argument('--download',action='store_true',help="will download files/images inside of target page")
 
     return vars(parser.parse_args())
 

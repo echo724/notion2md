@@ -4,7 +4,7 @@ from notion_client.helpers import get_id
 from notion2md.console import print_error
 
 class Config(object):
-    __slots__ = ("file_name", "target_id", "output_path")
+    __slots__ = ("file_name", "target_id", "output_path","download")
     def __init__(self,**kargs):
         if "url" in kargs and kargs['url']:
             self.target_id = get_id(kargs['url'])
@@ -23,6 +23,11 @@ class Config(object):
             self.output_path = os.path.abspath(kargs['path'])
         else:
             self.output_path = os.path.join(os.getcwd(),'notion2md-output')
+
+        if "download" in kargs and kargs['download']:
+            self.download = True
+        else:
+            self.download = False
 
 config = None
 

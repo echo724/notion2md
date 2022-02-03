@@ -64,16 +64,16 @@ def image(information:dict) -> str:
     """
     input: item:dict ={"url":str,"text":str,"caption":str}
     """
-    filepath,name = downloader(information['url'])
+    name,file_path = downloader(information['url'])
 
     if information['caption']:
-        return f"![{name}]({filepath})\n\n{information['caption']}"
+        return f"![{name}]({file_path})\n\n{information['caption']}"
     else:
-        return f"![{name}]({filepath})"
+        return f"![{name}]({file_path})"
 
 def file(information:dict) -> str:
-    filepath,name = downloader(information['url'])
-    return f"[{name}]({filepath})"
+    name,file_path = downloader(information['url'])
+    return f"[{name}]({file_path})"
 
 def bookmark(information:dict) -> str:
     """
