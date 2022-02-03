@@ -1,7 +1,7 @@
 [tool]
 [tool.poetry]
 name = "notion2md"
-version = "2.3.3"
+version = "2.4.0"
 description = "Notion Markdown Exporter with Python Cli"
 license = "MIT"
 classifiers = ["License :: OSI Approved :: MIT License", "Operating System :: OS Independent", "Programming Language :: Python :: 3.9"]

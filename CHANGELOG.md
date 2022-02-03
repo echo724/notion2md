@@ -1,5 +1,16 @@
 <!--next-version-placeholder-->
 
+## v2.4.0 (2022-02-03)
+### Feature
+* Add block to string exporter ([`26981f5`](https://github.com/echo724/notion2md/commit/26981f5cf1cfdd7e263a64758ba09e8f83cffcad))
+* Add "download" option so that user can choose whether to download files or not ([`bddcc40`](https://github.com/echo724/notion2md/commit/bddcc4071a7b2ef434b8782eff177c1a27757fb3))
+
+### Documentation
+* Add python usage description ([`e10687e`](https://github.com/echo724/notion2md/commit/e10687e2e9a986f9d261bd8007038222d2a8447b))
+* Checked Synced Block ([`791f779`](https://github.com/echo724/notion2md/commit/791f779a728b0f6ac17d6c807f573cb500ca2a06))
+* Update notion2md options image ([`7d1b263`](https://github.com/echo724/notion2md/commit/7d1b26322b9ec2c8c2ec1631cf84e6a601b57427))
+* Add download option description ([`004202b`](https://github.com/echo724/notion2md/commit/004202bd69f304864a5e3c938f183ec116b11f18))
+
 ## v2.3.3 (2022-02-03)
 ### Fix
 * Synced Block commented out #26 ([`c623a98`](https://github.com/echo724/notion2md/commit/c623a98f1da556c4acdfbef0b7688ea66351e6ef))
