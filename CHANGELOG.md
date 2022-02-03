@@ -1,5 +1,16 @@
 <!--next-version-placeholder-->
 
+## v2.3.3 (2022-02-03)
+### Fix
+* Synced Block commented out #26 ([`c623a98`](https://github.com/echo724/notion2md/commit/c623a98f1da556c4acdfbef0b7688ea66351e6ef))
+* Change the api of block_exporter without creating config file from user ([`2cd8bb8`](https://github.com/echo724/notion2md/commit/2cd8bb82d9c92823f568163c22f69ee1a3bcfed6))
+* Change the way of saving a file name using uuid #27 ([`52dd12a`](https://github.com/echo724/notion2md/commit/52dd12af851fcb324507d45395e5d5b6d12356d6))
+* Update os.getenv ([`29d5167`](https://github.com/echo724/notion2md/commit/29d5167da47b268bd8574ce129825fa6c9fcb8ed))
+* Update ([`8a8193c`](https://github.com/echo724/notion2md/commit/8a8193c66ab441e104f790c0b0eb53fe1c6945dd))
+
+### Documentation
+* Add a donation button on README.md ([`51d84cc`](https://github.com/echo724/notion2md/commit/51d84cc275612c2e388d66257562890b6d8e612e))
+
 ## v2.3.2 (2022-01-22)
 ### Fix
 * Merge error ([`a4244c0`](https://github.com/echo724/notion2md/commit/a4244c0064db5deb797ad64953f8ab07e5fb5d6b))
