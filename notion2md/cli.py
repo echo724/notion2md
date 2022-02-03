@@ -32,7 +32,7 @@ def run():
         sys.exit(1)
     
     target_type_map ={
-        'block': block_exporter,
+        'block': block_makrdown_exporter,
         # 'page': page_exporter,
         # 'database': database
     }

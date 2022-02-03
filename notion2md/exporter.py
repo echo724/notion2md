@@ -5,14 +5,13 @@ import time
 from notion2md.console import print_status,print_error
 from notion2md.config_store import set_config,get_config
 
-def block_exporter(**kargs):
+def block_makrdown_exporter(**kargs):
     set_config(**kargs)
     config = get_config()
 
     if not config:
         print_error("cannot make a config from input")
         sys.exit(1)
-
     else:
         start_time = time.time()
         #Directory Checking and Creating
@@ -30,6 +29,13 @@ def block_exporter(**kargs):
         print_status("Converted", f"{str(len(blocks))} blocks to markdown in {time.time() - start_time:.2f}s")
         print_status("Exported", f'"{config.file_name}.md" in "{os.path.abspath(config.output_path)}/"')
         print()
+
+def block_string_exporter(**kargs):
+    set_config(**kargs)
+    config = get_config()
+    blocks = get_children(config.target_id)
+    return blocks_convertor(blocks)
+
 
 # page_exporter()
 
