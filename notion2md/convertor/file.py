@@ -16,13 +16,13 @@ def downloader(url:str) -> str:
     if filename:
         name,ext = os.path.splitext(filename)
 
-        outfilename = str(uuid.uuid4())+ext 
+        outfilename = str(uuid.uuid4())[:8]+ext 
         fullpath = os.path.join(cfg.output_path,outfilename)
             
         try:
-            console.print_status("Downloading",f"{filename},fullpath:{fullpath}")
+            console.print_status("Downloading",f"{filename}")
             request.urlretrieve(url,fullpath)
-            console.print_status("Downloaded",f"successfully downloaded {filename} -> {outfilename}  ")
+            console.print_status("Downloaded",f'successfully downloaded "{filename}" -> "{outfilename}"')
             return outfilename,name
         except  :
             console.print_error("Cannot download a file or an image") 
