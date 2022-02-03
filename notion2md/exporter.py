@@ -1,4 +1,4 @@
-from notion2md.client_store import notion_client_object
+from notion2md.notion_api import get_children
 from notion2md.convertor.block import blocks_convertor
 import os,sys
 import time
@@ -21,7 +21,7 @@ def block_exporter(**kargs):
         #Get actual blocks
         print()
         print_status("Retrieving",f"blocks from '{config.target_id}'")
-        blocks = notion_client_object.blocks.children.list(config.target_id)['results']
+        blocks = get_children(config.target_id)
         #Write(Export) Markdown file
         with open(os.path.join(config.output_path,config.file_name + '.md'),'w',encoding="utf-8") as output:
             output.write(blocks_convertor(blocks))

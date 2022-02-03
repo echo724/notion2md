@@ -1,5 +1,5 @@
 from .richtext import richtext_convertor
-from notion2md.client_store import notion_client_object
+from notion2md.notion_api import get_children
 import concurrent.futures
 from .file import downloader
 
@@ -177,9 +177,9 @@ def block_convertor(block:object,depth=0) -> str:
                 pass
             elif block_type == 'table':
                 depth += 1
-                child_blocks = notion_client_object.blocks.children.list(block_id=block['id'])
+                child_blocks = get_children(block['id'])
                 table_list = []
-                for cell_block in child_blocks['results']:
+                for cell_block in child_blocks:
                     cell_block_type = cell_block['type']
                     table_list.append(block_type_map[cell_block_type](information_collector(cell_block[cell_block_type])))
                 # convert to markdown table
@@ -192,7 +192,7 @@ def block_convertor(block:object,depth=0) -> str:
                 outcome_block += "\n"
             else:
                 depth += 1
-                child_blocks = notion_client_object.blocks.children.list(block_id=block['id'])
-                for block in child_blocks['results']:
+                child_blocks = get_children(block['id'])
+                for block in child_blocks:
                     outcome_block += "\t"*depth + block_convertor(block,depth)
     return outcome_block
