@@ -24,7 +24,7 @@ def downloader(url:str) -> str:
             request.urlretrieve(url,fullpath)
             console.print_status("Downloaded",f'successfully downloaded "{filename}" -> "{outfilename}"')
             return outfilename,name
-        except  :
+        except:
             console.print_error(f"cannot download {filename}")
     else:
         console.print_error(f"unvalid {url}")
