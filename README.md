@@ -29,8 +29,11 @@ $ pip install notion2md
 
 ![Terminal output of the `notion2md -h` command](notion2md_terminal.png)
 
+- Notion2md requires either `id` or `url` of the Notion page/block
+- **Download** option will download files/images in the `path` directory
+
 ```Bash
-notion2md -n post -p ~/MyBlog/content/posts -u https://notion.so/...
+notion2md --download -n post -p ~/MyBlog/content/posts -u https://notion.so/...
 ```
 
 - This command will generate "**post.md**" in your '**~/MyBlog/content/posts**' directory
