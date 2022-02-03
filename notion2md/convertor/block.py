@@ -52,7 +52,7 @@ def code(information:dict) -> str:
     """
     input: item:dict = {"language":str,"text":str}
     """
-    return f"```{information['language']}\n\t{information['text']}\n```"
+    return f"\n```{information['language']}\n{information['text']}\n```"
 
 def embed(information:dict) -> str:
     """
@@ -102,6 +102,10 @@ def table_row(information:list) -> list:
         column_list.append(richtext_convertor(column))
     return column_list
 
+# Since Synced Block has only child blocks, not name, it will return blank
+def synced_block(information:list) -> str:
+    return "[//]: # (Synced Block)"
+
 block_type_map = {
     "paragraph": paragraph,
     "heading_1": heading_1,
@@ -121,7 +125,8 @@ block_type_map = {
     "equation": equation,
     "divider": divider,
     "file": file,
-    'table_row': table_row
+    'table_row': table_row,
+    'synced_block':synced_block
 }
 
 def blocks_convertor(blocks:object) -> str:
