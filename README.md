@@ -27,7 +27,7 @@ $ pip install notion2md
 
 ## Useage: Shell Command
 
-![Terminal output of the `notion2md -h` command](notion2md_terminal.png)
+![Terminal output of the `notion2md -h` command](notion2md_options.png)
 
 - Notion2md requires either `id` or `url` of the Notion page/block
 - **Download** option will download files/images in the `path` directory
