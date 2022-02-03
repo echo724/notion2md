@@ -15,13 +15,9 @@ def downloader(url:str) -> str:
     
     if filename:
         name,ext = os.path.splitext(filename)
-        fullpath = os.path.join(cfg.output_path,filename) 
-        is_uuid_file = os.getenv("NOTION2MD_UUIDFILE","false")
 
-        outfilename = filename
-        if str.lower(is_uuid_file) == "true" :
-            outfilename = str(uuid.uuid4())+ext 
-            fullpath = os.path.join(cfg.output_path,outfilename)
+        outfilename = str(uuid.uuid4())+ext 
+        fullpath = os.path.join(cfg.output_path,outfilename)
             
         try:
             console.print_status("Downloading",f"{filename},fullpath:{fullpath},url:{url}")
