@@ -20,7 +20,7 @@ def downloader(url:str) -> str:
         fullpath = os.path.join(cfg.output_path,outfilename)
             
         try:
-            console.print_status("Downloading",f"{filename},fullpath:{fullpath},url:{url}")
+            console.print_status("Downloading",f"{filename},fullpath:{fullpath}")
             request.urlretrieve(url,fullpath)
             console.print_status("Downloaded",f"successfully downloaded {filename} -> {outfilename}  ")
             return outfilename,name
