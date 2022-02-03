@@ -19,6 +19,11 @@
 $ export NOTION_TOKEN="{your integration token key}"
 ```
 
+- File download using uuid rename
+```Bash
+$ export NOTION2MD_UUIDFILE=true
+```
+
 ## Install
 
 ```Bash
