@@ -25,7 +25,7 @@ $ export NOTION_TOKEN="{your integration token key}"
 $ pip install notion2md
 ```
 
-## Useage: Shell Command
+## Usage: Shell Command
 
 ![Terminal output of the `notion2md -h` command](notion2md_options.png)
 
@@ -37,6 +37,18 @@ notion2md --download -n post -p ~/MyBlog/content/posts -u https://notion.so/...
 ```
 
 - This command will generate "**post.md**" in your '**~/MyBlog/content/posts**' directory
+
+## Usage: Python
+
+```Python
+from notion2md.exporter import block_markdown_exporter, block_string_exporter
+
+# block_markdown_exporter will make markdown file on your output path
+block_markdown_exporter(id='...',path='...',download=True)
+
+# block_string_exporter will return output as String type
+md = block_string_exporter(id='...',path='...')
+```
 
 ## To-do
 
