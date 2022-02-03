@@ -25,8 +25,6 @@ def downloader(url:str) -> str:
             console.print_status("Downloaded",f'successfully downloaded "{filename}" -> "{outfilename}"')
             return outfilename,name
         except  :
-            console.print_error("Cannot download a file or an image") 
-            sys.exit(1)
+            console.print_error(f"cannot download {filename}")
     else:
-        console.print_error("Cannot find a file or an image name")
-        sys.exit(1)
+        console.print_error(f"unvalid {url}")
