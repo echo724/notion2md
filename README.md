@@ -42,12 +42,12 @@ notion2md --download -n post -p ~/MyBlog/content/posts -u https://notion.so/...
 
 - [x] Download file object(image and files)
 - [x] Table blocks
+- [x] Synced Block
 - [ ] Page Exporter
 - [ ] Database Exporter
 - [ ] Child page
-- [ ] Column List and Column Blocks 
-- [ ] Synced Block
- 
+- [ ] Column List and Column Blocks
+
 ## Contribution
 
 Please read [Contribution Guide](CONTRIBUTION.md)
