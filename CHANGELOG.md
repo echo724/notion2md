@@ -1,5 +1,9 @@
 <!--next-version-placeholder-->
 
+## v2.4.1 (2022-02-04)
+### Fix
+* Fix typo ([`31bda67`](https://github.com/echo724/notion2md/commit/31bda67e083c499dad3c42ed5f520eeeceff9670))
+
 ## v2.4.0 (2022-02-03)
 ### Feature
 * Add block to string exporter ([`26981f5`](https://github.com/echo724/notion2md/commit/26981f5cf1cfdd7e263a64758ba09e8f83cffcad))
