@@ -35,8 +35,3 @@ def block_string_exporter(**kargs):
     config = get_config()
     blocks = get_children(config.target_id)
     return blocks_convertor(blocks)
-
-
-# page_exporter()
-
-# database_exporter()
