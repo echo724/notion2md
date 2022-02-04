@@ -5,7 +5,7 @@ import time
 from notion2md.console import print_status,print_error
 from notion2md.config_store import set_config,get_config
 
-def block_makrdown_exporter(**kargs):
+def block_markdown_exporter(**kargs):
     set_config(**kargs)
     config = get_config()
 
