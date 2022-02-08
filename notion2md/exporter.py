@@ -3,7 +3,7 @@ from notion2md.convertor.block import blocks_convertor
 import os,sys
 import time
 from notion2md.console import print_status,print_error
-from notion2md.config_store import set_config,get_config
+from notion2md.config import set_config,get_config
 
 def block_markdown_exporter(**kargs):
     set_config(**kargs)

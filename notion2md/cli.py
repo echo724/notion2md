@@ -1,5 +1,5 @@
 from notion2md.exporter import *
-from notion2md.config_store import *
+from notion2md.config import *
 import sys, argparse
 import notion2md
 from notion2md.console import print_error,print_status
