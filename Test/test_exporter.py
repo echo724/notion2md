@@ -3,7 +3,7 @@ import sys
 sys.path.append('../notion2md')
 sys.path.append('../Test')
 from notion2md.exporter import block_markdown_exporter
-from notion2md.config_store import set_config,get_config
+from notion2md.config import set_config,get_config
 from .config import specific_block_id
 
 class ExporterTest(unittest.TestCase):
