@@ -1,11 +1,11 @@
 from notion_client import Client #,AsyncClient
 import os,sys
-from notion2md.console import print_error
+from notion2md.console.formatter import *
 
 try:
     notion_client_object = Client(auth=os.environ["NOTION_TOKEN"])
 except:
-    print_error("Notion Integration Token is not found")
+    print("Notion Integration Token is not found")
     print(
     """
         Welcome to notion2md!
