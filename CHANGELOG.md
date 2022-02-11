@@ -1,5 +1,9 @@
 <!--next-version-placeholder-->
 
+## v2.6.0 (2022-02-11)
+### Feature
+* Exporting Notion block files to a single zip ([`d32afde`](https://github.com/echo724/notion2md/commit/d32afde66903c9c7191a2a87b1d2de4b19388909))
+
 ## v2.5.2 (2022-02-11)
 ### Fix
 * Include config.py to the package ([`73078d7`](https://github.com/echo724/notion2md/commit/73078d7a9ff8dc420a4b2d1771325dc2c4275353))
