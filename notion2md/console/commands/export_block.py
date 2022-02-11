@@ -1,7 +1,6 @@
 import os,sys
 import time
 
-sys.path.append('../notion2md')
 from notion2md.console.formatter import *
 from notion2md.config import set_config,get_config
 from notion2md.notion_api import get_children

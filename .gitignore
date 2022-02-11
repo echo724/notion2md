@@ -130,7 +130,7 @@ build.sh
 
 bin/
 
-config.py
+Test/config.py
 output.md
 
 notion2md-output/
