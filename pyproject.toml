@@ -13,9 +13,10 @@ exclude = ["Test/test_*"]
 [tool.poetry.dependencies]
 python = ">=3.7, <4"
 notion-client = ">=0.7.1"
+cleo = "^0.8.1"
 
 [tool.poetry.scripts]
-notion2md = 'notion2md.cli:run'
+notion2md = 'notion2md.console.application:main'
 
 [tool.poetry.dev-dependencies]
 python-semantic-release = "^7.23.0"
