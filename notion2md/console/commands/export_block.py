@@ -16,7 +16,7 @@ class ExportBlockCommand(Command):
     options = [
         option("url", "u", "The url of Notion block object.", flag=False),
         option("id", "i", "The id of Notion block object.", flag=False),
-        option("name", "N", "The name of Notion block object", flag=False),
+        option("name", "n", "The name of Notion block object", flag=False),
         option("path", "p", "The path to save exported markdown file.", flag=False),
         option("download", None, "Download files/images inside of the block object", flag=True),
     ]

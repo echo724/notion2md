@@ -15,26 +15,8 @@ class ApplicationConfig(BaseApplicationConfig):
         self.add_event_listener(PRE_HANDLE, self.print_version)
 
         self.add_option("help", "h", Option.NO_VALUE, "Display this help message")
-        self.add_option("quiet", "q", Option.NO_VALUE, "Do not output any message")
-        self.add_option(
-            "verbose",
-            "v",
-            Option.OPTIONAL_VALUE,
-            "Increase the verbosity of messages: "
-            '"-v" for normal output, '
-            '"-vv" for more verbose output '
-            'and "-vvv" for debug',
-        )
         self.add_option(
             "version", "V", Option.NO_VALUE, "Display this application version"
-        )
-        self.add_option("ansi", None, Option.NO_VALUE, "Force ANSI output")
-        self.add_option("no-ansi", None, Option.NO_VALUE, "Disable ANSI output")
-        self.add_option(
-            "no-interaction",
-            "n",
-            Option.NO_VALUE,
-            "Do not ask any interactive question",
         )
 
         with self.command("help") as c:
