@@ -18,7 +18,7 @@ def downloader(url:str,cfg:Config,io:IO) -> str:
             name,ext = os.path.splitext(file_name)
 
             downloaded_file_name = str(uuid.uuid4())[:8]+ext 
-            fullpath = os.path.join(cfg.output_path,downloaded_file_name)
+            fullpath = os.path.join(cfg.tmp_path,downloaded_file_name)
                 
             try:
                 io.write_line(status("Downloading",f"{file_name}"))

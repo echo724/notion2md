@@ -3,7 +3,7 @@ from notion_client.helpers import get_id
 from notion2md.console.formatter import *
 
 class Config(object):
-    __slots__ = ("file_name", "target_id", "output_path","download")
+    __slots__ = ("file_name", "target_id", "output_path","tmp_path","download","unzipped")
     def __init__(self,**kargs):
         if "url" in kargs and kargs['url']:
             self.target_id = get_id(kargs['url'])
@@ -26,6 +26,13 @@ class Config(object):
             self.download = True
         else:
             self.download = False
+
+        if "unzipped" in kargs and kargs["unzipped"]:
+            self.unzipped = True
+            self.tmp_path = self.output_path
+        else:
+            self.unzipped = False
+            self.tmp_path = os.path.join(os.getcwd(),'tmp')
         
 config = None
 

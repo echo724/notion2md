@@ -80,7 +80,7 @@ class BlockConvertor:
             information['caption'] = richtext_convertor(payload['caption'])
         if "external" in payload:
             information['url'] = payload['external']['url']
-            name,file_path = downloader(information['url'],self._io,self._config)
+            name,file_path = downloader(information['url'],self._config,self._io)
             information['file_name'] = name
             information['file_path'] = file_path
         if "language" in payload:
@@ -88,7 +88,7 @@ class BlockConvertor:
         # interal url
         if "file" in payload:
             information['url'] = payload['file']['url']
-            name,file_path = downloader(information['url'],self._io,self._config)
+            name,file_path = downloader(information['url'],self._config,self._io)
             information['file_name'] = name
             information['file_path'] = file_path
         # table cells
