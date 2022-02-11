@@ -106,7 +106,7 @@ def table_row(information:list) -> list:
 def synced_block(information:list) -> str:
     return "[//]: # (Synced Block)"
 
-block_type_map = {
+BLOCK_TYPES = {
     "paragraph": paragraph,
     "heading_1": heading_1,
     "heading_2": heading_2,
@@ -172,8 +172,8 @@ def block_convertor(block:object,depth=0) -> str:
     if block_type == "paragraph" and not block['has_children'] and not block[block_type]['text']:
         outcome_block = blank() +"\n\n"
     else:
-        if block_type in block_type_map:
-            outcome_block = block_type_map[block_type](information_collector(block[block_type])) + "\n\n"
+        if block_type in BLOCK_TYPES:
+            outcome_block = BLOCK_TYPES[block_type](information_collector(block[block_type])) + "\n\n"
         else:
             outcome_block = f"[{block_type} is not supported]\n\n"
         if block['has_children']:
