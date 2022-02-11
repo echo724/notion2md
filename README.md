@@ -29,14 +29,17 @@ $ pip install notion2md
 
 ![Terminal output of the `notion2md -h` command](notion2md_options.png)
 
-- Notion2md requires either `id` or `url` of the Notion page/block
-- **Download** option will download files/images in the `path` directory
+- Notion2md requires either `id` or `url` of the Notion page/block.
+
+- **download** option will download files/images in the `path` directory.
+
+- **unzipped** option makes Notion2Md export ***unzipped*** output of Notion block.
 
 ```Bash
 notion2md --download -n post -p ~/MyBlog/content/posts -u https://notion.so/...
 ```
 
-- This command will generate "**post.md**" in your '**~/MyBlog/content/posts**' directory
+- This command will generate "**post.zip**" in your '**~/MyBlog/content/posts**' directory.
 
 ## Usage: Python
 
