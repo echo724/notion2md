@@ -1,5 +1,10 @@
 <!--next-version-placeholder-->
 
+## v2.5.0 (2022-02-11)
+### Feature
+* Change block object convert methods to class ([`0f38d9a`](https://github.com/echo724/notion2md/commit/0f38d9adbc532e16cd04091d3cb8768f01432070))
+* Implemented Cleo for managing cli application ([`305f533`](https://github.com/echo724/notion2md/commit/305f533e770d9d3bfd4104cc38df4a7096bd4f6f))
+
 ## v2.4.1 (2022-02-04)
 ### Fix
 * Fix typo ([`31bda67`](https://github.com/echo724/notion2md/commit/31bda67e083c499dad3c42ed5f520eeeceff9670))
