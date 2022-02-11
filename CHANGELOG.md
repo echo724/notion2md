@@ -1,5 +1,10 @@
 <!--next-version-placeholder-->
 
+## v2.5.1 (2022-02-11)
+### Fix
+* Fix notion2md.config module import error ([`baafa44`](https://github.com/echo724/notion2md/commit/baafa442f608c64dae800038a334bdfe45ee052a))
+* Fix config module not found error ([`7a1f18c`](https://github.com/echo724/notion2md/commit/7a1f18c3234c5c6582737e013dc40683847fa963))
+
 ## v2.5.0 (2022-02-11)
 ### Feature
 * Change block object convert methods to class ([`0f38d9a`](https://github.com/echo724/notion2md/commit/0f38d9adbc532e16cd04091d3cb8768f01432070))
