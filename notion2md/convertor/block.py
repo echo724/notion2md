@@ -1,8 +1,106 @@
 from .richtext import richtext_convertor
-from notion2md.notion_api import get_children
-import concurrent.futures
 from .file import downloader
 
+from notion2md.notion_api import get_children
+from notion2md.config import Config
+
+import concurrent.futures
+
+
+class BlockConvertor:
+    def __init__(self,config,io=None):
+        self._config = config
+        self._io = io
+    
+    @property
+    def config(self):
+        return self._config
+    
+    @config.setter
+    def config(self,**kargs):
+        self._config = Config(**kargs)
+    
+    def convert(self,blocks:dict) -> str:
+        outcome_blocks:str = ""
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            results = executor.map(self.block_convertor,blocks)
+            outcome_blocks = "".join([result for result in results])
+        return outcome_blocks
+    
+    def block_convertor(self,block:dict,depth=0) -> str:
+        outcome_block:str = ""
+        block_type = block['type']
+        #Special Case: Block is blank
+        if block_type == "paragraph" and not block['has_children'] and not block[block_type]['text']:
+            outcome_block = blank() +"\n\n"
+        else:
+            if block_type in BLOCK_TYPES:
+                outcome_block = BLOCK_TYPES[block_type](self.information_collector(block[block_type])) + "\n\n"
+            else:
+                outcome_block = f"[{block_type} is not supported]\n\n"
+            if block['has_children']:
+                if block_type == "child_page":
+                    #call make_child_function
+                    pass
+                elif block_type == 'table':
+                    depth += 1
+                    child_blocks = get_children(block['id'])
+                    table_list = []
+                    for cell_block in child_blocks:
+                        cell_block_type = cell_block['type']
+                        table_list.append(BLOCK_TYPES[cell_block_type](self.information_collector(cell_block[cell_block_type])))
+                    # convert to markdown table
+                    for index,value in enumerate(table_list):
+                        if index == 0:
+                            outcome_block = " | " + " | ".join(value) + " | " + "\n"
+                            outcome_block += " | " + " | ".join(['----'] * len(value)) + " | " + "\n"
+                            continue
+                        outcome_block += " | " + " | ".join(value) + " | " + "\n"
+                    outcome_block += "\n"
+                else:
+                    depth += 1
+                    child_blocks = get_children(block['id'])
+                    for block in child_blocks:
+                        outcome_block += "\t"*depth + self.block_convertor(block,depth)
+        return outcome_block
+
+    def information_collector(self,payload:dict) -> dict:
+        information = dict()
+        if "text" in payload:
+            information['text'] = richtext_convertor(payload['text'])
+        if "icon" in payload:
+            information['icon'] = payload['icon']['emoji']
+        if "checked" in payload:
+            information['checked'] = payload['checked']
+        if "expression" in payload:
+            information['text'] = payload['expression']
+        if "url" in payload:
+            information['url'] = payload['url']
+        if "caption" in payload:
+            information['caption'] = richtext_convertor(payload['caption'])
+        if "external" in payload:
+            information['url'] = payload['external']['url']
+            name,file_path = downloader(information['url'],self._io,self._config)
+            information['file_name'] = name
+            information['file_path'] = file_path
+        if "language" in payload:
+            information['language'] = payload['language']
+        # interal url
+        if "file" in payload:
+            information['url'] = payload['file']['url']
+            name,file_path = downloader(information['url'],self._io,self._config)
+            information['file_name'] = name
+            information['file_path'] = file_path
+        # table cells
+        if "cells" in payload:
+            information['cells'] = payload['cells']
+
+        return information
+    
+    def to_string(self,blocks:dict) -> str:
+        return self.convert(blocks)
+
+# Converting Methods
 def paragraph(information:dict) -> str:
     return information['text']
 
@@ -64,16 +162,16 @@ def image(information:dict) -> str:
     """
     input: item:dict ={"url":str,"text":str,"caption":str}
     """
-    name,file_path = downloader(information['url'])
+    # name,file_path = downloader(information['url'])
 
     if information['caption']:
-        return f"![{name}]({file_path})\n\n{information['caption']}"
+        return f"![{information['file_name']}]({information['file_path']})\n\n{information['caption']}"
     else:
-        return f"![{name}]({file_path})"
+        return f"![{information['file_name']}]({information['file_path']})"
 
 def file(information:dict) -> str:
-    name,file_path = downloader(information['url'])
-    return f"[{name}]({file_path})"
+    # name,file_path = downloader(information['url'])
+    return f"[{information['file_name']}]({information['file_path']})"
 
 def bookmark(information:dict) -> str:
     """
@@ -106,6 +204,7 @@ def table_row(information:list) -> list:
 def synced_block(information:list) -> str:
     return "[//]: # (Synced Block)"
 
+# Block type map
 BLOCK_TYPES = {
     "paragraph": paragraph,
     "heading_1": heading_1,
@@ -128,76 +227,3 @@ BLOCK_TYPES = {
     'table_row': table_row,
     'synced_block':synced_block
 }
-
-def blocks_convertor(blocks:object) -> str:
-    outcome_blocks:str = ""
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        results = executor.map(block_convertor,blocks)
-        outcome_blocks = "".join([result for result in results])
-    return outcome_blocks
-
-def information_collector(payload:dict) -> dict:
-    information = dict()
-    if "text" in payload:
-        information['text'] = richtext_convertor(payload['text'])
-    if "icon" in payload:
-        information['icon'] = payload['icon']['emoji']
-    if "checked" in payload:
-        information['checked'] = payload['checked']
-    if "expression" in payload:
-        information['text'] = payload['expression']
-    if "url" in payload:
-        information['url'] = payload['url']
-    if "caption" in payload:
-        information['caption'] = richtext_convertor(payload['caption'])
-    if "external" in payload:
-        information['url'] = payload['external']['url']
-    if "language" in payload:
-        information['language'] = payload['language']
-    
-    # interal url
-    if "file" in payload:
-        information['url'] = payload['file']['url']
-    
-    # table cells
-    if "cells" in payload:
-        information['cells'] = payload['cells']
-
-    return information
-
-def block_convertor(block:object,depth=0) -> str:
-    outcome_block:str = ""
-    block_type = block['type']
-    #Special Case: Block is blank
-    if block_type == "paragraph" and not block['has_children'] and not block[block_type]['text']:
-        outcome_block = blank() +"\n\n"
-    else:
-        if block_type in BLOCK_TYPES:
-            outcome_block = BLOCK_TYPES[block_type](information_collector(block[block_type])) + "\n\n"
-        else:
-            outcome_block = f"[{block_type} is not supported]\n\n"
-        if block['has_children']:
-            if block_type == "child_page":
-                #call make_child_function
-                pass
-            elif block_type == 'table':
-                depth += 1
-                child_blocks = get_children(block['id'])
-                table_list = []
-                for cell_block in child_blocks:
-                    cell_block_type = cell_block['type']
-                    table_list.append(block_type_map[cell_block_type](information_collector(cell_block[cell_block_type])))
-                # convert to markdown table
-                for index,value in enumerate(table_list):
-                    if index == 0:
-                        outcome_block = " | " + " | ".join(value) + " | " + "\n"
-                        outcome_block += " | " + " | ".join(['----'] * len(value)) + " | " + "\n"
-                        continue
-                    outcome_block += " | " + " | ".join(value) + " | " + "\n"
-                outcome_block += "\n"
-            else:
-                depth += 1
-                child_blocks = get_children(block['id'])
-                for block in child_blocks:
-                    outcome_block += "\t"*depth + block_convertor(block,depth)
-    return outcome_block
