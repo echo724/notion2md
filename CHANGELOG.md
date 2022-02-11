@@ -1,5 +1,9 @@
 <!--next-version-placeholder-->
 
+## v2.5.2 (2022-02-11)
+### Fix
+* Include config.py to the package ([`73078d7`](https://github.com/echo724/notion2md/commit/73078d7a9ff8dc420a4b2d1771325dc2c4275353))
+
 ## v2.5.1 (2022-02-11)
 ### Fix
 * Fix notion2md.config module import error ([`baafa44`](https://github.com/echo724/notion2md/commit/baafa442f608c64dae800038a334bdfe45ee052a))
