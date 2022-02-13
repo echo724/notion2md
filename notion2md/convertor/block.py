@@ -1,24 +1,30 @@
+import sys
+
 from .richtext import richtext_convertor
 from .file import downloader
 
+from clikit.api.io import IO
+
 from notion2md.notion_api import get_children
 from notion2md.config import Config
+from notion2md.exceptions import UnInitializedConfigException
+from notion2md.console.formatter import *
 
 import concurrent.futures
 
 
 class BlockConvertor:
-    def __init__(self,config,io=None):
-        self._config = config
+    def __init__(self,io:IO=None):
         self._io = io
-    
-    @property
-    def config(self):
-        return self._config
-    
-    @config.setter
-    def config(self,**kargs):
-        self._config = Config(**kargs)
+        try:
+            self._config = Config()
+        except UnInitializedConfigException as e:
+            if self._io:
+                self._io.io.write_line(error(e))
+                sys.exit(1)
+            else:
+                print(e)
+                sys.exit(1)
     
     def convert(self,blocks:dict) -> str:
         outcome_blocks:str = ""
@@ -80,7 +86,7 @@ class BlockConvertor:
             information['caption'] = richtext_convertor(payload['caption'])
         if "external" in payload:
             information['url'] = payload['external']['url']
-            name,file_path = downloader(information['url'],self._config,self._io)
+            name,file_path = downloader(information['url'],self._io)
             information['file_name'] = name
             information['file_path'] = file_path
         if "language" in payload:
@@ -88,7 +94,7 @@ class BlockConvertor:
         # interal url
         if "file" in payload:
             information['url'] = payload['file']['url']
-            name,file_path = downloader(information['url'],self._config,self._io)
+            name,file_path = downloader(information['url'],self._io)
             information['file_name'] = name
             information['file_path'] = file_path
         # table cells

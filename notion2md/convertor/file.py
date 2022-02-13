@@ -5,13 +5,21 @@ import uuid
 
 from notion2md.console.formatter import *
 from notion2md.config import Config
+from notion2md.exceptions import UnInitializedConfigException
 
 from clikit.api.io import IO
 
 # Since external file block cannot guarantees
 # whether the file is downloadable or not,
 # there is no external file downloader
-def downloader(url:str,cfg:Config,io:IO=None) -> str:
+def downloader(url:str,io:IO=None) -> str:
+    try:
+        cfg= Config()
+    except UnInitializedConfigException as e:
+        if io:
+            io.write_line(error(e))
+        else:
+            print(e)
     file_name = os.path.basename(urlparse(url).path)
     if cfg.download:
         if file_name:

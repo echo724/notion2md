@@ -1,7 +1,22 @@
 import os
-from notion_client.helpers import get_id
-from notion2md.console.formatter import *
 
+from notion_client.helpers import get_id
+
+from notion2md.console.formatter import *
+from notion2md.exceptions import UnInitializedConfigException
+
+def singleton(cls):
+    instance = {}
+    def get_instance(**kargs):
+        if cls not in instance:
+            if kargs:
+                instance[cls] = cls(**kargs)
+            else:
+                raise UnInitializedConfigException
+        return instance[cls]
+    return get_instance
+
+@singleton
 class Config(object):
     __slots__ = ("file_name", "target_id", "output_path","tmp_path","download","unzipped")
     def __init__(self,**kargs):
@@ -33,13 +48,3 @@ class Config(object):
         else:
             self.unzipped = False
             self.tmp_path = os.path.join(os.getcwd(),'tmp')
-        
-config = None
-
-def set_config(**kargs):
-    global config
-    config = Config(**kargs)
-
-def get_config():
-    global config
-    return config

@@ -9,9 +9,10 @@ from typing import Union
 
 
 from notion2md.console.formatter import *
-from notion2md.config import set_config,get_config
+from notion2md.config import Config
 from notion2md.notion_api import get_children
 from notion2md.convertor.block import BlockConvertor
+from notion2md.exceptions import UnInitializedConfigException
 
 from cleo import option
 from cleo import Command
@@ -45,13 +46,16 @@ class ExportBlockCommand(Command):
 - By default, it will make a zip file in the output path, but if you want unzipped files, pass <code>--unzipped</code> option.
     """
     def handle(self):
-        set_config(**self.option())
-        config = get_config()
+        try:
+            config = Config(**self.option())
+        except UnInitializedConfigException as e:
+            self.line(error(e))
+            sys.exit(1)
         if not config.target_id:
             self.line_error(error("Notion2Md requires either id or url."))
             sys.exit(1)
         start_time = time.time()
-        exporter = BlockConvertor(config,self.io)
+        exporter = BlockConvertor(self.io)
         #Directory Checking and Creating
         if not os.path.exists(config.tmp_path):
             os.makedirs(config.tmp_path)
