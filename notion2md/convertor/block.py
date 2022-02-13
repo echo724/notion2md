@@ -3,7 +3,7 @@ import sys
 from .richtext import richtext_convertor
 from .file import downloader
 
-from clikit.api.io import IO
+from cleo.io.io import IO
 
 from notion2md.notion_api import get_children
 from notion2md.config import Config

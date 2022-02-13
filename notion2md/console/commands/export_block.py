@@ -14,8 +14,8 @@ from notion2md.notion_api import get_children
 from notion2md.convertor.block import BlockConvertor
 from notion2md.exceptions import UnInitializedConfigException
 
-from cleo import option
-from cleo import Command
+from cleo.helpers import option
+from cleo.commands.command import Command
 
 def zip_dir(zip_name: str, source_dir: Union[str, PathLike]):
     src_path = Path(source_dir).expanduser().resolve(strict=True)
@@ -47,7 +47,7 @@ class ExportBlockCommand(Command):
     """
     def handle(self):
         try:
-            config = Config(**self.option())
+            config = Config(**self.io.input.options)
         except UnInitializedConfigException as e:
             self.line(error(e))
             sys.exit(1)

@@ -7,7 +7,7 @@ from notion2md.console.formatter import *
 from notion2md.config import Config
 from notion2md.exceptions import UnInitializedConfigException
 
-from clikit.api.io import IO
+from cleo.io.io import IO
 
 # Since external file block cannot guarantees
 # whether the file is downloadable or not,
