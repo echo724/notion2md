@@ -11,23 +11,30 @@ from clikit.api.io import IO
 # Since external file block cannot guarantees
 # whether the file is downloadable or not,
 # there is no external file downloader
-def downloader(url:str,cfg:Config,io:IO) -> str:
+def downloader(url:str,cfg:Config,io:IO=None) -> str:
     file_name = os.path.basename(urlparse(url).path)
-    if cfg.download and io:
+    if cfg.download:
         if file_name:
             name,ext = os.path.splitext(file_name)
 
             downloaded_file_name = str(uuid.uuid4())[:8]+ext 
             fullpath = os.path.join(cfg.tmp_path,downloaded_file_name)
-                
-            try:
-                io.write_line(status("Downloading",f"{file_name}"))
+            
+            if io:
+                print_output(io,request.urlretrieve(url,fullpath),file_name,downloaded_file_name)
+            else:
                 request.urlretrieve(url,fullpath)
-                io.write_line(status("Downloaded",f'successfully downloaded "{file_name}" -> "{downloaded_file_name}"'))
-                return name,downloaded_file_name
-            except Exception as e:
-                io.write_line(error(f"cannot download {file_name}: {e}"))
+            return name,downloaded_file_name
         else:
-            io.write_line(error(f"unvalid {url}"))
+            if io:
+                io.write_line(error(f"unvalid {url}"))
     else:
         return file_name,url
+
+def print_output(io:IO,fn,file_name,downloaded_file_name):
+    try:
+        io.write_line(status("Downloading",f"{file_name}"))
+        fn()
+        io.write_line(status("Downloaded",f'successfully downloaded "{file_name}" -> "{downloaded_file_name}"'))
+    except Exception as e:
+        io.write_line(error(f"cannot download {file_name}"))
