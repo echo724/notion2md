@@ -1,5 +1,13 @@
 <!--next-version-placeholder-->
 
+## v2.6.1 (2022-02-13)
+### Fix
+* Fix methods' name in exporter __init__ ([`4cada7d`](https://github.com/echo724/notion2md/commit/4cada7da7f86a030284d70612fbfbfc04f13cd5e))
+* Fix output for the case if io is not given ([`457a048`](https://github.com/echo724/notion2md/commit/457a0481fb019ca67447fbd987d321ec6e160796))
+
+### Documentation
+* Add unzipped option explanation ([`00df4d6`](https://github.com/echo724/notion2md/commit/00df4d64b08b2eca97ee331a9fe29f35b2c1543e))
+
 ## v2.6.0 (2022-02-11)
 ### Feature
 * Exporting Notion block files to a single zip ([`d32afde`](https://github.com/echo724/notion2md/commit/d32afde66903c9c7191a2a87b1d2de4b19388909))
