@@ -1,5 +1,9 @@
 <!--next-version-placeholder-->
 
+## v2.6.2 (2022-02-14)
+### Fix
+* Add time indicator while retrieving blocks ([`48532fd`](https://github.com/echo724/notion2md/commit/48532fd8f9a25b1cd2b88f5e271d67b4e94ea8da))
+
 ## v2.6.1 (2022-02-13)
 ### Fix
 * Fix methods' name in exporter __init__ ([`4cada7d`](https://github.com/echo724/notion2md/commit/4cada7da7f86a030284d70612fbfbfc04f13cd5e))
