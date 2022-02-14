@@ -137,3 +137,5 @@ notion2md-output/
 Makefile
 
 poetry.lock
+
+tmp/
