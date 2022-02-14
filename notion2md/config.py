@@ -18,7 +18,7 @@ def singleton(cls):
 
 @singleton
 class Config(object):
-    __slots__ = ("file_name", "target_id", "output_path","tmp_path","download","unzipped")
+    __slots__ = ("file_name", "target_id", "output_path","tmp_path","download","unzipped","path_name")
     def __init__(self,**kargs):
         if "url" in kargs and kargs['url']:
             self.target_id = get_id(kargs['url'])
@@ -33,8 +33,11 @@ class Config(object):
             self.file_name = self.target_id
 
         if "path" in kargs and kargs['path']:
+            self.path_name = kargs['path']
             self.output_path = os.path.abspath(kargs['path'])
+            
         else:
+            self.path_name = 'notion2md-output'
             self.output_path = os.path.join(os.getcwd(),'notion2md-output')
 
         if "download" in kargs and kargs['download']:
