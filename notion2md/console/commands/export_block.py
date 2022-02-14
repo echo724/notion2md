@@ -67,10 +67,10 @@ class ExportBlockCommand(Command):
         with indicator.auto(status("Retrieving",""),status("Retrieved","children blocks in ")):
             blocks = get_children(config.target_id)
         #Write(Export) Markdown file
-        self.line(status("Converting",""))
+        self.line(status("Converting",f"{str(len(blocks))} blocks"))
         with open(os.path.join(config.tmp_path,config.file_name + '.md'),'w',encoding="utf-8") as output:
             output.write(exporter.convert(blocks))
-        status("Converted",f"{str(len(blocks))} blocks to markdown {start_time - time.time():0.1f}s")
+        self.line(status("Converted",f"{str(len(blocks))} blocks to markdown {start_time - time.time():0.1f}s"))
 
         #Compress Output files into a zip file
         if not config.unzipped:
