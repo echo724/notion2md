@@ -18,7 +18,7 @@ def progress(io,stmsg,fnmsg) -> Iterator[None]:
         io.write_line(status("Retrieved","Notion blocks..."))
         yield
     else:
-        indicator = Indicator(io,fmt="{message} ({elapsed:2s})")
+        indicator = Indicator(io,fmt="{message} <dim>({elapsed:2s})</dim>")
         with indicator.auto(
             stmsg,
             fnmsg,
