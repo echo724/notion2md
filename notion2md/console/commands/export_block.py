@@ -44,7 +44,7 @@ class ExportBlockCommand(Command):
 - By default, it won't save files/images in the block object, but if you pass <code>--download</code> option, it will download files/images in the path(<highlight>"notion-output/"</highlight> or <highlight>specific path you entered</highlight>)
 
 - By default, it will make a zip file in the output path, but if you want unzipped files, pass <code>--unzipped</code> option.
-    """
+"""
     def handle(self):
         try:
             config = Config(**self.io.input.options)
@@ -63,14 +63,20 @@ class ExportBlockCommand(Command):
         start_time = time.time()
         #Get actual blocks
         self.line("")
-        indicator = Indicator(self.io,fmt="{message}{elapsed}s")
-        with indicator.auto(status("Retrieving",""),status("Retrieved","children blocks in ")):
+        with progress(
+            self.io,
+            status("Retrieving","Notion blocks..."),
+            sccuess("Retrieved","Notion blocks...")
+        ):
             blocks = get_children(config.target_id)
         #Write(Export) Markdown file
-        self.line(status("Converting",f"{str(len(blocks))} blocks"))
+        self.line(sccuess("Converting",f"<info>{str(len(blocks))}</info> blocks..."))
         with open(os.path.join(config.tmp_path,config.file_name + '.md'),'w',encoding="utf-8") as output:
             output.write(exporter.convert(blocks))
-        self.line(status("Converted",f"{str(len(blocks))} blocks to markdown {start_time - time.time():0.1f}s"))
+        self.line(sccuess(
+            "Converted",
+            f"<info>{str(len(blocks))}</info> blocks to Markdown{f' <dim>({time.time() - start_time:0.1f}s)</dim>' if not self.io.is_debug() else ''}"
+        ))
 
         #Compress Output files into a zip file
         if not config.unzipped:
@@ -80,5 +86,5 @@ class ExportBlockCommand(Command):
         else:
             extension = ".md"
         #Result and Time Check
-        self.line(status("Exported", f'"{config.file_name}{extension}" in "./{config.path_name}/"'))
+        self.line(sccuess("Exported", f'"<info>{config.file_name}{extension}</info>" in "<info>./{config.path_name}/</info>"'))
         self.line("")

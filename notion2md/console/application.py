@@ -38,15 +38,18 @@ class Application(BaseApplication):
         io = super().create_io(input, output, error_output)
 
         formatter = io.output.formatter
-        formatter.set_style("status",Style("green",options=['bold']))
+        formatter.set_style("status",Style("green",options=['bold','dark']))
+        formatter.set_style("sccuess",Style("green",options=['bold']))
         formatter.set_style("error",Style("red",options=['bold']))
-        formatter.set_style("code",Style("green"))
+        formatter.set_style("code",Style("red",options=['italic']))
         formatter.set_style("highlight",Style("blue",options=['bold']))
+        formatter.set_style("dim",Style('default',options=['dark']))
 
         io.output.set_formatter(formatter)
         io.error_output.set_formatter(formatter)
 
         return io
+
     @property
     def _default_definition(self) -> Definition:
         return Definition(
