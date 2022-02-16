@@ -12,7 +12,7 @@ from notion2md.config import Config
 from notion2md.notion_api import get_children
 from notion2md.convertor.block import BlockConvertor
 from notion2md.exceptions import UnInitializedConfigException
-from notion2md.console.ui.indicator import Indicator
+from notion2md.console.ui.indicator import progress
 
 from cleo.helpers import option
 from cleo.commands.command import Command
