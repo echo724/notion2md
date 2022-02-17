@@ -1,10 +1,12 @@
+import os
+import sys
+
 from notion_client import Client  # ,AsyncClient
-import os, sys
-from notion2md.console.formatter import *
+
 
 try:
     notion_client_object = Client(auth=os.environ["NOTION_TOKEN"])
-except:
+except Exception:
     print("Notion Integration Token is not found")
     print(
         """
@@ -18,7 +20,7 @@ except:
         Then run shell command:
 
             $export NOTION_TOKEN="<Your Token>"
-        
+
         If you want to save this environment variable after reboot,
         put upper command in your shell resource(ex: .bashrc or .zshrc)
     """

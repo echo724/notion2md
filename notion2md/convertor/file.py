@@ -1,13 +1,17 @@
-import urllib.request as request
-from urllib.parse import urlparse
 import os
+import urllib.request as request
 import uuid
 
-from notion2md.console.formatter import *
-from notion2md.config import Config
-from notion2md.exceptions import UnInitializedConfigException
+from urllib.parse import urlparse
 
 from cleo.io.io import IO
+
+from notion2md.config import Config
+from notion2md.console.formatter import error
+from notion2md.console.formatter import status
+from notion2md.console.formatter import success
+from notion2md.exceptions import UnInitializedConfigException
+
 
 # Since external file block cannot guarantees
 # whether the file is downloadable or not,
@@ -32,7 +36,7 @@ def downloader(url: str, io: IO = None) -> str:
                 io.write_line(status("Downloading", f"{file_name}"))
                 request.urlretrieve(url, fullpath)
                 io.write_line(
-                    status(
+                    success(
                         "Downloaded",
                         f'successfully downloaded "{file_name}" -> "{downloaded_file_name}"',
                     )

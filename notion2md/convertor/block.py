@@ -1,16 +1,15 @@
+import concurrent.futures
 import sys
-
-from .richtext import richtext_convertor
-from .file import downloader
 
 from cleo.io.io import IO
 
-from notion2md.notion_api import get_children
 from notion2md.config import Config
+from notion2md.console.formatter import error
 from notion2md.exceptions import UnInitializedConfigException
-from notion2md.console.formatter import *
+from notion2md.notion_api import get_children
 
-import concurrent.futures
+from .file import downloader
+from .richtext import richtext_convertor
 
 
 class BlockConvertor:
@@ -65,18 +64,27 @@ class BlockConvertor:
                         cell_block_type = cell_block["type"]
                         table_list.append(
                             BLOCK_TYPES[cell_block_type](
-                                self.information_collector(cell_block[cell_block_type])
+                                self.information_collector(
+                                    cell_block[cell_block_type]
+                                )
                             )
                         )
                     # convert to markdown table
                     for index, value in enumerate(table_list):
                         if index == 0:
-                            outcome_block = " | " + " | ".join(value) + " | " + "\n"
+                            outcome_block = (
+                                " | " + " | ".join(value) + " | " + "\n"
+                            )
                             outcome_block += (
-                                " | " + " | ".join(["----"] * len(value)) + " | " + "\n"
+                                " | "
+                                + " | ".join(["----"] * len(value))
+                                + " | "
+                                + "\n"
                             )
                             continue
-                        outcome_block += " | " + " | ".join(value) + " | " + "\n"
+                        outcome_block += (
+                            " | " + " | ".join(value) + " | " + "\n"
+                        )
                     outcome_block += "\n"
                 else:
                     depth += 1
@@ -166,7 +174,9 @@ def to_do(information: dict) -> str:
     """
     input: item:dict = {"checked":bool, "test":str}
     """
-    return f"- {'[x]' if information['checked'] else '[ ]'} {information['text']}"
+    return (
+        f"- {'[x]' if information['checked'] else '[ ]'} {information['text']}"
+    )
 
 
 # not yet supported
@@ -216,9 +226,7 @@ def bookmark(information: dict) -> str:
     input: item:dict ={"url":str,"text":str,"caption":str}
     """
     if information["caption"]:
-        return (
-            f"![{information['url']}]({information['url']})\n\n{information['caption']}"
-        )
+        return f"![{information['url']}]({information['url']})\n\n{information['caption']}"
     else:
         return f"![{information['url']}]({information['url']})"
 
@@ -228,7 +236,7 @@ def equation(information: dict) -> str:
 
 
 def divider(information: dict) -> str:
-    return f"---"
+    return "---"
 
 
 def blank() -> str:

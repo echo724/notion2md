@@ -43,6 +43,7 @@ annotation_map = {
     "code": code,
 }
 
+
 # Mentions
 def _mention_link(content, url):
     return f"([{content}]({url}])"
@@ -89,7 +90,9 @@ def richtext_word_converter(richtext: dict) -> str:
     elif richtext["type"] == "mention":
         mention_type = richtext["mention"]["type"]
         if mention_type in mention_map:
-            outcome_word = mention_map[mention_type](mention_information(richtext))
+            outcome_word = mention_map[mention_type](
+                mention_information(richtext)
+            )
     else:
         if richtext["href"]:
             outcome_word = text_link(richtext["text"])

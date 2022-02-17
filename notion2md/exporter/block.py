@@ -1,10 +1,10 @@
-from notion2md.convertor.block import BlockConvertor
-from notion2md.config import Config
-from notion2md.notion_api import get_children
-from notion2md.util import zip_dir
-
 import os
 import shutil
+
+from notion2md.config import Config
+from notion2md.convertor.block import BlockConvertor
+from notion2md.notion_api import get_children
+from notion2md.util import zip_dir
 
 
 def block_markdown_exporter(**kargs):
@@ -26,7 +26,8 @@ def block_markdown_exporter(**kargs):
     # Make Zip file and Delete tmp
     if not config.unzipped:
         zip_dir(
-            os.path.join(config.output_path, config.file_name) + ".zip", config.tmp_path
+            os.path.join(config.output_path, config.file_name) + ".zip",
+            config.tmp_path,
         )
         shutil.rmtree(config.tmp_path)
 
@@ -42,7 +43,8 @@ def block_string_exporter(**kargs):
     # Make Zip file and Delete tmp
     if not config.unzipped:
         zip_dir(
-            os.path.join(config.output_path, config.file_name) + ".zip", config.tmp_path
+            os.path.join(config.output_path, config.file_name) + ".zip",
+            config.tmp_path,
         )
         shutil.rmtree(config.tmp_path)
     return md

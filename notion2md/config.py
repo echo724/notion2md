@@ -2,7 +2,6 @@ import os
 
 from notion_client.helpers import get_id
 
-from notion2md.console.formatter import *
 from notion2md.exceptions import UnInitializedConfigException
 
 

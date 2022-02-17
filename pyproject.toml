@@ -25,6 +25,21 @@ isort = "^5.10.1"
 black = "^22.1.0"
 flake8 = "^4.0.1"
 
+[tool.isort]
+profile = "black"
+force_single_line = true
+atomic = true
+include_trailing_comma = true
+lines_after_imports = 2
+lines_between_types = 1
+use_parentheses = true
+src_paths = ["notion2md", "tests"]
+filter_files = true
+known_first_party = "notion2md"
+
+[tool.black]
+line-length = 79
+
 [tool.semantic_release]
 version_variable = [
     "notion2md/__init__.py:__version__",
@@ -33,4 +48,4 @@ version_variable = [
 branch = "main"
 upload_to_pypi = true
 upload_to_release = true
-build_command = "pip install poetry && poetry build"
+build_command = "poetry build"

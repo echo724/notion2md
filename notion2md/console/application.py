@@ -1,21 +1,21 @@
-from notion2md import __version__
+from typing import List
+from typing import Optional
 
 from cleo.application import Application as BaseApplication
-from cleo.io.inputs.input import Input
-from cleo.io.io import IO
-from cleo.io.outputs.output import Output
-from cleo.formatters.style import Style
-from cleo.io.inputs.argument import Argument
-from cleo.io.inputs.definition import Definition
-from cleo.io.inputs.option import Option
 from cleo.commands.command import Command
 from cleo.commands.completions_command import CompletionsCommand
 from cleo.commands.help_command import HelpCommand
+from cleo.formatters.style import Style
+from cleo.io.inputs.argument import Argument
+from cleo.io.inputs.definition import Definition
+from cleo.io.inputs.input import Input
+from cleo.io.inputs.option import Option
+from cleo.io.io import IO
+from cleo.io.outputs.output import Output
 
+from notion2md import __version__
 
 from .commands.export_block import ExportBlockCommand
-
-from typing import Optional, List
 
 
 class Application(BaseApplication):
@@ -38,7 +38,7 @@ class Application(BaseApplication):
 
         formatter = io.output.formatter
         formatter.set_style("status", Style("green", options=["bold", "dark"]))
-        formatter.set_style("sccuess", Style("green", options=["bold"]))
+        formatter.set_style("success", Style("green", options=["bold"]))
         formatter.set_style("error", Style("red", options=["bold"]))
         formatter.set_style("code", Style("red", options=["italic"]))
         formatter.set_style("highlight", Style("blue", options=["bold"]))

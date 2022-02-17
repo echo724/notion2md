@@ -1,11 +1,11 @@
+import time
+
+from contextlib import contextmanager
+from typing import Iterator
+
 from cleo.ui.progress_indicator import ProgressIndicator
 
 from notion2md.console.formatter import status
-
-import time
-from contextlib import contextmanager
-
-from typing import Iterator
 
 
 class Indicator(ProgressIndicator):

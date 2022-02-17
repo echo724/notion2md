@@ -1,19 +1,20 @@
-import os, sys
-import time
+import os
 import shutil
+import sys
+import time
 
-from typing import Union
+from cleo.commands.command import Command
+from cleo.helpers import option
 
-from notion2md.console.ui.indicator import progress
-from notion2md.console.formatter import *
 from notion2md.config import Config
-from notion2md.notion_api import get_children
+from notion2md.console.formatter import error
+from notion2md.console.formatter import status
+from notion2md.console.formatter import success
+from notion2md.console.ui.indicator import progress
 from notion2md.convertor.block import BlockConvertor
 from notion2md.exceptions import UnInitializedConfigException
+from notion2md.notion_api import get_children
 from notion2md.util import zip_dir
-
-from cleo.helpers import option
-from cleo.commands.command import Command
 
 
 class ExportBlockCommand(Command):
@@ -24,22 +25,37 @@ class ExportBlockCommand(Command):
         option("url", "u", "The url of Notion block object.", flag=False),
         option("id", "i", "The id of Notion block object.", flag=False),
         option("name", "n", "The name of Notion block object", flag=False),
-        option("path", "p", "The path to save exported markdown file.", flag=False),
+        option(
+            "path", "p", "The path to save exported markdown file.", flag=False
+        ),
         option(
             "download",
             None,
             "Download files/images inside of the block object",
             flag=True,
         ),
-        option("unzipped", None, "Download unzipped output files/images", flag=True),
+        option(
+            "unzipped",
+            None,
+            "Download unzipped output files/images",
+            flag=True,
+        ),
     ]
     help = """The block command retrieves and exports Notion <highlight>block object</highlight> to markdownfile.
 
-- By default, the <highlight>id</highlight> of the block will be the name of markdown file, but if you path a value after <code>--name/-n</code>, the value will be the name of the markdown file.
-    
+- By default, the <highlight>id</highlight> of the block will be the name of markdown file,
+
+but if you path a value after <code>--name/-n</code>, the value will be the name of the markdown file.
+
+
 - It will save the exported zip file in the path(<highlight>"notion-output/"</highlight> or <highlight>specific path you entered</highlight>)
 
-- By default, it won't save files/images in the block object, but if you pass <code>--download</code> option, it will download files/images in the path(<highlight>"notion-output/"</highlight> or <highlight>specific path you entered</highlight>)
+- By default, it won't save files/images in the block object,
+
+but if you pass <code>--download</code> option, it will download files/images in the path(<highlight>"notion-output/"</highlight>
+
+or <highlight>specific path you entered</highlight>)
+
 
 - By default, it will make a zip file in the output path, but if you want unzipped files, pass <code>--unzipped</code> option.
 """
@@ -48,7 +64,7 @@ class ExportBlockCommand(Command):
         self.line(status(st, msg))
 
     def success(self, st, msg):
-        self.line(sccuess(st, msg))
+        self.line(success(st, msg))
 
     def error(self, msg):
         self.line_error(error(msg))
@@ -73,18 +89,20 @@ class ExportBlockCommand(Command):
         with progress(
             self.io,
             status("Retrieving", "Notion blocks..."),
-            sccuess("Retrieved", "Notion blocks..."),
+            success("Retrieved", "Notion blocks..."),
         ):
             blocks = get_children(config.target_id)
         # Write(Export) Markdown file
-        self.sccuess("Converting", f"<info>{str(len(blocks))}</info> blocks...")
+        self.success(
+            "Converting", f"<info>{str(len(blocks))}</info> blocks..."
+        )
         with open(
             os.path.join(config.tmp_path, config.file_name + ".md"),
             "w",
             encoding="utf-8",
         ) as output:
             output.write(exporter.convert(blocks))
-        self.sccuess(
+        self.success(
             "Converted",
             f"<info>{str(len(blocks))}</info> blocks to Markdown{f' <dim>({time.time() - start_time:0.1f}s)</dim>' if not self.io.is_debug() else ''}",
         )
@@ -100,7 +118,7 @@ class ExportBlockCommand(Command):
         else:
             extension = ".md"
         # Result and Time Check
-        self.sccuess(
+        self.success(
             "Exported",
             f'"<info>{config.file_name}{extension}</info>" in "<info>./{config.path_name}/</info>"',
         )

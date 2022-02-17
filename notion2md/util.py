@@ -1,9 +1,8 @@
-from pathlib import Path
-from zipfile import ZIP_DEFLATED, ZipFile
 from os import PathLike
-import shutil
-
+from pathlib import Path
 from typing import Union
+from zipfile import ZIP_DEFLATED
+from zipfile import ZipFile
 
 
 def zip_dir(zip_name: str, source_dir: Union[str, PathLike]):
