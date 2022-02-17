@@ -15,35 +15,34 @@ from cleo.commands.help_command import HelpCommand
 
 from .commands.export_block import ExportBlockCommand
 
-from typing import Optional,List
+from typing import Optional, List
+
 
 class Application(BaseApplication):
     def __init__(self):
-        super(Application,self).__init__(
-            "notion2md",__version__
-        )
-        self._default_command = 'block'
+        super(Application, self).__init__("notion2md", __version__)
+        self._default_command = "block"
         self._single_command = True
 
     @property
     def default_commands(self) -> List[Command]:
-        return [HelpCommand(),ExportBlockCommand(),CompletionsCommand()]
-    
+        return [HelpCommand(), ExportBlockCommand(), CompletionsCommand()]
+
     def create_io(
-        self, 
-        input: Optional[Input] = None, 
-        output: Optional[Output] = None, 
-        error_output: Optional[Output] = None
-        ) -> IO:
+        self,
+        input: Optional[Input] = None,
+        output: Optional[Output] = None,
+        error_output: Optional[Output] = None,
+    ) -> IO:
         io = super().create_io(input, output, error_output)
 
         formatter = io.output.formatter
-        formatter.set_style("status",Style("green",options=['bold','dark']))
-        formatter.set_style("sccuess",Style("green",options=['bold']))
-        formatter.set_style("error",Style("red",options=['bold']))
-        formatter.set_style("code",Style("red",options=['italic']))
-        formatter.set_style("highlight",Style("blue",options=['bold']))
-        formatter.set_style("dim",Style('default',options=['dark']))
+        formatter.set_style("status", Style("green", options=["bold", "dark"]))
+        formatter.set_style("sccuess", Style("green", options=["bold"]))
+        formatter.set_style("error", Style("red", options=["bold"]))
+        formatter.set_style("code", Style("red", options=["italic"]))
+        formatter.set_style("highlight", Style("blue", options=["bold"]))
+        formatter.set_style("dim", Style("default", options=["dark"]))
 
         io.output.set_formatter(formatter)
         io.error_output.set_formatter(formatter)
@@ -77,8 +76,10 @@ class Application(BaseApplication):
             ]
         )
 
+
 def main():
     Application().run()
+
 
 if __name__ == "__main__":
     main()

@@ -7,18 +7,20 @@ from contextlib import contextmanager
 
 from typing import Iterator
 
+
 class Indicator(ProgressIndicator):
     def _formatter_elapsed(self):
         elapsed = time.time() - self._start_time
         return f"{elapsed:0.1f}s"
 
+
 @contextmanager
-def progress(io,stmsg,fnmsg) -> Iterator[None]:
+def progress(io, stmsg, fnmsg) -> Iterator[None]:
     if io.is_debug():
-        io.write_line(status("Retrieved","Notion blocks..."))
+        io.write_line(status("Retrieved", "Notion blocks..."))
         yield
     else:
-        indicator = Indicator(io,fmt="{message} <dim>({elapsed:2s})</dim>")
+        indicator = Indicator(io, fmt="{message} <dim>({elapsed:2s})</dim>")
         with indicator.auto(
             stmsg,
             fnmsg,

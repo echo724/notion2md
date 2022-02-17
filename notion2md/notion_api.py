@@ -1,5 +1,5 @@
-from notion_client import Client #,AsyncClient
-import os,sys
+from notion_client import Client  # ,AsyncClient
+import os, sys
 from notion2md.console.formatter import *
 
 try:
@@ -7,7 +7,7 @@ try:
 except:
     print("Notion Integration Token is not found")
     print(
-    """
+        """
         Welcome to notion2md!
 
         To get started, you need to save your Notion Integration Token.
@@ -26,5 +26,6 @@ except:
     sys.exit(1)
 # notion_async_client = AsyncClient(auth=os.environ["NOTION_TOKEN"])
 
+
 def get_children(parent_id):
-    return notion_client_object.blocks.children.list(parent_id)['results']
+    return notion_client_object.blocks.children.list(parent_id)["results"]

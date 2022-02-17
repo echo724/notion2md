@@ -20,6 +20,7 @@ notion2md = 'notion2md.console.application:main'
 
 [tool.poetry.dev-dependencies]
 python-semantic-release = "^7.23.0"
+black = "^22.1.0"
 
 [tool.semantic_release]
 version_variable = [
