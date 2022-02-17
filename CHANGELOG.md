@@ -1,5 +1,9 @@
 <!--next-version-placeholder-->
 
+## v2.6.3 (2022-02-17)
+### Fix
+* Fix block_string_exporter not downloading files ([`f46f31c`](https://github.com/echo724/notion2md/commit/f46f31cc4629b8e976028fb5fe25c9ef9d11e5d2))
+
 ## v2.6.2 (2022-02-14)
 ### Fix
 * Add time indicator while retrieving blocks ([`48532fd`](https://github.com/echo724/notion2md/commit/48532fd8f9a25b1cd2b88f5e271d67b4e94ea8da))
