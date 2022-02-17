@@ -1,5 +1,15 @@
 repos:
+  - repo: https://github.com/pycqa/isort
+    rev: ''
+    hooks:
+      - id: isort 
+
   - repo: https://github.com/psf/black
     rev: stable
     hooks:
       - id: black
+  
+  - repo: https://github.com/pycqa/flake8
+    rev: ''
+    hooks:
+      - id: flake8

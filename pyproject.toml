@@ -20,8 +20,10 @@ notion2md = 'notion2md.console.application:main'
 
 [tool.poetry.dev-dependencies]
 python-semantic-release = "^7.23.0"
-black = "^22.1.0"
 pre-commit = "^2.17.0"
+isort = "^5.10.1"
+black = "^22.1.0"
+flake8 = "^4.0.1"
 
 [tool.semantic_release]
 version_variable = [
