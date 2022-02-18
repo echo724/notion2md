@@ -1,5 +1,9 @@
 <!--next-version-placeholder-->
 
+## v2.7.0 (2022-02-18)
+### Feature
+* Add a case if there is no extension, notion2md won't download the file ([`a8965a8`](https://github.com/echo724/notion2md/commit/a8965a833856fe713128dbedb5146b06c5ddc724))
+
 ## v2.6.3 (2022-02-17)
 ### Fix
 * Fix block_string_exporter not downloading files ([`f46f31c`](https://github.com/echo724/notion2md/commit/f46f31cc4629b8e976028fb5fe25c9ef9d11e5d2))
