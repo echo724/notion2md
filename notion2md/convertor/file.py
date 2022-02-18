@@ -29,6 +29,9 @@ def downloader(url: str, io: IO = None) -> str:
         if file_name:
             name, ext = os.path.splitext(file_name)
 
+            if not ext:
+                return file_name, url
+
             downloaded_file_name = str(uuid.uuid4())[:8] + ext
             fullpath = os.path.join(cfg.tmp_path, downloaded_file_name)
 
