@@ -17,6 +17,16 @@ from notion2md.notion_api import get_children
 from notion2md.util import zip_dir
 
 
+ARGS_NEW_KEY_MAP = {
+    "id": "block_id",
+    "url": "block_url",
+    "name": "output_filename",
+    "path": "output_path",
+    "download": "download",
+    "unzipped": "unzipped",
+}
+
+
 class ExportBlockCommand(Command):
     name = "block"
     description = "Export a Notion block object to markdown."
@@ -71,8 +81,14 @@ or <highlight>specific path you entered</highlight>)
         sys.exit(1)
 
     def handle(self):
+        args = {}
+        for k, v in self.io.input.options.items():
+            if k in ARGS_NEW_KEY_MAP:
+                args[ARGS_NEW_KEY_MAP[k]] = v
+            else:
+                pass
         try:
-            config = Config(**self.io.input.options)
+            config = Config(**args)
         except UnInitializedConfigException as e:
             self.error(e)
         if not config.target_id:

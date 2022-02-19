@@ -31,33 +31,41 @@ class Config(object):
         "path_name",
     )
 
-    def __init__(self, **kargs):
-        if "url" in kargs and kargs["url"]:
-            self.target_id = get_id(kargs["url"])
-        elif "id" in kargs and kargs["id"]:
-            self.target_id = kargs["id"]
+    def __init__(
+        self,
+        block_id: str = None,
+        block_url: str = None,
+        output_filename: str = None,
+        output_path: str = None,
+        download: bool = False,
+        unzipped: bool = False,
+    ):
+        if block_url:
+            self.target_id = get_id(block_url)
+        elif block_id:
+            self.target_id = block_id
         else:
             self.target_id = ""
 
-        if "name" in kargs and kargs["name"]:
-            self.file_name = kargs["name"]
+        if output_filename:
+            self.file_name = output_filename
         else:
             self.file_name = self.target_id
 
-        if "path" in kargs and kargs["path"]:
-            self.path_name = kargs["path"]
-            self.output_path = os.path.abspath(kargs["path"])
+        if output_path:
+            self.path_name = output_path
+            self.output_path = os.path.abspath(output_path)
 
         else:
             self.path_name = "notion2md-output"
             self.output_path = os.path.join(os.getcwd(), "notion2md-output")
 
-        if "download" in kargs and kargs["download"]:
+        if download:
             self.download = True
         else:
             self.download = False
 
-        if "unzipped" in kargs and kargs["unzipped"]:
+        if unzipped:
             self.unzipped = True
             self.tmp_path = self.output_path
         else:
