@@ -1,5 +1,9 @@
 <!--next-version-placeholder-->
 
+## v2.7.1 (2022-02-19)
+### Fix
+* Indicate parameters explicitly in Config Object ([`7ea65a4`](https://github.com/echo724/notion2md/commit/7ea65a432cc860bdc294984344bd5f43c7d6b885))
+
 ## v2.7.0 (2022-02-18)
 ### Feature
 * Add a case if there is no extension, notion2md won't download the file ([`a8965a8`](https://github.com/echo724/notion2md/commit/a8965a833856fe713128dbedb5146b06c5ddc724))
