@@ -15,9 +15,8 @@ def markdown_exporter(
     download: bool = False,
     unzipped: bool = False,
 ):
-    config = Config(
-        block_id, block_url, output_filename, output_path, download, unzipped
-    )
+    args = locals()
+    config = Config(**args)
     # Directory Checking and Creating
     if not os.path.exists(config.tmp_path):
         os.makedirs(config.tmp_path)
@@ -49,9 +48,8 @@ def string_exporter(
     download: bool = False,
     unzipped: bool = False,
 ):
-    config = Config(
-        block_id, block_url, output_filename, output_path, download, unzipped
-    )
+    args = locals()
+    config = Config(**args)
     if config.download and not os.path.exists(config.output_path):
         os.mkdir(config.output_path)
     if not config.unzipped and not os.path.exists(config.tmp_path):
