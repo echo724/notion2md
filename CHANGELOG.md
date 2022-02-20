@@ -1,5 +1,9 @@
 <!--next-version-placeholder-->
 
+## v2.7.2 (2022-02-20)
+### Fix
+* Change importing method names typo ([`f14ad98`](https://github.com/echo724/notion2md/commit/f14ad98d3f48ffeb874594fab77af2c47136e51c))
+
 ## v2.7.1 (2022-02-19)
 ### Fix
 * Indicate parameters explicitly in Config Object ([`7ea65a4`](https://github.com/echo724/notion2md/commit/7ea65a432cc860bdc294984344bd5f43c7d6b885))
