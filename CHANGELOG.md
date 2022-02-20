@@ -1,5 +1,9 @@
 <!--next-version-placeholder-->
 
+## v2.7.3 (2022-02-20)
+### Fix
+* Fix exporter methods passing positional arguments to Config class to dict ([`3c66ca3`](https://github.com/echo724/notion2md/commit/3c66ca3b094f7511b0107c62cb5e80f9408a3a30))
+
 ## v2.7.2 (2022-02-20)
 ### Fix
 * Change importing method names typo ([`f14ad98`](https://github.com/echo724/notion2md/commit/f14ad98d3f48ffeb874594fab77af2c47136e51c))
