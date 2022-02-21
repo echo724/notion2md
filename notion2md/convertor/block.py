@@ -226,9 +226,9 @@ def bookmark(information: dict) -> str:
     input: item:dict ={"url":str,"text":str,"caption":str}
     """
     if information["caption"]:
-        return f"![{information['url']}]({information['url']})\n\n{information['caption']}"
+        return f"[{information['url']}]({information['url']})\n\n{information['caption']}"
     else:
-        return f"![{information['url']}]({information['url']})"
+        return f"[{information['url']}]({information['url']})"
 
 
 def equation(information: dict) -> str:
