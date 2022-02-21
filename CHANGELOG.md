@@ -1,5 +1,9 @@
 <!--next-version-placeholder-->
 
+## v2.7.4 (2022-02-21)
+### Fix
+* Remove exclamation mark in front of square brackets in bookmark convertor ([`4c37b0d`](https://github.com/echo724/notion2md/commit/4c37b0dc2564c0b55f57e65bb1b576f8e70e47bd))
+
 ## v2.7.3 (2022-02-20)
 ### Fix
 * Fix exporter methods passing positional arguments to Config class to dict ([`3c66ca3`](https://github.com/echo724/notion2md/commit/3c66ca3b094f7511b0107c62cb5e80f9408a3a30))
