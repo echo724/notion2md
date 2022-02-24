@@ -49,13 +49,13 @@ notion2md --download -n post -p ~/MyBlog/content/posts -u https://notion.so/...
 ## Usage: Python
 
 ```Python
-from notion2md.exporter import block_markdown_exporter, block_string_exporter
+from notion2md.exporter import markdown_exporter, string_exporter
 
 # block_markdown_exporter will make markdown file on your output path
-block_markdown_exporter(id='...',path='...',download=True)
+markdown_exporter(page_id='...',output_path='...',download=True)
 
 # block_string_exporter will return output as String type
-md = block_string_exporter(id='...',path='...')
+md = string_exporter(page_id='...',output_path='...')
 ```
 
 ## To-do
