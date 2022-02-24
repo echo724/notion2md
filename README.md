@@ -10,6 +10,10 @@
 
 - Notion Markdown Exporter using **official notion api** by [notion-sdk-py](https://github.com/ramnes/notion-sdk-py)
 
+### Notion2Medium
+
+- Check out [Notion2Medium](https://github.com/echo724/notion2medium) that publishes a **Medium** post from **Notion** using Notion2Md.
+
 ## API Key(Token)
 
 - Before getting started, create [an integration and find the token](https://www.notion.so/my-integrations). → [Learn more about authorization](https://developers.notion.com/docs/authorization).
