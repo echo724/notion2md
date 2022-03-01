@@ -1,38 +1,35 @@
 import concurrent.futures
-import sys
+import os
+import urllib.request as request
+import uuid
+
+from urllib.parse import urlparse
 
 from cleo.io.io import IO
 
 from notion2md.config import Config
 from notion2md.console.formatter import error
+from notion2md.console.formatter import status
+from notion2md.console.formatter import success
 from notion2md.exceptions import UnInitializedConfigException
 from notion2md.notion_api import get_children
 
-from .file import downloader
 from .richtext import richtext_convertor
 
 
 class BlockConvertor:
-    def __init__(self, io: IO = None):
+    def __init__(self, config: Config, io: IO = None):
         self._io = io
-        try:
-            self._config = Config()
-        except UnInitializedConfigException as e:
-            if self._io:
-                self._io.io.write_line(error(e))
-                sys.exit(1)
-            else:
-                print(e)
-                sys.exit(1)
+        self._config = config
 
     def convert(self, blocks: dict) -> str:
         outcome_blocks: str = ""
         with concurrent.futures.ThreadPoolExecutor() as executor:
-            results = executor.map(self.block_convertor, blocks)
+            results = executor.map(self.convert_block, blocks)
             outcome_blocks = "".join([result for result in results])
         return outcome_blocks
 
-    def block_convertor(self, block: dict, depth=0) -> str:
+    def convert_block(self, block: dict, depth=0) -> str:
         outcome_block: str = ""
         block_type = block["type"]
         # Special Case: Block is blank
@@ -46,7 +43,7 @@ class BlockConvertor:
             if block_type in BLOCK_TYPES:
                 outcome_block = (
                     BLOCK_TYPES[block_type](
-                        self.information_collector(block[block_type])
+                        self.collect_info(block[block_type])
                     )
                     + "\n\n"
                 )
@@ -64,9 +61,7 @@ class BlockConvertor:
                         cell_block_type = cell_block["type"]
                         table_list.append(
                             BLOCK_TYPES[cell_block_type](
-                                self.information_collector(
-                                    cell_block[cell_block_type]
-                                )
+                                self.collect_info(cell_block[cell_block_type])
                             )
                         )
                     # convert to markdown table
@@ -90,152 +85,184 @@ class BlockConvertor:
                     depth += 1
                     child_blocks = get_children(block["id"])
                     for block in child_blocks:
-                        outcome_block += "\t" * depth + self.block_convertor(
+                        outcome_block += "\t" * depth + self.convert_block(
                             block, depth
                         )
         return outcome_block
 
-    def information_collector(self, payload: dict) -> dict:
-        information = dict()
+    def collect_info(self, payload: dict) -> dict:
+        info = dict()
         if "text" in payload:
-            information["text"] = richtext_convertor(payload["text"])
+            info["text"] = richtext_convertor(payload["text"])
         if "icon" in payload:
-            information["icon"] = payload["icon"]["emoji"]
+            info["icon"] = payload["icon"]["emoji"]
         if "checked" in payload:
-            information["checked"] = payload["checked"]
+            info["checked"] = payload["checked"]
         if "expression" in payload:
-            information["text"] = payload["expression"]
+            info["text"] = payload["expression"]
         if "url" in payload:
-            information["url"] = payload["url"]
+            info["url"] = payload["url"]
         if "caption" in payload:
-            information["caption"] = richtext_convertor(payload["caption"])
+            info["caption"] = richtext_convertor(payload["caption"])
         if "external" in payload:
-            information["url"] = payload["external"]["url"]
-            name, file_path = downloader(information["url"], self._io)
-            information["file_name"] = name
-            information["file_path"] = file_path
+            info["url"] = payload["external"]["url"]
+            name, file_path = self.download_file(info["url"])
+            info["file_name"] = name
+            info["file_path"] = file_path
         if "language" in payload:
-            information["language"] = payload["language"]
+            info["language"] = payload["language"]
         # interal url
         if "file" in payload:
-            information["url"] = payload["file"]["url"]
-            name, file_path = downloader(information["url"], self._io)
-            information["file_name"] = name
-            information["file_path"] = file_path
+            info["url"] = payload["file"]["url"]
+            name, file_path = self.download_file(info["url"])
+            info["file_name"] = name
+            info["file_path"] = file_path
         # table cells
         if "cells" in payload:
-            information["cells"] = payload["cells"]
+            info["cells"] = payload["cells"]
 
-        return information
+        return info
+
+    def download_file(self, url: str) -> str:
+        file_name = os.path.basename(urlparse(url).path)
+        if self._config.download:
+            if file_name:
+                name, extentsion = os.path.splitext(file_name)
+
+                if not extentsion:
+                    return file_name, url
+
+                downloaded_file_name = str(uuid.uuid4())[:8] + extentsion
+                fullpath = os.path.join(
+                    self._config.tmp_path, downloaded_file_name
+                )
+
+                if self._io:
+                    self._io.write_line(status("Downloading", f"{file_name}"))
+                    request.urlretrieve(url, fullpath)
+                    self._io.write_line(
+                        success(
+                            "Downloaded",
+                            f'successfully downloaded "{file_name}" -> "{downloaded_file_name}"',
+                        )
+                    )
+                else:
+                    request.urlretrieve(url, fullpath)
+                return name, downloaded_file_name
+            else:
+                if self._io:
+                    self._io.write_line(error(f"invalid {url}"))
+        else:
+            return file_name, url
 
     def to_string(self, blocks: dict) -> str:
         return self.convert(blocks)
 
 
 # Converting Methods
-def paragraph(information: dict) -> str:
-    return information["text"]
+def paragraph(info: dict) -> str:
+    return info["text"]
 
 
-def heading_1(information: dict) -> str:
-    return f"# {information['text']}"
+def heading_1(info: dict) -> str:
+    return f"# {info['text']}"
 
 
-def heading_2(information: dict) -> str:
-    return f"## {information['text']}"
+def heading_2(info: dict) -> str:
+    return f"## {info['text']}"
 
 
-def heading_3(information: dict) -> str:
-    return f"### {information['text']}"
+def heading_3(info: dict) -> str:
+    return f"### {info['text']}"
 
 
-def callout(information: dict) -> str:
-    return f"{information['icon']} {information['text']}"
+def callout(info: dict) -> str:
+    return f"{info['icon']} {info['text']}"
 
 
-def quote(information: dict) -> str:
-    return f"> {information['text']}"
+def quote(info: dict) -> str:
+    return f"> {info['text']}"
 
 
 # toggle item will be changed as bulleted list item
-def bulleted_list_item(information: dict) -> str:
-    return f"- {information['text']}"
+def bulleted_list_item(info: dict) -> str:
+    return f"- {info['text']}"
 
 
 # numbering is not supported
-def numbered_list_item(information: dict) -> str:
+def numbered_list_item(info: dict) -> str:
     """
     input: item:dict = {"number":int, "text":str}
     """
-    return f"1. {information['text']}"
+    return f"1. {info['text']}"
 
 
-def to_do(information: dict) -> str:
+def to_do(info: dict) -> str:
     """
     input: item:dict = {"checked":bool, "test":str}
     """
-    return (
-        f"- {'[x]' if information['checked'] else '[ ]'} {information['text']}"
-    )
+    return f"- {'[x]' if info['checked'] else '[ ]'} {info['text']}"
 
 
 # not yet supported
 # child_database will be changed as child page
-# def child_page(information:dict) -> str:
+# def child_page(info:dict) -> str:
 #     """
 #     input: item:dict = {"id":str,"text":str}
 #     """
-#     #make_page(information['id'])
-#     text = information['text']
+#     #make_page(info['id'])
+#     text = info['text']
 #     return f'[{text}]({text})'
 
 
-def code(information: dict) -> str:
+def code(info: dict) -> str:
     """
     input: item:dict = {"language":str,"text":str}
     """
-    return f"\n```{information['language']}\n{information['text']}\n```"
+    return f"\n```{info['language']}\n{info['text']}\n```"
 
 
-def embed(information: dict) -> str:
+def embed(info: dict) -> str:
     """
     input: item:dict ={"url":str,"text":str}
     """
-    return f"[{information['url']}]({information['url']})"
+    return f"[{info['url']}]({info['url']})"
 
 
-def image(information: dict) -> str:
+def image(info: dict) -> str:
     """
     input: item:dict ={"url":str,"text":str,"caption":str}
     """
-    # name,file_path = downloader(information['url'])
+    # name,file_path = downloader(info['url'])
 
-    if information["caption"]:
-        return f"![{information['file_name']}]({information['file_path']})\n\n{information['caption']}"
+    if info["caption"]:
+        return (
+            f"![{info['file_name']}]({info['file_path']})\n\n{info['caption']}"
+        )
     else:
-        return f"![{information['file_name']}]({information['file_path']})"
+        return f"![{info['file_name']}]({info['file_path']})"
 
 
-def file(information: dict) -> str:
-    # name,file_path = downloader(information['url'])
-    return f"[{information['file_name']}]({information['file_path']})"
+def file(info: dict) -> str:
+    # name,file_path = downloader(info['url'])
+    return f"[{info['file_name']}]({info['file_path']})"
 
 
-def bookmark(information: dict) -> str:
+def bookmark(info: dict) -> str:
     """
     input: item:dict ={"url":str,"text":str,"caption":str}
     """
-    if information["caption"]:
-        return f"[{information['url']}]({information['url']})\n\n{information['caption']}"
+    if info["caption"]:
+        return f"[{info['url']}]({info['url']})\n\n{info['caption']}"
     else:
-        return f"[{information['url']}]({information['url']})"
+        return f"[{info['url']}]({info['url']})"
 
 
-def equation(information: dict) -> str:
-    return f"$$ {information['text']} $$"
+def equation(info: dict) -> str:
+    return f"$$ {info['text']} $$"
 
 
-def divider(information: dict) -> str:
+def divider(info: dict) -> str:
     return "---"
 
 
@@ -243,18 +270,18 @@ def blank() -> str:
     return "<br/>"
 
 
-def table_row(information: list) -> list:
+def table_row(info: list) -> list:
     """
     input: item:list = [[richtext],....]
     """
     column_list = []
-    for column in information["cells"]:
+    for column in info["cells"]:
         column_list.append(richtext_convertor(column))
     return column_list
 
 
 # Since Synced Block has only child blocks, not name, it will return blank
-def synced_block(information: list) -> str:
+def synced_block(info: list) -> str:
     return "[//]: # (Synced Block)"
 
 
