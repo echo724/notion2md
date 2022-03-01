@@ -1,3 +1,15 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See
+[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+### [2.7.5](https://github.com/echo724/notion2md/compare/v2.7.4...v2.7.5) (2022-03-01)
+
+
+### Bug Fixes
+
+* Remove Singleton pattern in Config class ([#31](https://github.com/echo724/notion2md/issues/31)) ([2de75e3](https://github.com/echo724/notion2md/commit/2de75e367e1a4cea0bf8c4c0bd31b05f805e8f8b))
+
 <!--next-version-placeholder-->
 
 ## v2.7.4 (2022-02-21)
