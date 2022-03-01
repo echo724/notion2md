@@ -2,24 +2,7 @@ import os
 
 from notion_client.helpers import get_id
 
-from notion2md.exceptions import UnInitializedConfigException
 
-
-def singleton(cls):
-    instance = {}
-
-    def get_instance(**kargs):
-        if cls not in instance:
-            if kargs:
-                instance[cls] = cls(**kargs)
-            else:
-                raise UnInitializedConfigException
-        return instance[cls]
-
-    return get_instance
-
-
-@singleton
 class Config(object):
     __slots__ = (
         "file_name",

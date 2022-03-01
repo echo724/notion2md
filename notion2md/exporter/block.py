@@ -30,7 +30,7 @@ def markdown_exporter(
         "w",
         encoding="utf-8",
     ) as output:
-        output.write(BlockConvertor().convert(blocks))
+        output.write(BlockConvertor(config).convert(blocks))
     # Make Zip file and Delete tmp
     if not config.unzipped:
         zip_dir(
@@ -55,7 +55,7 @@ def string_exporter(
     if not config.unzipped and not os.path.exists(config.tmp_path):
         os.makedirs(config.tmp_path)
     blocks = get_children(config.target_id)
-    md = BlockConvertor().to_string(blocks)
+    md = BlockConvertor(config).to_string(blocks)
     # Make Zip file and Delete tmp
     if not config.unzipped:
         zip_dir(

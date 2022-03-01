@@ -93,7 +93,7 @@ or <highlight>specific path you entered</highlight>)
             self.error(e)
         if not config.target_id:
             self.error("Notion2Md requires either id or url.")
-        exporter = BlockConvertor(self.io)
+        exporter = BlockConvertor(config, self.io)
         # Directory Checking and Creating
         if not os.path.exists(config.tmp_path):
             os.makedirs(config.tmp_path)
