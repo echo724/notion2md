@@ -12,8 +12,7 @@ from notion2md.console.formatter import status
 from notion2md.console.formatter import success
 from notion2md.console.ui.indicator import progress
 from notion2md.convertor.block import BlockConvertor
-from notion2md.exceptions import UnInitializedConfigException
-from notion2md.notion_api import get_children
+from notion2md.notion_api import NotionClient
 from notion2md.util import zip_dir
 
 
@@ -81,19 +80,20 @@ or <highlight>specific path you entered</highlight>)
         sys.exit(1)
 
     def handle(self):
+        try:
+            notion_client = NotionClient()
+        except Exception as e:
+            self.error(e)
         args = {}
         for k, v in self.io.input.options.items():
             if k in ARGS_NEW_KEY_MAP:
                 args[ARGS_NEW_KEY_MAP[k]] = v
             else:
                 pass
-        try:
-            config = Config(**args)
-        except UnInitializedConfigException as e:
-            self.error(e)
+        config = Config(**args)
         if not config.target_id:
             self.error("Notion2Md requires either id or url.")
-        exporter = BlockConvertor(config, self.io)
+        exporter = BlockConvertor(config, notion_client, self.io)
         # Directory Checking and Creating
         if not os.path.exists(config.tmp_path):
             os.makedirs(config.tmp_path)
@@ -107,7 +107,7 @@ or <highlight>specific path you entered</highlight>)
             status("Retrieving", "Notion blocks..."),
             success("Retrieved", "Notion blocks..."),
         ):
-            blocks = get_children(config.target_id)
+            blocks = notion_client.get_children(config.target_id)
         # Write(Export) Markdown file
         self.success(
             "Converting", f"<info>{str(len(blocks))}</info> blocks..."

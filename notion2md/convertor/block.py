@@ -11,16 +11,16 @@ from notion2md.config import Config
 from notion2md.console.formatter import error
 from notion2md.console.formatter import status
 from notion2md.console.formatter import success
-from notion2md.exceptions import UnInitializedConfigException
-from notion2md.notion_api import get_children
+from notion2md.notion_api import NotionClient
 
 from .richtext import richtext_convertor
 
 
 class BlockConvertor:
-    def __init__(self, config: Config, io: IO = None):
-        self._io = io
+    def __init__(self, config: Config, client: NotionClient, io: IO = None):
         self._config = config
+        self._client = client
+        self._io = io
 
     def convert(self, blocks: dict) -> str:
         outcome_blocks: str = ""
@@ -55,7 +55,7 @@ class BlockConvertor:
                     pass
                 elif block_type == "table":
                     depth += 1
-                    child_blocks = get_children(block["id"])
+                    child_blocks = self._client.get_children(block["id"])
                     table_list = []
                     for cell_block in child_blocks:
                         cell_block_type = cell_block["type"]
@@ -83,7 +83,7 @@ class BlockConvertor:
                     outcome_block += "\n"
                 else:
                     depth += 1
-                    child_blocks = get_children(block["id"])
+                    child_blocks = self._client.get_children(block["id"])
                     for block in child_blocks:
                         outcome_block += "\t" * depth + self.convert_block(
                             block, depth
