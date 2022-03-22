@@ -143,7 +143,7 @@ class BlockConvertor:
                     self._io.write_line(
                         success(
                             "Downloaded",
-                            f'successfully downloaded "{file_name}" -> "{downloaded_file_name}"',
+                            f'"{file_name}" -> "{downloaded_file_name}"',
                         )
                     )
                 else:
