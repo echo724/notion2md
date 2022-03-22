@@ -40,7 +40,7 @@ class Application(BaseApplication):
         formatter.set_style("status", Style("green", options=["bold", "dark"]))
         formatter.set_style("success", Style("green", options=["bold"]))
         formatter.set_style("error", Style("red", options=["bold"]))
-        formatter.set_style("code", Style("red", options=["italic"]))
+        formatter.set_style("code", Style("green", options=["italic"]))
         formatter.set_style("highlight", Style("blue", options=["bold"]))
         formatter.set_style("dim", Style("default", options=["dark"]))
 
