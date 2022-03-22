@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [2.7.6](https://github.com/echo724/notion2md/compare/v2.7.5...v2.7.6) (2022-03-22)
+
+
+### Features
+
+* Replace methods to Exporter Classes ([2b35818](https://github.com/echo724/notion2md/commit/2b3581801dfb0e08c7db39053013a8e80a29efdf))
+
+
+### Bug Fixes
+
+* Change the way of calling get_children function ([4563790](https://github.com/echo724/notion2md/commit/4563790cff4f39e1625de2c748fe85bd9e0725c8))
+* Implemented Singletone pattern in NotionClient class ([b8443ba](https://github.com/echo724/notion2md/commit/b8443ba963267a4ede3df9e782d07d3001b0b8d6))
+
 ### [2.7.5](https://github.com/echo724/notion2md/compare/v2.7.4...v2.7.5) (2022-03-01)
 
 
