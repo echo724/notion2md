@@ -1,19 +1,27 @@
 import os
-import shutil
 import sys
 import time
 
 from cleo.commands.command import Command
 from cleo.helpers import option
 
-from notion2md.config import Config
 from notion2md.console.formatter import error
 from notion2md.console.formatter import status
 from notion2md.console.formatter import success
 from notion2md.console.ui.indicator import progress
-from notion2md.convertor.block import BlockConvertor
-from notion2md.notion_api import NotionClient
-from notion2md.util import zip_dir
+from notion2md.exporter.block import Exporter
+
+
+class CLIExporter(Exporter):
+    def export(self, blocks):
+        with open(
+            os.path.join(
+                self._config.tmp_path, self._config.file_name + ".md"
+            ),
+            "w",
+            encoding="utf-8",
+        ) as output:
+            output.write(self.block_convertor.convert(blocks))
 
 
 ARGS_NEW_KEY_MAP = {
@@ -79,63 +87,52 @@ or <highlight>specific path you entered</highlight>)
         self.line_error(error(msg))
         sys.exit(1)
 
-    def handle(self):
-        try:
-            notion_client = NotionClient()
-        except Exception as e:
-            self.error(e)
+    def _parse_args(self):
         args = {}
         for k, v in self.io.input.options.items():
             if k in ARGS_NEW_KEY_MAP:
                 args[ARGS_NEW_KEY_MAP[k]] = v
             else:
                 pass
-        config = Config(**args)
-        if not config.target_id:
-            self.error("Notion2Md requires either id or url.")
-        exporter = BlockConvertor(config, notion_client, self.io)
-        # Directory Checking and Creating
-        if not os.path.exists(config.tmp_path):
-            os.makedirs(config.tmp_path)
-        if not os.path.exists(config.output_path):
-            os.makedirs(config.output_path)
-        start_time = time.time()
-        # Get actual blocks
-        self.line("")
-        with progress(
-            self.io,
-            status("Retrieving", "Notion blocks..."),
-            success("Retrieved", "Notion blocks..."),
-        ):
-            blocks = notion_client.get_children(config.target_id)
-        # Write(Export) Markdown file
-        self.success(
-            "Converting", f"<info>{str(len(blocks))}</info> blocks..."
-        )
-        with open(
-            os.path.join(config.tmp_path, config.file_name + ".md"),
-            "w",
-            encoding="utf-8",
-        ) as output:
-            output.write(exporter.convert(blocks))
-        self.success(
-            "Converted",
-            f"<info>{str(len(blocks))}</info> blocks to Markdown{f' <dim>({time.time() - start_time:0.1f}s)</dim>' if not self.io.is_debug() else ''}",
-        )
+        return args
 
-        # Compress Output files into a zip file
-        if not config.unzipped:
-            zip_dir(
-                os.path.join(config.output_path, config.file_name) + ".zip",
-                config.tmp_path,
+    def handle(self):
+        try:
+            args = self._parse_args()
+            exporter = CLIExporter(**args)
+            exporter.io = self.io
+            exporter.create_directories()
+            # Get actual blocks
+            self.line("")
+            with progress(
+                self.io,
+                status("Retrieving", "Notion blocks..."),
+                success("Retrieved", "Notion blocks..."),
+            ):
+                blocks = exporter.get_blocks()
+            # Write(Export) Markdown file
+            start_time = time.time()
+            self.success(
+                "Converting", f"<info>{str(len(blocks))}</info> blocks..."
             )
-            shutil.rmtree(config.tmp_path)
-            extension = ".zip"
-        else:
-            extension = ".md"
-        # Result and Time Check
-        self.success(
-            "Exported",
-            f'"<info>{config.file_name}{extension}</info>" in "<info>./{config.path_name}/</info>"',
-        )
-        self.line("")
+            exporter.export(blocks)
+            self.success(
+                "Converted",
+                f"<info>{str(len(blocks))}</info> blocks to Markdown{f' <dim>({time.time() - start_time:0.1f}s)</dim>' if not self.io.is_debug() else ''}",
+            )
+
+            # Compress Output files into a zip file
+            if not exporter.config.unzipped:
+                exporter.make_zip()
+                extension = ".zip"
+            else:
+                extension = ".md"
+            # Result and Time Check
+            self.success(
+                "Exported",
+                f'"<info>{exporter.config.file_name}{extension}</info>" in "<info>./{exporter.config.path_name}/</info>"',
+            )
+            self.line("")
+
+        except Exception as e:
+            self.error(e)
