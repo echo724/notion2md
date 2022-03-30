@@ -49,13 +49,13 @@ notion2md --download -n post -p ~/MyBlog/content/posts -u https://notion.so/...
 ## Usage: Python
 
 ```Python
-from notion2md.exporter import markdown_exporter, string_exporter
+from notion2md.exporter.block import MarkdownExporter, StringExporter
 
-# block_markdown_exporter will make markdown file on your output path
-markdown_exporter(page_id='...',output_path='...',download=True)
+# MarkdownExporter will make markdown file on your output path
+MarkdownExporter(page_id='...',output_path='...',download=True).export()
 
-# block_string_exporter will return output as String type
-md = string_exporter(page_id='...',output_path='...')
+# StringExporter will return output as String type
+md = StringExporter(page_id='...',output_path='...').export()
 ```
 
 ## To-do
@@ -64,7 +64,6 @@ md = string_exporter(page_id='...',output_path='...')
 - [x] Table blocks
 - [x] Synced Block
 - [ ] Page Exporter
-- [ ] Database Exporter
 - [ ] Child page
 - [ ] Column List and Column Blocks
 
