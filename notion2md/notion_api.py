@@ -1,10 +1,8 @@
 import os
 
 from notion_client import Client
-from notion_client import errors
 
-from notion2md.exceptions import EnvVariableNotFound
-from notion2md.exceptions import InvalidIntegrationKey
+from notion2md.exceptions import MissingTokenError
 
 
 def singleton(cls):
@@ -28,7 +26,7 @@ class NotionClient:
         try:
             return os.environ["NOTION_TOKEN"]
         except Exception:
-            raise EnvVariableNotFound() from None
+            raise MissingTokenError() from None
 
     def get_children(self, parent_id):
         return self._client.blocks.children.list(parent_id)["results"]

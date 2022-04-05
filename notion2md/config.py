@@ -2,6 +2,8 @@ import os
 
 from notion_client.helpers import get_id
 
+from notion2md.exceptions import MissingTargetIDError
+
 
 class Config(object):
     __slots__ = (
@@ -28,7 +30,7 @@ class Config(object):
         elif block_id:
             self.target_id = block_id
         else:
-            self.target_id = ""
+            raise MissingTargetIDError
 
         if output_filename:
             self.file_name = output_filename
