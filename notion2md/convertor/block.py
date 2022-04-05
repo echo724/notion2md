@@ -56,31 +56,7 @@ class BlockConvertor:
                 elif block_type == "table":
                     depth += 1
                     child_blocks = self._client.get_children(block["id"])
-                    table_list = []
-                    for cell_block in child_blocks:
-                        cell_block_type = cell_block["type"]
-                        table_list.append(
-                            BLOCK_TYPES[cell_block_type](
-                                self.collect_info(cell_block[cell_block_type])
-                            )
-                        )
-                    # convert to markdown table
-                    for index, value in enumerate(table_list):
-                        if index == 0:
-                            outcome_block = (
-                                " | " + " | ".join(value) + " | " + "\n"
-                            )
-                            outcome_block += (
-                                " | "
-                                + " | ".join(["----"] * len(value))
-                                + " | "
-                                + "\n"
-                            )
-                            continue
-                        outcome_block += (
-                            " | " + " | ".join(value) + " | " + "\n"
-                        )
-                    outcome_block += "\n"
+                    outcome_block = self.create_table(cell_blocks=child_blocks)
                 else:
                     depth += 1
                     child_blocks = self._client.get_children(block["id"])
@@ -89,6 +65,27 @@ class BlockConvertor:
                             block, depth
                         )
         return outcome_block
+
+    def create_table(self, cell_blocks: dict):
+        table_list = []
+        for cell_block in cell_blocks:
+            cell_block_type = cell_block["type"]
+            table_list.append(
+                BLOCK_TYPES[cell_block_type](
+                    self.collect_info(cell_block[cell_block_type])
+                )
+            )
+        # convert to markdown table
+        for index, value in enumerate(table_list):
+            if index == 0:
+                table = " | " + " | ".join(value) + " | " + "\n"
+                table += (
+                    " | " + " | ".join(["----"] * len(value)) + " | " + "\n"
+                )
+                continue
+            table += " | " + " | ".join(value) + " | " + "\n"
+        table += "\n"
+        return table
 
     def collect_info(self, payload: dict) -> dict:
         info = dict()
