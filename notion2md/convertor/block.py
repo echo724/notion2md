@@ -38,42 +38,44 @@ class BlockConvertor:
             and not block["has_children"]
             and not block[block_type]["text"]
         ):
-            outcome_block = blank() + "\n\n"
+            return blank() + "\n\n"
+        # Normal Case
+        if block_type in BLOCK_TYPES:
+            outcome_block = (
+                self.get_md_from_block_type(block, block_type) + "\n\n"
+            )
         else:
-            if block_type in BLOCK_TYPES:
-                outcome_block = (
-                    BLOCK_TYPES[block_type](
-                        self.collect_info(block[block_type])
-                    )
-                    + "\n\n"
-                )
+            outcome_block = f"[//]: # ({block_type} is not supported)\n\n"
+        # Convert child block
+        if block["has_children"]:
+            # create child page
+            if block_type == "child_page":
+                # call make_child_function
+                pass
+            # create table block
+            elif block_type == "table":
+                depth += 1
+                child_blocks = self._client.get_children(block["id"])
+                outcome_block = self.create_table(cell_blocks=child_blocks)
+            # create indent block
             else:
-                outcome_block = f"[{block_type} is not supported]\n\n"
-            if block["has_children"]:
-                if block_type == "child_page":
-                    # call make_child_function
-                    pass
-                elif block_type == "table":
-                    depth += 1
-                    child_blocks = self._client.get_children(block["id"])
-                    outcome_block = self.create_table(cell_blocks=child_blocks)
-                else:
-                    depth += 1
-                    child_blocks = self._client.get_children(block["id"])
-                    for block in child_blocks:
-                        outcome_block += "\t" * depth + self.convert_block(
-                            block, depth
-                        )
+                depth += 1
+                child_blocks = self._client.get_children(block["id"])
+                for block in child_blocks:
+                    outcome_block += "\t" * depth + self.convert_block(
+                        block, depth
+                    )
         return outcome_block
+
+    def get_md_from_block_type(self, block: dict, block_type: str) -> str:
+        return BLOCK_TYPES[block_type](self.collect_info(block[block_type]))
 
     def create_table(self, cell_blocks: dict):
         table_list = []
         for cell_block in cell_blocks:
             cell_block_type = cell_block["type"]
             table_list.append(
-                BLOCK_TYPES[cell_block_type](
-                    self.collect_info(cell_block[cell_block_type])
-                )
+                self.get_md_from_block_type(cell_block, cell_block_type)
             )
         # convert to markdown table
         for index, value in enumerate(table_list):
