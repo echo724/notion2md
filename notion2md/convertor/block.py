@@ -21,6 +21,8 @@ class BlockConvertor:
         self._config = config
         self._client = client
         self._io = io
+        self._continued_numbered_list = False
+        self._numbered_list_number = 1
 
     def convert(self, blocks: dict) -> str:
         outcome_blocks: str = ""
@@ -32,6 +34,15 @@ class BlockConvertor:
     def convert_block(self, block: dict, depth=0) -> str:
         outcome_block: str = ""
         block_type = block["type"]
+        # Handle the case where the block is a list item
+        if block_type == "numbered_list_item":
+            if self._continued_numbered_list:
+                self._numbered_list_number += 1
+            else:
+                self._continued_numbered_list = True
+                self._numbered_list_number = 1
+        else:
+            self._continued_numbered_list = False
         # Special Case: Block is blank
         if (
             block_type == "paragraph"
@@ -119,7 +130,7 @@ class BlockConvertor:
         # table cells
         if "cells" in payload:
             info["cells"] = payload["cells"]
-
+        info["number"] = self._numbered_list_number
         return info
 
     def download_file(self, url: str) -> str:
@@ -193,7 +204,7 @@ def numbered_list_item(info: dict) -> str:
     """
     input: item:dict = {"number":int, "text":str}
     """
-    return f"1. {info['text']}"
+    return f"{info['number']}. {info['text']}"
 
 
 def to_do(info: dict) -> str:
