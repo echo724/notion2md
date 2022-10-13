@@ -42,7 +42,8 @@ class BlockConvertor:
         # Normal Case
         if block_type in BLOCK_TYPES:
             outcome_block = (
-                self.get_md_from_block_type(block, block_type) + "\n\n"
+                BLOCK_TYPES[block_type](self.collect_info(block[block_type]))
+                + "\n\n"
             )
         else:
             outcome_block = f"[//]: # ({block_type} is not supported)\n\n"
@@ -67,15 +68,14 @@ class BlockConvertor:
                     )
         return outcome_block
 
-    def get_md_from_block_type(self, block: dict, block_type: str) -> str:
-        return BLOCK_TYPES[block_type](self.collect_info(block[block_type]))
-
     def create_table(self, cell_blocks: dict):
         table_list = []
         for cell_block in cell_blocks:
             cell_block_type = cell_block["type"]
             table_list.append(
-                self.get_md_from_block_type(cell_block, cell_block_type)
+                BLOCK_TYPES[cell_block_type](
+                    self.collect_info(cell_block[cell_block_type])
+                )
             )
         # convert to markdown table
         for index, value in enumerate(table_list):
