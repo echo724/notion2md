@@ -21,6 +21,8 @@ class BlockConvertor:
         self._config = config
         self._client = client
         self._io = io
+        self._continued_numbered_list = False
+        self._numbered_list_number = 1
 
     def convert(self, blocks: dict) -> str:
         outcome_blocks: str = ""
@@ -32,6 +34,15 @@ class BlockConvertor:
     def convert_block(self, block: dict, depth=0) -> str:
         outcome_block: str = ""
         block_type = block["type"]
+        # Handle the case where the block is a list item
+        if block_type == "numbered_list_item":
+            if self._continued_numbered_list:
+                self._numbered_list_number += 1
+            else:
+                self._continued_numbered_list = True
+                self._numbered_list_number = 1
+        else:
+            self._continued_numbered_list = False
         # Special Case: Block is blank
         if (
             block_type == "paragraph"
@@ -42,7 +53,8 @@ class BlockConvertor:
         # Normal Case
         if block_type in BLOCK_TYPES:
             outcome_block = (
-                self.get_md_from_block_type(block, block_type) + "\n\n"
+                BLOCK_TYPES[block_type](self.collect_info(block[block_type]))
+                + "\n\n"
             )
         else:
             outcome_block = f"[//]: # ({block_type} is not supported)\n\n"
@@ -67,15 +79,14 @@ class BlockConvertor:
                     )
         return outcome_block
 
-    def get_md_from_block_type(self, block: dict, block_type: str) -> str:
-        return BLOCK_TYPES[block_type](self.collect_info(block[block_type]))
-
     def create_table(self, cell_blocks: dict):
         table_list = []
         for cell_block in cell_blocks:
             cell_block_type = cell_block["type"]
             table_list.append(
-                self.get_md_from_block_type(cell_block, cell_block_type)
+                BLOCK_TYPES[cell_block_type](
+                    self.collect_info(cell_block[cell_block_type])
+                )
             )
         # convert to markdown table
         for index, value in enumerate(table_list):
@@ -119,7 +130,7 @@ class BlockConvertor:
         # table cells
         if "cells" in payload:
             info["cells"] = payload["cells"]
-
+        info["number"] = self._numbered_list_number
         return info
 
     def download_file(self, url: str) -> str:
@@ -193,7 +204,7 @@ def numbered_list_item(info: dict) -> str:
     """
     input: item:dict = {"number":int, "text":str}
     """
-    return f"1. {info['text']}"
+    return f"{info['number']}. {info['text']}"
 
 
 def to_do(info: dict) -> str:
