@@ -75,7 +75,7 @@ class MarkdownExporter(Exporter):
         self.create_directories()
         with open(
             os.path.join(
-                self._config.output_path, self._config.file_name + ".md"
+                self._config.tmp_path, self._config.file_name + ".md"
             ),
             "w",
             encoding="utf-8",
