@@ -9,19 +9,7 @@ from notion2md.console.formatter import error
 from notion2md.console.formatter import status
 from notion2md.console.formatter import success
 from notion2md.console.ui.indicator import progress
-from notion2md.exporter.block import Exporter
-
-
-class CLIExporter(Exporter):
-    def export(self, blocks):
-        with open(
-            os.path.join(
-                self._config.tmp_path, self._config.file_name + ".md"
-            ),
-            "w",
-            encoding="utf-8",
-        ) as output:
-            output.write(self.block_convertor.convert(blocks))
+from notion2md.exporter.block import CLIExporter
 
 
 ARGS_NEW_KEY_MAP = {
