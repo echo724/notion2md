@@ -1,4 +1,5 @@
 import concurrent.futures
+import hashlib
 import os
 import urllib.request as request
 import uuid
@@ -137,12 +138,16 @@ class BlockConvertor:
         file_name = os.path.basename(urlparse(url).path)
         if self._config.download:
             if file_name:
-                name, extentsion = os.path.splitext(file_name)
+                name, extension = os.path.splitext(file_name)
 
-                if not extentsion:
+                if not extension:
                     return file_name, url
 
-                downloaded_file_name = str(uuid.uuid4())[:8] + extentsion
+                url_hash = hashlib.blake2s(
+                    urlparse(url).path.encode()
+                ).hexdigest()[:8]
+                downloaded_file_name = f"{url_hash}_{file_name}"
+
                 fullpath = os.path.join(
                     self._config.tmp_path, downloaded_file_name
                 )
