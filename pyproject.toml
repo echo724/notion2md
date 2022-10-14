@@ -12,7 +12,7 @@ exclude = ["Test/test_*"]
 
 [tool.poetry.dependencies]
 python = ">=3.7, <4"
-notion-client = ">=0.7.1"
+notion-client = ">=1.0.1"
 cleo = "1.0.0a4"
 
 [tool.poetry.scripts]
