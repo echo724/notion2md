@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.0](https://github.com/echo724/notion2md/compare/v2.7.6...v2.8.0) (2022-10-14)
+
+
+### Features
+
+* Make downloaded filenames consistent between runs ([#38](https://github.com/echo724/notion2md/issues/38)) ([30e8f0b](https://github.com/echo724/notion2md/commit/30e8f0b9ccc9c103cbb7b35746c8ec9bc27ad76b))
+
+
+### Bug Fixes
+
+* Fixed [#40](https://github.com/echo724/notion2md/issues/40) due to the update of Notion API ([#42](https://github.com/echo724/notion2md/issues/42)) ([1a63351](https://github.com/echo724/notion2md/commit/1a633515ed835e9cda26cd0b5951773f2076a069))
+
 ### [2.7.6](https://github.com/echo724/notion2md/compare/v2.7.5...v2.7.6) (2022-03-22)
 
 
