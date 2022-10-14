@@ -4,6 +4,7 @@
 
 ## About Notion2Md
 
+[![Downloads](https://pepy.tech/badge/notion2md)](https://pepy.tech/project/notion2md)
 [![PyPI version](https://badge.fury.io/py/notion2md.svg)](https://badge.fury.io/py/notion2md)
 [![Code Quality](https://github.com/echo724/notion2md/actions/workflows/code_quality.yaml/badge.svg)](https://github.com/echo724/notion2md/actions/workflows/code_quality.yaml)
 <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fecho724%2Fnotion2md&count_bg=%23949191&title_bg=%23555555&icon=github.svg&icon_color=%23E7E7E7&title=visited&edge_flat=false"/></a>
