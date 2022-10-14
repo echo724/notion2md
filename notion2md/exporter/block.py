@@ -75,7 +75,7 @@ class MarkdownExporter(Exporter):
         self.create_directories()
         with open(
             os.path.join(
-                self._config.output_path, self._config.file_name + ".md"
+                self._config.tmp_path, self._config.file_name + ".md"
             ),
             "w",
             encoding="utf-8",
@@ -88,3 +88,15 @@ class MarkdownExporter(Exporter):
 class StringExporter(Exporter):
     def export(self):
         return self.block_convertor.to_string(self.get_blocks())
+
+
+class CLIExporter(Exporter):
+    def export(self, blocks):
+        with open(
+            os.path.join(
+                self._config.tmp_path, self._config.file_name + ".md"
+            ),
+            "w",
+            encoding="utf-8",
+        ) as output:
+            output.write(self.block_convertor.convert(blocks))
