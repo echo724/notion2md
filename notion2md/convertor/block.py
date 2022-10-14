@@ -48,36 +48,44 @@ class BlockConvertor:
         if (
             block_type == "paragraph"
             and not block["has_children"]
-            and not block[block_type]["text"]
+            and not block[block_type]["rich_text"]
         ):
             return blank() + "\n\n"
         # Normal Case
-        if block_type in BLOCK_TYPES:
-            outcome_block = (
-                BLOCK_TYPES[block_type](self.collect_info(block[block_type]))
-                + "\n\n"
-            )
-        else:
-            outcome_block = f"[//]: # ({block_type} is not supported)\n\n"
-        # Convert child block
-        if block["has_children"]:
-            # create child page
-            if block_type == "child_page":
-                # call make_child_function
-                pass
-            # create table block
-            elif block_type == "table":
-                depth += 1
-                child_blocks = self._client.get_children(block["id"])
-                outcome_block = self.create_table(cell_blocks=child_blocks)
-            # create indent block
-            else:
-                depth += 1
-                child_blocks = self._client.get_children(block["id"])
-                for block in child_blocks:
-                    outcome_block += "\t" * depth + self.convert_block(
-                        block, depth
+        try:
+            if block_type in BLOCK_TYPES:
+                outcome_block = (
+                    BLOCK_TYPES[block_type](
+                        self.collect_info(block[block_type])
                     )
+                    + "\n\n"
+                )
+            else:
+                outcome_block = f"[//]: # ({block_type} is not supported)\n\n"
+            # Convert child block
+            if block["has_children"]:
+                # create child page
+                if block_type == "child_page":
+                    # call make_child_function
+                    pass
+                # create table block
+                elif block_type == "table":
+                    depth += 1
+                    child_blocks = self._client.get_children(block["id"])
+                    outcome_block = self.create_table(cell_blocks=child_blocks)
+                # create indent block
+                else:
+                    depth += 1
+                    child_blocks = self._client.get_children(block["id"])
+                    for block in child_blocks:
+                        outcome_block += "\t" * depth + self.convert_block(
+                            block, depth
+                        )
+        except Exception as e:
+            if self._io:
+                self._io.write_line(
+                    error(f"{e}: Error occured block_type:{block_type}")
+                )
         return outcome_block
 
     def create_table(self, cell_blocks: dict):
@@ -103,8 +111,8 @@ class BlockConvertor:
 
     def collect_info(self, payload: dict) -> dict:
         info = dict()
-        if "text" in payload:
-            info["text"] = richtext_convertor(payload["text"])
+        if "rich_text" in payload:
+            info["text"] = richtext_convertor(payload["rich_text"])
         if "icon" in payload:
             info["icon"] = payload["icon"]["emoji"]
         if "checked" in payload:
