@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [2.8.1](https://github.com/echo724/notion2md/compare/v2.8.0...v2.8.1) (2022-11-07)
+
+
+### Bug Fixes
+
+* **pyproject:** fix dependencies' version requirement ([a7f2b04](https://github.com/echo724/notion2md/commit/a7f2b0432d0b2746c381c0c98c20116a727253fb)), closes [#44](https://github.com/echo724/notion2md/issues/44)
+
 ## [2.8.0](https://github.com/echo724/notion2md/compare/v2.7.6...v2.8.0) (2022-10-14)
 
 
