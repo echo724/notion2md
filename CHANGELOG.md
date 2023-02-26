@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [2.8.2](https://github.com/echo724/notion2md/compare/v2.8.1...v2.8.2) (2023-02-26)
+
+
+### Bug Fixes
+
+* fix retrieving over 100 blocks [#46](https://github.com/echo724/notion2md/issues/46) ([a89ce45](https://github.com/echo724/notion2md/commit/a89ce454d5ec53e7721ae326030c603016d7ab57))
+
 ### [2.8.1](https://github.com/echo724/notion2md/compare/v2.8.0...v2.8.1) (2022-11-07)
 
 
