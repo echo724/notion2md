@@ -34,9 +34,13 @@ class NotionClient:
         start_cursor = None
         # Avoid infinite loops
         for _ in range(100):
-            resp = self._client.blocks.children.list(parent_id, start_cursor=start_cursor, page_size=100)
+            resp = self._client.blocks.children.list(
+                parent_id, start_cursor=start_cursor, page_size=100
+            )
             results.extend(resp["results"])
             start_cursor = resp["next_cursor"] if resp["has_more"] else None
             if start_cursor is None:
                 return results
-        raise Exception(f"Can't parse notion page of > 10,000 children! (e.g. blocks)")
+        raise Exception(
+            "Can't parse notion page of > 10,000 children! (e.g. blocks)"
+        )
