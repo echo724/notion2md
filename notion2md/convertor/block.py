@@ -308,6 +308,10 @@ def synced_block(info: list) -> str:
     return "[//]: # (Synced Block)"
 
 
+def link_preview(info: dict) -> str:
+    url = info["url"]
+    return f"[{url}]({url})"
+
 # Block type map
 BLOCK_TYPES = {
     "paragraph": paragraph,
@@ -330,4 +334,5 @@ BLOCK_TYPES = {
     "file": file,
     "table_row": table_row,
     "synced_block": synced_block,
+    "link_preview": link_preview,
 }
