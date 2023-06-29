@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [2.8.3](https://github.com/echo724/notion2md/compare/v2.8.2...v2.8.3) (2023-06-29)
+
+
+### Bug Fixes
+
+* constructor in README.md ([03e42c4](https://github.com/echo724/notion2md/commit/03e42c4a8ba2b29a91df243b588a3cbcc6caffdf))
+
 ### [2.8.2](https://github.com/echo724/notion2md/compare/v2.8.1...v2.8.2) (2023-02-26)
 
 
