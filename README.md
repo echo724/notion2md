@@ -53,10 +53,10 @@ notion2md --download -n post -p ~/MyBlog/content/posts -u https://notion.so/...
 from notion2md.exporter.block import MarkdownExporter, StringExporter
 
 # MarkdownExporter will make markdown file on your output path
-MarkdownExporter(page_id='...',output_path='...',download=True).export()
+MarkdownExporter(block_id='...',output_path='...',download=True).export()
 
 # StringExporter will return output as String type
-md = StringExporter(page_id='...',output_path='...').export()
+md = StringExporter(block_id='...',output_path='...').export()
 ```
 
 ## To-do
