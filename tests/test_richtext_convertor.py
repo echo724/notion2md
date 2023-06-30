@@ -284,7 +284,7 @@ class ExportRichTextTest(unittest.TestCase):
             "href": None,
         }
         self.assertEqual(
-            richtext_word_converter(richtext), "`<u>~~***multiple***~~</u>`"
+            richtext_word_converter(richtext), "<u>~~***`multiple`***~~</u>"
         )
 
     def test_text_color_type(self):

@@ -36,11 +36,11 @@ def equation(content: str):
 
 
 annotation_map = {
+    "code": code,
     "bold": bold,
     "italic": italic,
     "strikethrough": strikethrough,
     "underline": underline,
-    "code": code,
 }
 
 
