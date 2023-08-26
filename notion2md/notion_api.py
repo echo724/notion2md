@@ -8,9 +8,9 @@ from notion2md.exceptions import MissingTokenError
 def singleton(cls):
     instance = {}
 
-    def get_instance():
+    def get_instance(token=""):
         if cls not in instance:
-            instance[cls] = cls()
+            instance[cls] = cls(token)
         return instance[cls]
 
     return get_instance
@@ -18,8 +18,9 @@ def singleton(cls):
 
 @singleton
 class NotionClient:
-    def __init__(self):
-        token = self._get_env_variable()
+    def __init__(self, token=""):
+        if not token:
+            token = self._get_env_variable()
         self._client = Client(auth=token)
 
     def _get_env_variable(self):
