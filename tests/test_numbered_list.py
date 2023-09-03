@@ -452,7 +452,6 @@ class NumberedListTest(unittest.TestCase):
 
             block_id = "1"
             md: str = StringExporter(block_id).export()
-            print(md)
 
             assert md == expected_md
 
