@@ -25,3 +25,9 @@ Pull requests are welcome.
 3. send pull request from your **develop** branch to this develop branch
 
 **This is only way to give pull request to this repo. Thank you**
+
+Please make sure that you do the following before submitting your code:
+1. Run the tests: `poetry run python -m unittest discover tests`
+2. Format the code `poetry run black .`
+3. Use isort the code `poetry run isort .`
+4. Lint the code `poetry run flake8 .`

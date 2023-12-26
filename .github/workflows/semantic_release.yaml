@@ -12,7 +12,7 @@ jobs:
       - uses: actions/setup-python@v2
       - name: Install poetry
         run: pip install poetry
-      - uses: bjoluc/semantic-release-config-poetry@v1
+      - uses: bjoluc/semantic-release-config-poetry@v2
         with:
           pypi_token: ${{ secrets.PYPI_TOKEN }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
