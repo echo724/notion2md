@@ -2,8 +2,6 @@ import concurrent.futures
 import hashlib
 import os
 import urllib.request as request
-import uuid
-
 from urllib.parse import urlparse
 
 from cleo.io.io import IO
@@ -13,7 +11,6 @@ from notion2md.console.formatter import error
 from notion2md.console.formatter import status
 from notion2md.console.formatter import success
 from notion2md.notion_api import NotionClient
-
 from .richtext import richtext_convertor
 
 
@@ -27,48 +24,27 @@ class BlockConvertor:
         outcome_blocks: str = ""
         with concurrent.futures.ThreadPoolExecutor() as executor:
             results = executor.map(self.convert_block, blocks)
-            outcome_blocks = "".join([result["text"] for result in results])
+            outcome_blocks = "".join([result for result in results])
         return outcome_blocks
 
     def convert_block(
-        self,
-        block: dict,
-        depth=0,
-        continued_numbered_list=False,
-        numbered_list_number=1,
+            self,
+            block: dict,
+            depth=0,
     ):
         outcome_block: str = ""
         block_type = block["type"]
-        # Handle the case where the block is a list item
-        if block_type == "numbered_list_item":
-            if continued_numbered_list:
-                numbered_list_number += 1
-            else:
-                continued_numbered_list = True
-                numbered_list_number = 1
-        else:
-            continued_numbered_list = False
         # Special Case: Block is blank
-        if (
-            block_type == "paragraph"
-            and not block["has_children"]
-            and not block[block_type]["rich_text"]
-        ):
-            return {
-                "text": blank() + "\n\n",
-                "continued_numbered_list": continued_numbered_list,
-                "numbered_list_number": numbered_list_number,
-            }
+        if check_block_is_blank(block, block_type):
+            return blank() + "\n\n"
         # Normal Case
         try:
             if block_type in BLOCK_TYPES:
                 outcome_block = (
-                    BLOCK_TYPES[block_type](
-                        self.collect_info(
-                            block[block_type], numbered_list_number
+                        BLOCK_TYPES[block_type](
+                            self.collect_info(block[block_type])
                         )
-                    )
-                    + "\n\n"
+                        + "\n\n"
                 )
             else:
                 outcome_block = f"[//]: # ({block_type} is not supported)\n\n"
@@ -87,33 +63,18 @@ class BlockConvertor:
                 else:
                     depth += 1
                     child_blocks = self._client.get_children(block["id"])
-                    child_continued_numbered_list = False
-                    child_numbered_list_number = 1
                     for block in child_blocks:
                         converted_block = self.convert_block(
                             block,
                             depth,
-                            child_continued_numbered_list,
-                            child_numbered_list_number,
                         )
-                        outcome_block += "\t" * depth + converted_block["text"]
-                        # Extract the child values for the next child
-                        child_continued_numbered_list = converted_block[
-                            "continued_numbered_list"
-                        ]
-                        child_numbered_list_number = converted_block[
-                            "numbered_list_number"
-                        ]
+                        outcome_block += "\t" * depth + converted_block
         except Exception as e:
             if self._io:
                 self._io.write_line(
                     error(f"{e}: Error occured block_type:{block_type}")
                 )
-        return {
-            "text": outcome_block,
-            "continued_numbered_list": continued_numbered_list,
-            "numbered_list_number": numbered_list_number,
-        }
+        return outcome_block
 
     def create_table(self, cell_blocks: dict):
         table_list = []
@@ -129,14 +90,14 @@ class BlockConvertor:
             if index == 0:
                 table = " | " + " | ".join(value) + " | " + "\n"
                 table += (
-                    " | " + " | ".join(["----"] * len(value)) + " | " + "\n"
+                        " | " + " | ".join(["----"] * len(value)) + " | " + "\n"
                 )
                 continue
             table += " | " + " | ".join(value) + " | " + "\n"
         table += "\n"
         return table
 
-    def collect_info(self, payload: dict, numbered_list_number) -> dict:
+    def collect_info(self, payload: dict) -> dict:
         info = dict()
         if "rich_text" in payload:
             info["text"] = richtext_convertor(payload["rich_text"])
@@ -166,7 +127,6 @@ class BlockConvertor:
         # table cells
         if "cells" in payload:
             info["cells"] = payload["cells"]
-        info["number"] = numbered_list_number
         return info
 
     def download_file(self, url: str) -> str:
@@ -209,6 +169,14 @@ class BlockConvertor:
         return self.convert(blocks)
 
 
+def check_block_is_blank(block, block_type):
+    return (
+            block_type == "paragraph"
+            and not block["has_children"]
+            and not block[block_type]["rich_text"]
+    )
+
+
 # Converting Methods
 def paragraph(info: dict) -> str:
     return info["text"]
@@ -244,7 +212,7 @@ def numbered_list_item(info: dict) -> str:
     """
     input: item:dict = {"number":int, "text":str}
     """
-    return f"{info['number']}. {info['text']}"
+    return f"1. {info['text']}"
 
 
 def to_do(info: dict) -> str:

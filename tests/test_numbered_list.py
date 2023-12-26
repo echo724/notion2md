@@ -1,10 +1,8 @@
 import unittest
-
 from unittest.mock import MagicMock
 from unittest.mock import patch
 
 from notion2md.exporter.block import StringExporter  # type: ignore
-
 
 expected_md = """1. Thing1:
 
@@ -12,7 +10,7 @@ expected_md = """1. Thing1:
 
 \t\t1. one
 
-\t\t2. two
+\t\t1. two
 
 <br/>
 
@@ -24,10 +22,9 @@ Stuff
 
 \t1. id (integer)
 
-\t2. type (string)
+\t1. type (string)
 
 """
-
 
 mock_responses = [
     {
