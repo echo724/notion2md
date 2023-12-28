@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.4](https://github.com/echo724/notion2md/compare/v2.8.3...v2.8.4) (2023-12-28)
+
+
+### Bug Fixes
+
+* fix numbered list format according to commonmark format ([#58](https://github.com/echo724/notion2md/issues/58)) ([305ec68](https://github.com/echo724/notion2md/commit/305ec6881aeb4a22ccce9b1d2ee7948a69765801))
+
 ### [2.8.3](https://github.com/echo724/notion2md/compare/v2.8.2...v2.8.3) (2023-06-29)
 
 
