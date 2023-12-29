@@ -21,6 +21,8 @@
 
 - Then save your api key(token) as your os environment variable
 
+- From version 2.9.0, you can use `--token` or `-t` option to set your token key.
+
 ```Bash
 $ export NOTION_TOKEN="{your integration token key}"
 ```
