@@ -2,7 +2,7 @@ import concurrent.futures
 import hashlib
 import os
 import urllib.request as request
-from urllib.parse import urlparse
+from urllib.parse import urlparse,unquote
 
 from cleo.io.io import IO
 
@@ -129,31 +129,32 @@ class BlockConvertor:
             info["cells"] = payload["cells"]
         return info
 
-    def download_file(self, url: str) -> str:
+    def download_file(self, url: str) -> tuple[str, str]:
         file_name = os.path.basename(urlparse(url).path)
+        unquoted_file_name = unquote(file_name)
         if self._config.download:
-            if file_name:
-                name, extension = os.path.splitext(file_name)
+            if unquoted_file_name:
+                name, extension = os.path.splitext(unquoted_file_name)
 
                 if not extension:
-                    return file_name, url
+                    return unquoted_file_name, url
 
                 url_hash = hashlib.blake2s(
                     urlparse(url).path.encode()
                 ).hexdigest()[:8]
-                downloaded_file_name = f"{url_hash}_{file_name}"
+                downloaded_file_name = f"{url_hash}_{unquoted_file_name}"
 
                 fullpath = os.path.join(
                     self._config.tmp_path, downloaded_file_name
                 )
 
                 if self._io:
-                    self._io.write_line(status("Downloading", f"{file_name}"))
+                    self._io.write_line(status("Downloading", f"{unquoted_file_name}"))
                     request.urlretrieve(url, fullpath)
                     self._io.write_line(
                         success(
                             "Downloaded",
-                            f'"{file_name}" -> "{downloaded_file_name}"',
+                            f'"{unquoted_file_name}" -> "{downloaded_file_name}"',
                         )
                     )
                 else:
@@ -163,7 +164,7 @@ class BlockConvertor:
                 if self._io:
                     self._io.write_line(error(f"invalid {url}"))
         else:
-            return file_name, url
+            return unquoted_file_name, url
 
     def to_string(self, blocks: dict) -> str:
         return self.convert(blocks)
