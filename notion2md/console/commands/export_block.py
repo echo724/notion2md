@@ -1,4 +1,3 @@
-import os
 import sys
 import time
 
@@ -11,7 +10,6 @@ from notion2md.console.formatter import success
 from notion2md.console.ui.indicator import progress
 from notion2md.exporter.block import CLIExporter
 
-
 ARGS_NEW_KEY_MAP = {
     "id": "block_id",
     "url": "block_url",
@@ -19,6 +17,7 @@ ARGS_NEW_KEY_MAP = {
     "path": "output_path",
     "download": "download",
     "unzipped": "unzipped",
+    "token": "token",
 }
 
 
@@ -27,6 +26,7 @@ class ExportBlockCommand(Command):
     description = "Export a Notion block object to markdown."
 
     options = [
+        option("token", "t", "The token of your Notion account.", flag=False),
         option("url", "u", "The url of Notion block object.", flag=False),
         option("id", "i", "The id of Notion block object.", flag=False),
         option("name", "n", "The name of Notion block object", flag=False),
