@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.9.0](https://github.com/echo724/notion2md/compare/v2.8.4...v2.9.0) (2024-01-10)
+
+
+### Features
+
+* add notion token parameter to `Exporter` ([#60](https://github.com/echo724/notion2md/issues/60)) ([a93cf51](https://github.com/echo724/notion2md/commit/a93cf515bc0793e936d8b080475e459b98ede5fd))
+
+
+### Bug Fixes
+
+* fix encoded filename is too long case ([#59](https://github.com/echo724/notion2md/issues/59)) ([073994a](https://github.com/echo724/notion2md/commit/073994a32246dbd2bf957040fe9a454b52961a8e))
+
 ## [2.8.4](https://github.com/echo724/notion2md/compare/v2.8.3...v2.8.4) (2023-12-28)
 
 
